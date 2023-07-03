@@ -27,6 +27,10 @@
 <% html_title(@query.new_record? ? l(:label_issue_plural) : @query.name) %>
 
 <%= form_tag(_project_issue_notes_path(@project), :method => :get, :id => 'query_form') do %>
+  <p>
+    <%= label_tag :number_of_notes, l(:issue_note_list_label_number_of_notes) %>
+    <%= number_field_tag :number_of_notes, @number_of_notes, :min => 1, :max => 10, :autocomplete => false %>
+  </p>
   <%= render :partial => 'queries/query_form' %>
 <% end %>
 
