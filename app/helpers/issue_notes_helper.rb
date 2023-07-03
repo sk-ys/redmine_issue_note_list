@@ -50,4 +50,12 @@ module IssueNotesHelper
     end
     content_tag('span', content, :class => column.css_classes)
   end
+  
+  def _project_issue_notes_path(project, *args)
+    if project
+      project_issue_notes_path(project, *args)
+    else
+      issue_notes_path(*args)
+    end
+  end
 end
