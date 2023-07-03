@@ -46,25 +46,33 @@
         <% if journals.count <= num %>
           <div class="issue-note empty"></div>
         <% else %>
-          <% journal = journals[num] %>
-          <div class="issue-note">
-            <h4 class="note-header">
-              <%= link_to(format_time(journal.updated_on),
-                @project.present? ?
-                  project_activity_path(@project, :from => User.current.time_to_date(journal.updated_on)) :
-                  activity_path( :from => User.current.time_to_date(journal.updated_on))) %>
-              <%= render_private_notes_indicator(journal) %>
-            </h4>
-            <div class="note-info">
-              <%= l(journal.created_on == journal.updated_on ? :field_author : :field_updated_by).html_safe + ": " + link_to_user(journal.user) %>
-            </div>
-            <%= render_notes(issue, journal) %>
-          </div>
+          <%= render_issue_note(issue, journals[num]) %>
         <% end %>
       <% end %>
     </td>
-    <td class="add_note">
-      <%= text_area_tag "issue-note-"+issue.id.to_s, "dummy" %>
+    <td class="add-notes">
+      <% if issue.notes_addable? %>
+        <%= form_tag "#{issue_notes_path}/#{issue.id.to_s}/add_note",
+          :id => "add_notes_form-#{issue.id.to_s}", :multipart => true,
+          remote: true do %>
+          <%= text_area_tag 'issue[notes]', nil, cols: 60, rows: 10, class: 'wiki-edit',
+                  data: { auto_complete: true },
+                  id: "add_issue_notes-#{issue.id.to_s}",
+                  no_label: true %>
+          <%= wikitoolbar_for "add_issue_notes-#{issue.id.to_s}", preview_issue_path(:project_id => issue.project_id, :issue_id => issue) %>
+
+          <div class="commands">
+            <% if issue.safe_attribute? 'private_notes' %>
+              <div class="private_notes">
+                <%= check_box_tag 'issue[private_notes]', true, false, :id => "add_issue_private_notes-#{issue.id.to_s}" %>
+                <label for="<%= "add_issue_private_notes-#{issue.id.to_s}" %>"><%= l(:field_private_notes) %></label>
+              </div>
+            <% end %>
+
+            <%= submit_tag l(:button_submit) %>
+          </div>
+        <% end %>
+      <% end %>
     </td>
   </tr>
   <% query.block_columns.each do |column|
