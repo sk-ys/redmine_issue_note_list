@@ -1,0 +1,10 @@
+<% if !@saved || @issue.current_journal.updated_on.blank? %>
+  alert("<%= l(:issue_note_list_failed_to_add_note) %>");
+<% else %>
+  // replace form to view
+  (() => {
+    const $target = $("<%= "#issue-#{@issue.id} td.add-notes" %>");
+    $target.empty();
+    $target.append($('<%= render_issue_note(@issue, @issue.current_journal) %>'));
+  })()
+<% end %>
