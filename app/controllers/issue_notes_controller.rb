@@ -24,9 +24,13 @@ class IssueNotesController < ApplicationController
 
   helper :issues
   helper :queries
+  helper :journals
   include QueriesHelper
 
   def index
+    # TODO: Set from query
+    params["number_of_notes"] = 3
+
     use_session = true
     retrieve_default_query(use_session)
     retrieve_query(IssueQuery, use_session)
@@ -35,6 +39,7 @@ class IssueNotesController < ApplicationController
       @issue_count = @query.issue_count
       @issue_pages = Paginator.new @issue_count, per_page_option, params['page']
       @issues = @query.issues(:offset => @issue_pages.offset, :limit => @issue_pages.per_page)
+      @number_of_notes = params["number_of_notes"]
     end
 
   rescue ActiveRecord::RecordNotFound
