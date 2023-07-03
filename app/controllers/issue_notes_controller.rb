@@ -27,7 +27,7 @@ class IssueNotesController < ApplicationController
   include QueriesHelper
 
   def index
-    use_session = !request.format.csv?
+    use_session = true
     retrieve_default_query(use_session)
     retrieve_query(IssueQuery, use_session)
 

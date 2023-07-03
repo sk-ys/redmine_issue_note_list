@@ -1,0 +1,16 @@
+table.list.issues>thead>tr>th>span,
+table.list.issues>tbody>tr.issue>td>div {
+  display: list-item;
+  list-style-position: inside;
+  text-align: left;
+  display: flex;
+}
+
+table.list.issues>tbody>tr.issue>td>div>span:first-of-type:before {
+  content: ": ";
+}
+
+table.list.issues>tbody>tr.issue>td>div>span.done_ratio>table.progress {
+  float: none;
+  display: inline-table;
+}
