@@ -40,8 +40,28 @@
         </div>
       <% end %>
     </td>
-    <td class="last_note">
-      <%= issue.last_notes.present? ? content_tag('div', textilizable(issue, :last_notes), :class => "wiki") : '' %>
+    <td class="last_notes">
+      <% journals = issue.visible_journals_with_index.select{|journal| journal.notes.present?}.reverse.take(@number_of_notes) %>
+      <% (0..(@number_of_notes - 1)).reverse_each do |num| %>
+        <% if journals.count <= num %>
+          <div class="issue-note empty"></div>
+        <% else %>
+          <% journal = journals[num] %>
+          <div class="issue-note">
+            <h4 class="note-header">
+              <%= link_to(format_time(journal.updated_on),
+                @project.present? ?
+                  project_activity_path(@project, :from => User.current.time_to_date(journal.updated_on)) :
+                  activity_path( :from => User.current.time_to_date(journal.updated_on))) %>
+              <%= render_private_notes_indicator(journal) %>
+            </h4>
+            <div class="note-info">
+              <%= l(journal.created_on == journal.updated_on ? :field_author : :field_updated_by).html_safe + ": " + link_to_user(journal.user) %>
+            </div>
+            <%= render_notes(issue, journal) %>
+          </div>
+        <% end %>
+      <% end %>
     </td>
     <td class="add_note">
       <%= text_area_tag "issue-note-"+issue.id.to_s, "dummy" %>
