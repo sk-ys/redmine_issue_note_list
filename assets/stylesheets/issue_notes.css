@@ -1,16 +1,32 @@
-table.list.issues>thead>tr>th>span,
-table.list.issues>tbody>tr.issue>td>div {
-  display: list-item;
-  list-style-position: inside;
-  text-align: left;
+table.list.issues > thead > tr > th.issue-status > span,
+table.list.issues > tbody > tr.issue > td.issue-status > div {
   display: flex;
 }
 
-table.list.issues>tbody>tr.issue>td>div>span:first-of-type:before {
+table.list.issues > thead > tr > th.issue-status > span > a.icon.sort {
+  padding-left: 0;
+}
+
+table.list.issues
+  > tbody
+  > tr.issue
+  > td.issue-status
+  > div
+  > span:first-of-type:before {
   content: ": ";
 }
 
-table.list.issues>tbody>tr.issue>td>div>span.done_ratio>table.progress {
+table.list.issues
+  > tbody
+  > tr.issue
+  > td.issue-status
+  > div
+  > span.done_ratio
+  > table.progress {
   float: none;
   display: inline-table;
+}
+
+td.last_note > div.wiki {
+  text-align: left;
 }
