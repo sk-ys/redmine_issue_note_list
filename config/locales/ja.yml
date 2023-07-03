@@ -2,3 +2,4 @@
 ja:
   redmine_issue_note_list: ノート一覧
   issue_note_list_label_number_of_notes: ノート数
+  issue_note_list_failed_to_add_note: ノートの追加に失敗しました。
