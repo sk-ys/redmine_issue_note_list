@@ -65,6 +65,10 @@ module IssueNotesHelper
     content = +''
     content << "<div class=\"issue-note\">"
     content <<   "<h4 class=\"note-header\">"
+    content <<     content_tag(:div, button_tag(
+                     '', class: "ui-icon collapse-expand", type: "button",
+                     onclick: "$(this).closest('div.issue-note').toggleClass('expanded')"
+                   ), class: 'header-buttons')
     content <<     link_to(
                     format_time(journal.updated_on),
                     @project.present? ?

@@ -45,16 +45,21 @@ div.issue-note {
 }
 div.issue-note > div.wiki {
   width: 100%;
-  max-height: 200px;
+  height: 200px;
   overflow: auto;
   text-align: left;
   padding: 3px;
 }
+div.issue-note.expanded > div.wiki {
+  height: auto;
+}
+
 div.issue-note > h4.note-header {
   overflow: hidden;
   padding-left: 5px;
   padding-right: 5px;
   text-overflow: ellipsis;
+  position: relative;
 }
 div.issue-note > div.note-info {
   overflow: hidden;
@@ -64,6 +69,28 @@ div.issue-note > div.note-info {
   text-align: right;
   padding-right: 3px;
   font-size: smaller;
+}
+div.issue-note div.header-buttons {
+  position: absolute;
+  right: 0;
+  display: flex;
+  flex-direction: row;
+  top: 5px;
+}
+div.issue-note div.header-buttons > button.ui-icon {
+  cursor: pointer;
+  opacity: 0.1;
+}
+div.issue-note div.header-buttons > button.ui-icon:hover {
+  opacity: 1;
+}
+div.issue-note div.header-buttons > button.ui-icon.collapse-expand {
+  /* ui-icon-caret-1-s */
+  background-position: -65px 0;
+}
+div.issue-note.expanded div.header-buttons > button.ui-icon.collapse-expand {
+  /* ui-icon-caret-1-n */
+  background-position: 0 0;
 }
 
 table.list td.add-notes {
