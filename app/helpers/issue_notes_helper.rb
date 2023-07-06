@@ -63,7 +63,7 @@ module IssueNotesHelper
     project = issue.project
 
     content = +''
-    content << "<div class=\"issue-note\">"
+    content << "<div class=\"journal has-notes\">"
     content <<   "<h4 class=\"note-header\">"
     content <<     "<div class=\"header-buttons\">"
     if journal.editable_by?(User.current)
