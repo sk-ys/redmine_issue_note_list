@@ -39,19 +39,26 @@ table.list tr.issue td.last_notes {
   align-items: stretch;
   justify-content: center;
   grid-auto-columns: 1fr;
+  padding: 3px;
 }
 div.journal.has-notes {
   min-width: 150px;
+  border: 1px solid #ccc;
 }
 div.journal.has-notes > div.wiki {
   width: 100%;
   height: 200px;
   overflow: auto;
   text-align: left;
-  padding: 3px;
+  padding: 5px;
+  box-sizing: border-box;
 }
 div.journal.has-notes.expanded > div.wiki {
   height: auto;
+}
+div.journal.has-notes.private-notes > div.wiki {
+  margin-left: 0;
+  padding-left: 3px;
 }
 
 div.journal.has-notes > h4.note-header {
@@ -93,7 +100,9 @@ div.journal.has-notes div.header-buttons > button.ui-icon.collapse-expand {
   /* ui-icon-caret-1-s */
   background-position: -65px 0;
 }
-div.journal.has-notes.expanded div.header-buttons > button.ui-icon.collapse-expand {
+div.journal.has-notes.expanded
+  div.header-buttons
+  > button.ui-icon.collapse-expand {
   /* ui-icon-caret-1-n */
   background-position: 0 0;
 }
@@ -102,12 +111,14 @@ div.journal.has-notes > form[id^="journal-"][id$="-form"] {
   text-align: left;
   display: block;
 }
-div.journal.has-notes > form[id^="journal-"][id$="-form"] label[for$="private_notes"] {
+div.journal.has-notes
+  > form[id^="journal-"][id$="-form"]
+  label[for$="private_notes"] {
   font-size: smaller;
 }
 div.journal.has-notes > form[id^="journal-"][id$="-form"] > div.jstBlock {
   text-align: center;
-  margin-bottom: 3px;
+  margin-bottom: 9px;
 }
 div.journal.has-notes
   > form[id^="journal-"][id$="-form"]
@@ -116,31 +127,34 @@ div.journal.has-notes
   > div.wiki-preview {
   text-align: left;
   box-sizing: border-box;
-  margin-bottom: 6px;
+  margin-bottom: 12px;
+  margin-left: 3px;
+  width: calc(100% - 6px);
+}
+div.journal.has-notes
+  > form[id^="journal-"][id$="-form"]
+  > div.jstBlock
+  div.jstEditor
+  > textarea.wiki-edit {
+  width: calc(100% - 6px);
 }
 div.journal.has-notes > form[id^="journal-"][id$="-form"] > p {
   /* submit button */
   position: absolute;
   right: 0;
   bottom: 0;
-}
-div.journal.has-notes:has(form[id^="journal-"][id$="-form"]) > h4.note-header,
-div.journal.has-notes:has(form[id^="journal-"][id$="-form"]) > div.note-info {
-  /* If hide header information */
-  /* Currently FireFox is not supported */
-  /* display: none; */
+  margin: 3px 5px;
 }
 
 table.list td.add-notes {
   vertical-align: top;
-  padding: 2px;
+  padding: 3px;
 }
-td.add-notes form {
+td.add-notes > form {
   vertical-align: top;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  margin: 3px;
 }
 td.add-notes textarea {
   height: 100px;
@@ -159,6 +173,7 @@ td.add-notes div.jstEditor div.wiki-preview {
   width: 100%;
   box-sizing: border-box;
   margin-bottom: 5px;
+  overflow: auto;
 }
 td.add-notes div.commands {
   width: 100%;
