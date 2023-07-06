@@ -76,6 +76,7 @@ div.journal.has-notes div.header-buttons {
   display: flex;
   flex-direction: row;
   top: 0;
+  background-color: #fffa;
 }
 div.journal.has-notes div.header-buttons > * {
   margin-left: 2px;

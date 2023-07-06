@@ -63,7 +63,7 @@ module IssueNotesHelper
     project = issue.project
 
     content = +''
-    content << "<div class=\"journal has-notes\">"
+    content << "<div class=\"journal has-notes\" id=\"change-#{journal.id}\">"
     content <<   "<h4 class=\"note-header\">"
     content <<     "<div class=\"header-buttons\">"
     if journal.editable_by?(User.current)
@@ -81,16 +81,16 @@ module IssueNotesHelper
                       )
     content <<     "</div>"
     content <<     link_to(
-                    format_time(journal.updated_on),
+                    format_time(journal.created_on),
                     @project.present? ?
-                    project_activity_path(@project, :from => User.current.time_to_date(journal.updated_on)) :
-                    activity_path( :from => User.current.time_to_date(journal.updated_on))
+                    project_activity_path(@project, :from => User.current.time_to_date(journal.created_on)) :
+                    activity_path( :from => User.current.time_to_date(journal.created_on))
                   )
     content <<     render_private_notes_indicator(journal)
+    content <<     (render_journal_update_info(journal) || '')
     content <<   "</h4>"
     content <<   "<div class=\"note-info\">"
-    content <<     l(journal.created_on == journal.updated_on ? :field_author : :field_updated_by).html_safe +
-                    ": " + link_to_user(journal.user)
+    content <<     l(:field_updated_by).html_safe + ": " + link_to_user(journal.user)
     content <<   "</div>"
     content <<   render_notes(issue, journal)
     content << "</div>"
