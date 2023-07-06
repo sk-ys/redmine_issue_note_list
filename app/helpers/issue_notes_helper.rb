@@ -77,7 +77,7 @@ module IssueNotesHelper
     end
     content <<       button_tag(
                        '', class: "ui-icon collapse-expand", type: "button",
-                       onclick: "$(this).closest('div.issue-note').toggleClass('expanded')"
+                       onclick: "$(this).closest('div.journal.has-notes').toggleClass('expanded')"
                       )
     content <<     "</div>"
     content <<     link_to(
