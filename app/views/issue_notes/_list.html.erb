@@ -44,7 +44,7 @@
       <% journals = issue.visible_journals_with_index.select{|journal| journal.notes.present?}.reverse.take(@number_of_notes) %>
       <% (0..(@number_of_notes - 1)).reverse_each do |num| %>
         <% if journals.count <= num %>
-          <div class="issue-note empty"></div>
+          <div class="journal empty"></div>
         <% else %>
           <%= render_issue_note(issue, journals[num]) %>
         <% end %>
