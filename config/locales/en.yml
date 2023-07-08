@@ -3,3 +3,11 @@ en:
   redmine_issue_note_list: Note list
   issue_note_list_label_number_of_notes: Number of notes
   issue_note_list_failed_to_add_note: Failed to add note.
+  issue_note_list_label_pop_out: pop-out
+  issue_note_list_label_close_pop_out: Close the pop-out
+  issue_note_list_label_fix_to_left: Fix to the left side
+  issue_note_list_label_fix_to_right: Fix to the right side
+  issue_note_list_label_fix_to_top: Fix to the top side
+  issue_note_list_label_fix_to_bottom: Fix to the bottom side
+  issue_note_list_label_maximize: Maximize
+  issue_note_list_label_restore: Restore
