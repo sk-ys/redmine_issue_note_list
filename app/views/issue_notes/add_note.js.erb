@@ -3,8 +3,7 @@
 <% else %>
   // replace form to view
   (() => {
-    const $target = $("<%= "#issue-#{@issue.id} td.add-notes" %>");
-    $target.empty();
-    $target.append($('<%= render_issue_note(@issue, @issue.current_journal) %>'));
+    const $target = $("<%= "#add_notes_form-#{@issue.id}" %>").closest("div.add_notes_form_outer");
+    $target.empty().append($('<%= render_issue_note(@issue, @issue.current_journal) %>'));
   })()
 <% end %>
