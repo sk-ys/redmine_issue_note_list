@@ -95,7 +95,7 @@ module IssueNotesHelper
                     activity_path( :from => User.current.time_to_date(journal.created_on))
                   )
     content <<     render_private_notes_indicator(journal)
-    content <<     (render_journal_update_info(journal) || '')
+    content <<     (respond_to?(:render_journal_update_info) ? (render_journal_update_info(journal) || '') : '')
     content <<   "</h4>"
     content <<   "<div class=\"note-info\">"
     content <<     l(:field_updated_by).html_safe + ": " + link_to_user(journal.user)
