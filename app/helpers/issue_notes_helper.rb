@@ -65,6 +65,16 @@ module IssueNotesHelper
     content = +''
     content << "<div class=\"#{journal.css_classes}\" id=\"change-#{journal.id}\">"
     content <<   "<h4 class=\"note-header\">"
+    content <<     "<div class=\"header-text\">"
+    content <<       link_to(
+                       format_time(journal.created_on),
+                       @project.present? ?
+                       project_activity_path(@project, :from => User.current.time_to_date(journal.created_on)) :
+                       activity_path( :from => User.current.time_to_date(journal.created_on))
+                     )
+    content <<       render_private_notes_indicator(journal)
+    content <<       (respond_to?(:render_journal_update_info) ? (render_journal_update_info(journal) || '') : '')
+    content <<     "</div>"
     content <<     "<div class=\"header-buttons\">"
     if journal.editable_by?(User.current)
       content << link_to(l(:button_edit),
@@ -94,14 +104,6 @@ module IssueNotesHelper
                        title: l(:issue_note_list_label_pop_out)
                       )
     content <<     "</div>"
-    content <<     link_to(
-                    format_time(journal.created_on),
-                    @project.present? ?
-                    project_activity_path(@project, :from => User.current.time_to_date(journal.created_on)) :
-                    activity_path( :from => User.current.time_to_date(journal.created_on))
-                  )
-    content <<     render_private_notes_indicator(journal)
-    content <<     (respond_to?(:render_journal_update_info) ? (render_journal_update_info(journal) || '') : '')
     content <<   "</h4>"
     content <<   "<div class=\"note-info\">"
     content <<     l(:field_updated_by).html_safe + ": " + link_to_user(journal.user)
