@@ -10,9 +10,13 @@
   <thead>
     <tr>
       <th class="issue-status">
+        <%= l(:issue_note_list_label_issue_details) %>
+        <div class="column-filter">
+          <span class="icon-only icon-list" title=<%= l(:label_sort) %>></span>
         <% query.inline_columns.each do |column| %>
           <%= column_names(query, column, query_options) %>
         <% end %>
+        </div>
       </th>
       <th class="last_notes"><%= l(:label_last_notes) %></th>
       <th class="add-notes"><%= l(:label_add_note) %></th>

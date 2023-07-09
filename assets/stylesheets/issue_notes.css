@@ -6,13 +6,61 @@ table.list td.issue-status {
   overflow: auto;
   padding: 5px;
 }
+table.list th.issue-status {
+  position: relative;
+  overflow: unset;
+}
 
-table.list.issues > thead > tr > th.issue-status > span,
+table.list th.issue-status > div.column-filter {
+  vertical-align: top;
+  padding: 5px 10px;
+  overflow: hidden;
+  position: absolute;
+  background-color: #eee;
+  box-sizing: border-box;
+  right: 0;
+  top: 0;
+}
+table.list th.issue-status > .column-filter:hover {
+  overflow: unset;
+  height: fit-content;
+  border: 1px solid #ccc;
+}
+
+table.list.issues > thead > tr > th.issue-status > div.column-filter > span {
+  display: none;
+}
+table.list.issues
+  > thead
+  > tr
+  > th.issue-status
+  > div.column-filter
+  > span:first-of-type {
+  display: flex;
+  user-select: none;
+  margin-left: auto;
+  cursor: pointer;
+}
+table.list.issues
+  > thead
+  > tr
+  > th.issue-status
+  > div.column-filter:hover
+  > span {
+  display: flex;
+}
+
 table.list.issues > tbody > tr.issue > td.issue-status > div {
   display: flex;
 }
 
-table.list.issues > thead > tr > th.issue-status > span > a.icon.sort {
+table.list.issues
+  > thead
+  > tr
+  > th.issue-status
+  > div.column-filter
+  > span
+  > a.icon.sort {
   padding-left: 0;
 }
 
