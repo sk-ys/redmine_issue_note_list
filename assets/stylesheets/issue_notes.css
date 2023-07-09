@@ -11,7 +11,6 @@ table.list th.issue-status {
   position: relative;
   overflow: unset;
 }
-
 table.list th.issue-status > div.column-filter {
   vertical-align: top;
   padding: 5px 10px;
@@ -94,6 +93,22 @@ table.list.issues
   float: none;
   display: inline-table;
 }
+td.issue-status div.header-buttons {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 5px;
+}
+tr.issue:not(.variable-height)
+  > td.issue-status
+  > div.header-buttons
+  > button.fixed-height,
+tr.issue.variable-height
+  > td.issue-status
+  > div.header-buttons
+  > button.variable-height {
+  display: none;
+}
 
 table.list tr.issue td.last_notes {
   display: grid;
@@ -123,7 +138,7 @@ div.journal.has-notes > div.wiki {
   padding: 5px;
   box-sizing: border-box;
 }
-div.journal.has-notes.expanded > div.wiki {
+tr.issue.variable-height div.journal.has-notes > div.wiki {
   height: auto;
 }
 div.journal.has-notes.private-notes > div.wiki {
@@ -146,26 +161,24 @@ div.journal.has-notes > h4.note-header > .header-text {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-div.journal.has-notes div.header-buttons {
+div.journal.has-notes div.header-buttons,
+td.issue-status div.header-buttons {
   display: flex;
   flex-direction: row;
 }
-div.journal.has-notes div.header-buttons > * {
+div.journal.has-notes div.header-buttons > *,
+td.issue-status div.header-buttons > * {
   margin-left: 2px;
   opacity: 0.3;
 }
-div.journal.has-notes div.header-buttons > button.ui-icon {
+div.journal.has-notes div.header-buttons > button.ui-icon,
+td.issue-status div.header-buttons > button.ui-icon {
   cursor: pointer;
   margin-top: 0;
 }
-div.journal.has-notes div.header-buttons > *:hover {
+div.journal.has-notes div.header-buttons > *:hover,
+td.issue-status div.header-buttons > *:hover {
   opacity: 1;
-}
-div.journal.has-notes:not(.expanded)
-  div.header-buttons
-  > button.ui-icon.collapse,
-div.journal.has-notes.expanded div.header-buttons > button.ui-icon.expand {
-  display: none;
 }
 div.journal.has-notes > div.note-info {
   overflow: hidden;

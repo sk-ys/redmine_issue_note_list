@@ -45,6 +45,18 @@
             :title => column.name == :subject ? column.value_object(issue) : nil) %>
         </div>
       <% end %>
+      <div class="header-buttons">
+        <button
+          class="variable-height ui-icon ui-icon-locked"
+          title="<%=l(:issue_note_list_label_fixed_height)%>"
+          onclick="setNoteHeightVariable(arguments[0], true)">
+        </button>
+        <button
+          class="fixed-height ui-icon ui-icon-unlocked"
+          title="<%=l(:issue_note_list_label_variable_height)%>"
+          onclick="setNoteHeightVariable(arguments[0], false)">
+        </button>
+      </div>
     </td>
     <td class="last_notes">
       <% journals = issue.visible_journals_with_index.select{|journal| journal.notes.present?}.reverse.take(@number_of_notes) %>

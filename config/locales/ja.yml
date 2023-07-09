@@ -13,5 +13,5 @@ ja:
   issue_note_list_label_maximize: 最大化
   issue_note_list_label_restore: 元に戻す
   issue_note_list_label_issue_details: チケット詳細
-  issue_note_list_label_expand: 展開
-  issue_note_list_label_collapse: 折りたたみ
+  issue_note_list_label_variable_height: 高さ可変
+  issue_note_list_label_fixed_height: 高さ固定
