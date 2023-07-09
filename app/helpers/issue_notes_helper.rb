@@ -76,8 +76,14 @@ module IssueNotesHelper
       )
     end
     content <<       button_tag(
-                       '', class: "ui-icon collapse-expand", type: "button",
-                       onclick: "$(this).closest('div.journal.has-notes').toggleClass('expanded')"
+                       '', class: "expand ui-icon ui-icon-caret-1-s", type: "button",
+                       onclick: "$(this).closest('div.journal.has-notes').addClass('expanded')",
+                       title: l(:issue_note_list_label_expand)
+                     )
+    content <<       button_tag(
+                       '', class: "collapse ui-icon ui-icon-caret-1-n", type: "button",
+                       onclick: "$(this).closest('div.journal.has-notes').removeClass('expanded')",
+                       title: l(:issue_note_list_label_collapse)
                       )
     content <<       button_tag(
                        '', class: "ui-icon ui-icon-arrowreturnthick-1-n pop-out",

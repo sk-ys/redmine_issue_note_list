@@ -97,15 +97,11 @@ div.journal.has-notes div.header-buttons > button.ui-icon {
 div.journal.has-notes div.header-buttons > button.ui-icon:hover {
   opacity: 1;
 }
-div.journal.has-notes div.header-buttons > button.ui-icon.collapse-expand {
-  /* ui-icon-caret-1-s */
-  background-position: -65px 0;
-}
-div.journal.has-notes.expanded
+div.journal.has-notes:not(.expanded)
   div.header-buttons
-  > button.ui-icon.collapse-expand {
-  /* ui-icon-caret-1-n */
-  background-position: 0 0;
+  > button.ui-icon.collapse,
+div.journal.has-notes.expanded div.header-buttons > button.ui-icon.expand {
+  display: none;
 }
 div.journal.has-notes > form {
   position: relative;
