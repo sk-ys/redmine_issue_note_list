@@ -85,12 +85,13 @@ module IssueNotesHelper
                          :class => 'icon-only icon-edit'
       )
     end
+    indice = journal.indice || journal.issue.visible_journals_with_index.find{|j| j.id == journal.id}.indice
     content <<       button_tag(
                        '', class: "ui-icon ui-icon-arrowreturnthick-1-n pop-out",
                        type: "button",
                        onclick: "toggleNotesPopOutState(" +
                         "$(this).closest(\"div.journal.has-notes\"), " +
-                        "'##{issue.id}: #{issue.subject} - #{l(:field_notes)}-#{journal.indice}');",
+                        "'##{issue.id}: #{issue.subject} - #{l(:field_notes)}-#{ indice }');",
                        title: l(:issue_note_list_label_pop_out)
                       )
     content <<     "</div>"
