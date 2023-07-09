@@ -185,7 +185,7 @@ div.journal.has-notes > form > div.jstBlock div.jstEditor > div.wiki-preview {
   width: calc(100% - 6px);
 }
 div.journal.has-notes > form > div.jstBlock div.jstEditor > textarea.wiki-edit {
-  width: calc(100% - 6px);
+  width: 100%;
 }
 div.journal.has-notes > form > p {
   /* submit button */
@@ -257,7 +257,11 @@ div.ui-dialog.note-pop-out-dialog div.journal.has-notes {
 div.ui-dialog.note-pop-out-dialog
   div.journal.has-notes
   div.header-buttons
-  button.collapse-expand,
+  button.collapse,
+div.ui-dialog.note-pop-out-dialog
+  div.journal.has-notes
+  div.header-buttons
+  button.expand,
 div.ui-dialog.note-pop-out-dialog
   div.journal.has-notes
   div.header-buttons
