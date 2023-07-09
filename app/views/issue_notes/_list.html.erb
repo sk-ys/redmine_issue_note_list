@@ -38,9 +38,11 @@
   <tr id="issue-<%= issue.id %>" class="<%= cycle('odd', 'even') %> <%= issue.css_classes %> <%= level > 0 ? "idnt idnt-#{level}" : nil %>">
     <td class="issue-status">
       <% query.inline_columns.each do |column| %>
-        <div>
+        <div class="column-items">
           <%= column.caption %>
-          <%= content_tag('span', column_content(column, issue), :class => column.css_classes) %>
+          <%= content_tag(
+            'span', column_content(column, issue), :class => column.css_classes,
+            :title => column.name == :subject ? column.value_object(issue) : nil) %>
         </div>
       <% end %>
     </td>

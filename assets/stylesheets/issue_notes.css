@@ -1,6 +1,6 @@
 table.list th.issue-status,
 table.list td.issue-status {
-  width: 300px;
+  width: 250px;
   vertical-align: top;
   border-right: 1px solid #ccc;
   overflow: auto;
@@ -50,10 +50,21 @@ table.list.issues
   display: flex;
 }
 
-table.list.issues > tbody > tr.issue > td.issue-status > div {
+table.list.issues > tbody > tr.issue > td.issue-status > div.column-items {
   display: flex;
+  width: 250px;
 }
-
+table.list.issues
+  > tbody
+  > tr.issue
+  > td.issue-status
+  > div.column-items
+  > span {
+  flex: 1 1 auto;
+  text-align: left;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 table.list.issues
   > thead
   > tr
@@ -63,7 +74,6 @@ table.list.issues
   > a.icon.sort {
   padding-left: 0;
 }
-
 table.list.issues
   > tbody
   > tr.issue
@@ -72,7 +82,6 @@ table.list.issues
   > span:first-of-type:before {
   content: ": ";
 }
-
 table.list.issues
   > tbody
   > tr.issue
