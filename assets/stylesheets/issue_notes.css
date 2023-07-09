@@ -3,7 +3,8 @@ table.list td.issue-status {
   width: 250px;
   vertical-align: top;
   border-right: 1px solid #ccc;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   padding: 5px;
 }
 table.list th.issue-status {
@@ -20,6 +21,7 @@ table.list th.issue-status > div.column-filter {
   box-sizing: border-box;
   right: 0;
   top: 0;
+  z-index: 1;
 }
 table.list th.issue-status > .column-filter:hover {
   overflow: unset;
@@ -208,6 +210,7 @@ table.list td.add-notes {
   vertical-align: top;
   padding: 3px;
   width: 300px;
+  left: 0 !important; /* Support resizable */
 }
 table.list th.add-notes,
 table.list td.add-notes {

@@ -187,4 +187,12 @@ $(() => {
       });
     }
   });
+
+  // Set resizable
+  $("td.issue-status").resizable({
+    handles: "e",
+    alsoResize: "td.issue-status > div.column-items",
+    minWidth: $("td.issue-status").width(),
+  });
+  $("td.add-notes").resizable({ handles: "w" });
 });
