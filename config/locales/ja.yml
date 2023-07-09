@@ -3,11 +3,3 @@ ja:
   redmine_issue_note_list: ノート一覧
   issue_note_list_label_number_of_notes: ノート数
   issue_note_list_failed_to_add_note: ノートの追加に失敗しました。
-  issue_note_list_label_pop_out: ポップアウト
-  issue_note_list_label_close_pop_out: ポップアウトを終了する
-  issue_note_list_label_fix_to_left: 左側に固定する
-  issue_note_list_label_fix_to_right: 右側に固定する
-  issue_note_list_label_fix_to_top: 上側に固定する
-  issue_note_list_label_fix_to_bottom: 下側に固定する
-  issue_note_list_label_maximize: 最大化
-  issue_note_list_label_restore: 元に戻す

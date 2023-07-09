@@ -43,49 +43,36 @@
     <td class="last_notes">
       <% journals = issue.visible_journals_with_index.select{|journal| journal.notes.present?}.reverse.take(@number_of_notes) %>
       <% (0..(@number_of_notes - 1)).reverse_each do |num| %>
-        <div class="journal_outer">
-          <% if journals.count <= num %>
-            <div class="journal empty"></div>
-          <% else %>
-            <%= render_issue_note(issue, journals[num]) %>
-          <% end %>
-        </div>
+        <% if journals.count <= num %>
+          <div class="journal empty"></div>
+        <% else %>
+          <%= render_issue_note(issue, journals[num]) %>
+        <% end %>
       <% end %>
     </td>
     <td class="add-notes">
-      <div class="add_notes_form_outer">
-        <% if issue.notes_addable? %>
-          <div class="action_buttons">
-            <%= button_tag(
-                        '', class: "ui-icon ui-icon-arrowreturnthick-1-n pop-out", type: "button",
-                        onclick: "ToggleNotesPopOutState(" +
-                          "$(this).closest('.add_notes_form_outer'), " +
-                          "'##{issue.id}: #{issue.subject} - #{l(:label_add_note)}');",
-                        title: l(:issue_note_list_label_pop_out)
-                        ) %>
+      <% if issue.notes_addable? %>
+        <%= form_tag "#{issue_notes_path}/#{issue.id.to_s}/add_note",
+          :id => "add_notes_form-#{issue.id.to_s}", :multipart => true,
+          remote: true do %>
+          <%= text_area_tag 'issue[notes]', nil, cols: 60, rows: 10, class: 'wiki-edit',
+                  data: { auto_complete: true },
+                  id: "add_issue_notes-#{issue.id.to_s}",
+                  no_label: true %>
+          <%= wikitoolbar_for "add_issue_notes-#{issue.id.to_s}", preview_issue_path(:project_id => issue.project_id, :issue_id => issue) %>
+
+          <div class="commands">
+            <% if issue.safe_attribute? 'private_notes' %>
+              <div class="private_notes">
+                <%= check_box_tag 'issue[private_notes]', true, false, :id => "add_issue_private_notes-#{issue.id.to_s}" %>
+                <label for="<%= "add_issue_private_notes-#{issue.id.to_s}" %>"><%= l(:field_private_notes) %></label>
+              </div>
+            <% end %>
+
+            <%= submit_tag l(:button_submit) %>
           </div>
-          <%= form_tag "#{issue_notes_path}/#{issue.id.to_s}/add_note",
-            :id => "add_notes_form-#{issue.id.to_s}", :multipart => true,
-            remote: true do %>
-            <%= text_area_tag 'issue[notes]', nil, cols: 60, rows: 10, class: 'wiki-edit',
-                    data: { auto_complete: true },
-                    id: "add_issue_notes-#{issue.id.to_s}",
-                    no_label: true %>
-            <%= wikitoolbar_for "add_issue_notes-#{issue.id.to_s}", preview_issue_path(:project_id => issue.project_id, :issue_id => issue) %>
-
-            <div class="commands">
-              <% if issue.safe_attribute? 'private_notes' %>
-                <div class="private_notes">
-                  <%= check_box_tag 'issue[private_notes]', true, false, :id => "add_issue_private_notes-#{issue.id.to_s}" %>
-                  <label for="<%= "add_issue_private_notes-#{issue.id.to_s}" %>"><%= l(:field_private_notes) %></label>
-                </div>
-              <% end %>
-
-              <%= submit_tag l(:button_submit) %>
-            </div>
-          <% end %>
         <% end %>
-      </div>
+      <% end %>
     </td>
   </tr>
   <% query.block_columns.each do |column|
