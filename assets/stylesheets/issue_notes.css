@@ -1,5 +1,9 @@
+table.list th.issue-status,
 table.list td.issue-status {
+  width: 300px;
   vertical-align: top;
+  border-right: 1px solid #ccc;
+  overflow: auto;
   padding: 5px;
 }
 
@@ -35,7 +39,6 @@ table.list.issues
 table.list tr.issue td.last_notes {
   display: grid;
   grid-auto-flow: column;
-  grid-column-gap: 5px;
   align-items: stretch;
   justify-content: center;
   grid-auto-columns: 1fr;
@@ -43,7 +46,15 @@ table.list tr.issue td.last_notes {
 }
 div.journal_outer {
   min-width: 150px;
-  border: 1px solid #ccc;
+  padding: 0 5px;
+  border-left: 1px solid #ddd;
+}
+div.journal_outer:first-of-type {
+  border-left: none;
+}
+div.journal_outer > div.journal.has-notes,
+div.add_notes_form_outer > div.journal.has-notes {
+  padding-left: 0;
 }
 div.journal.has-notes > div.wiki {
   width: 100%;
@@ -137,6 +148,9 @@ table.list td.add-notes {
   vertical-align: top;
   padding: 3px;
   width: 300px;
+}
+table.list th.add-notes,
+table.list td.add-notes {
   border-left: 1px solid #ccc;
 }
 td.add-notes > form {
