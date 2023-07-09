@@ -2,18 +2,6 @@
 
 <% content_for :header_tags do %>
   <%= stylesheet_link_tag "issue_notes", :plugin => "redmine_issue_note_list" %>
-  <%= javascript_include_tag "issue_notes", :plugin => "redmine_issue_note_list" %>
-  <%= javascript_tag type: 'application/javascript' do -%>
-  var IssueNoteList = { resources: {
-    labelClosePopOut: "<%= l(:issue_note_list_label_close_pop_out) %>",
-    labelFixToLeft: "<%= l(:issue_note_list_label_fix_to_left) %>",
-    labelFixToRight: "<%= l(:issue_note_list_label_fix_to_right) %>",
-    labelFixToTop: "<%= l(:issue_note_list_label_fix_to_top) %>",
-    labelFixToBottom: "<%= l(:issue_note_list_label_fix_to_bottom) %>",
-    labelMaximize: "<%= l(:issue_note_list_label_maximize) %>",
-    labelRestore: "<%= l(:issue_note_list_label_restore) %>",
-  }}
-  <% end -%>
 <% end %>
 
 <div class="contextual">
