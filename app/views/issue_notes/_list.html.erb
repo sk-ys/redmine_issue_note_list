@@ -10,12 +10,16 @@
   <thead>
     <tr>
       <th class="issue-status">
+        <%= l(:issue_note_list_label_issue_details) %>
+        <div class="column-filter">
+          <span class="icon-only icon-list" title=<%= l(:label_sort) %>></span>
         <% query.inline_columns.each do |column| %>
           <%= column_names(query, column, query_options) %>
         <% end %>
+        </div>
       </th>
-      <th><%= l(:label_last_notes) %></th>
-      <th><%= l(:label_add_note) %></th>
+      <th class="last_notes"><%= l(:label_last_notes) %></th>
+      <th class="add-notes"><%= l(:label_add_note) %></th>
     </tr>
   </thead>
   <tbody>
@@ -34,11 +38,25 @@
   <tr id="issue-<%= issue.id %>" class="<%= cycle('odd', 'even') %> <%= issue.css_classes %> <%= level > 0 ? "idnt idnt-#{level}" : nil %>">
     <td class="issue-status">
       <% query.inline_columns.each do |column| %>
-        <div>
+        <div class="column-items">
           <%= column.caption %>
-          <%= content_tag('span', column_content(column, issue), :class => column.css_classes) %>
+          <%= content_tag(
+            'span', column_content(column, issue), :class => column.css_classes,
+            :title => column.name == :subject ? column.value_object(issue) : nil) %>
         </div>
       <% end %>
+      <div class="header-buttons">
+        <button
+          class="variable-height ui-icon ui-icon-locked"
+          title="<%=l(:issue_note_list_label_fixed_height)%>"
+          onclick="setNoteHeightVariable(arguments[0], true)">
+        </button>
+        <button
+          class="fixed-height ui-icon ui-icon-unlocked"
+          title="<%=l(:issue_note_list_label_variable_height)%>"
+          onclick="setNoteHeightVariable(arguments[0], false)">
+        </button>
+      </div>
     </td>
     <td class="last_notes">
       <% journals = issue.visible_journals_with_index.select{|journal| journal.notes.present?}.reverse.take(@number_of_notes) %>
@@ -58,7 +76,7 @@
           <div class="action_buttons">
             <%= button_tag(
                         '', class: "ui-icon ui-icon-arrowreturnthick-1-n pop-out", type: "button",
-                        onclick: "ToggleNotesPopOutState(" +
+                        onclick: "toggleNotesPopOutState(" +
                           "$(this).closest('.add_notes_form_outer'), " +
                           "'##{issue.id}: #{issue.subject} - #{l(:label_add_note)}');",
                         title: l(:issue_note_list_label_pop_out)

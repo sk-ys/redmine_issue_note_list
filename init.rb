@@ -10,9 +10,9 @@ Redmine::Plugin.register :redmine_issue_note_list do
     permission :view_issue_notes, :issue_notes => :index
   end
 
-  menu :application_menu, :issue_notes,
+  menu :application_menu, :redmine_issue_note_list,
     { :controller => "issue_notes", :action => "index" }, :after => :issues
-  menu :project_menu, :issue_notes,
+  menu :project_menu, :redmine_issue_note_list,
     { :controller => "issue_notes", :action => "index" }, :after => :issues,
     :param => :project_id
 
