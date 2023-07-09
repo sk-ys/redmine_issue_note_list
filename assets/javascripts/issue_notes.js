@@ -1,4 +1,12 @@
-function ToggleNotesPopOutState(elem, title) {
+function fixPopUpWindowPosition($dialog) {
+  if ($dialog.hasClass("fix-to-right")) {
+    $dialog.css("left", $(window).width() - $dialog.outerWidth());
+  } else if ($dialog.hasClass("fix-to-bottom")) {
+    $dialog.css("top", $(window).height() - $dialog.outerHeight());
+  }
+}
+
+function toggleNotesPopOutState(elem, title) {
   const $note = $(elem);
   const $noteParent = $note.parent();
   const dialogStyle = {
@@ -8,14 +16,6 @@ function ToggleNotesPopOutState(elem, title) {
 
   // Keep current height
   $noteParent.css("height", $noteParent.height());
-
-  function fixPopUpWindowPosition($dialog) {
-    if ($dialog.hasClass("fix-to-right")) {
-      $dialog.css("left", $(window).width() - $dialog.outerWidth());
-    } else if ($dialog.hasClass("fix-to-bottom")) {
-      $dialog.css("top", $(window).height() - $dialog.outerHeight());
-    }
-  }
 
   function addButtonsToDialogTitlebar($dialog) {
     const $titleBar = $dialog.find(".ui-dialog-titlebar");
@@ -176,7 +176,9 @@ function ToggleNotesPopOutState(elem, title) {
       fixPopUpWindowPosition($dialog);
     },
   });
+}
 
+$(() => {
   $(window).on("resize", (e) => {
     if (e.target === window) {
       const $dialogs = $(".ui-dialog.note-pop-out-dialog");
@@ -185,4 +187,4 @@ function ToggleNotesPopOutState(elem, title) {
       });
     }
   });
-}
+});

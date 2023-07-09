@@ -98,7 +98,7 @@ module IssueNotesHelper
     content <<       button_tag(
                        '', class: "ui-icon ui-icon-arrowreturnthick-1-n pop-out",
                        type: "button",
-                       onclick: "ToggleNotesPopOutState(" +
+                       onclick: "toggleNotesPopOutState(" +
                         "$(this).closest(\"div.journal.has-notes\"), " +
                         "'##{issue.id}: #{issue.subject} - #{l(:field_notes)}-#{journal.indice}');",
                        title: l(:issue_note_list_label_pop_out)
