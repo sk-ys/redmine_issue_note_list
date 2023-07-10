@@ -20,7 +20,7 @@
 class IssueNotesController < ApplicationController
   unloadable
   menu_item :redmine_issue_note_list
-  before_action :find_optional_project
+  before_action :find_optional_project, :only => [:index]
   before_action :find_issue, :only => [:add_note]
 
   helper :issues
