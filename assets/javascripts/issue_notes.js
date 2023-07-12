@@ -186,6 +186,14 @@ function setNoteHeightVariable(e, state = true) {
   $target.toggleClass("variable-height", state);
 }
 
+function collapseNoteRow(e, state = false) {
+  const $target =
+    e.ctrlKey || e.metaKey
+      ? $("table.list.issues").find("tr.issue")
+      : $(e.target).closest("tr.issue");
+  $target.toggleClass("collapse-row", state);
+}
+
 $(() => {
   $(window).on("resize", (e) => {
     if (e.target === window) {
@@ -199,7 +207,7 @@ $(() => {
   // Set resizable
   $("td.issue-status").resizable({
     handles: "e",
-    alsoResize: "td.issue-status > div.column-items",
+    alsoResize: "td.issue-status > div.column-items, td.issue-status > div.header",
     minWidth: $("td.issue-status").width(),
   });
   $("td.add-notes").resizable({ handles: "w" });

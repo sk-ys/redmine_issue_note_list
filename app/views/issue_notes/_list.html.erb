@@ -37,26 +37,45 @@
   <% end %>
   <tr id="issue-<%= issue.id %>" class="<%= cycle('odd', 'even') %> <%= issue.css_classes %> <%= level > 0 ? "idnt idnt-#{level}" : nil %>">
     <td class="issue-status">
+      <div class="header">
+        <div class="header-text">
+          <%= link_to issue_path(issue), title: "##{issue.id}: #{issue.subject}" do %>
+            <%= '#' + issue.id.to_s  %>
+            <%= content_tag('span', ': ' + issue.subject, class: 'id-with-subject') %>
+          <% end %>
+        </div>
+        <div class="header-buttons">
+          <button
+            class="variable-height ui-icon ui-icon-locked"
+            title="<%=l(:issue_note_list_label_fixed_height)%>"
+            onclick="setNoteHeightVariable(arguments[0], true)">
+          </button>
+          <button
+            class="fixed-height ui-icon ui-icon-unlocked"
+            title="<%=l(:issue_note_list_label_variable_height)%>"
+            onclick="setNoteHeightVariable(arguments[0], false)">
+          </button>
+          <button
+            class="collapse-row ui-icon ui-icon-arrowstop-1-n"
+            title="<%=l(:issue_note_list_label_collapse_row)%>"
+            onclick="collapseNoteRow(arguments[0], true)">
+          </button>
+          <button
+            class="expand-row ui-icon ui-icon-arrowstop-1-s"
+            title="<%=l(:issue_note_list_label_expand_row)%>"
+            onclick="collapseNoteRow(arguments[0], false)">
+          </button>
+        </div>
+      </div>
       <% query.inline_columns.each do |column| %>
+        <% if column.name == :id || column.name == :subject %>
+          <% next %>
+        <% end %>
         <div class="column-items">
           <%= column.caption %>
-          <%= content_tag(
-            'span', column_content(column, issue), :class => column.css_classes,
-            :title => column.name == :subject ? column.value_object(issue) : nil) %>
+          <%= content_tag('span', column_content(column, issue), :class => column.css_classes) %>
         </div>
       <% end %>
-      <div class="header-buttons">
-        <button
-          class="variable-height ui-icon ui-icon-locked"
-          title="<%=l(:issue_note_list_label_fixed_height)%>"
-          onclick="setNoteHeightVariable(arguments[0], true)">
-        </button>
-        <button
-          class="fixed-height ui-icon ui-icon-unlocked"
-          title="<%=l(:issue_note_list_label_variable_height)%>"
-          onclick="setNoteHeightVariable(arguments[0], false)">
-        </button>
-      </div>
     </td>
     <td class="last_notes">
       <% journals = issue.visible_journals_with_index.select{|journal| journal.notes.present?}.reverse.take(@number_of_notes) %>

@@ -15,3 +15,5 @@ ja:
   issue_note_list_label_issue_details: チケット詳細
   issue_note_list_label_variable_height: 高さ可変
   issue_note_list_label_fixed_height: 高さ固定
+  issue_note_list_label_collapse_row: 行を縮小
+  issue_note_list_label_expand_row: 行を拡張
