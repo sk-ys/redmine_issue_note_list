@@ -35,7 +35,7 @@
       </td>
     </tr>
   <% end %>
-  <tr id="issue-<%= issue.id %>" class="<%= cycle('odd', 'even') %> <%= issue.css_classes %> <%= level > 0 ? "idnt idnt-#{level}" : nil %>">
+  <tr id="issue-<%= issue.id %>" class="<%= cycle('odd', 'even') %> <%= issue.css_classes %> <%= level > 0 ? "idnt idnt-#{level}" : nil %> <%= @enable_compact_mode ? "collapse-row" : nil %>">
     <td class="issue-status">
       <div class="header">
         <div class="header-text">

@@ -509,3 +509,6 @@ div.journal.has-notes h4.note-header div.header-text span.note-id {
   padding: 1px 2px;
   color: #aaa;
 }
+#issue_note_list_query > span {
+  margin-right: 5px;
+}

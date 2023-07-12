@@ -38,6 +38,7 @@ class IssueNotesController < ApplicationController
       @issue_pages = Paginator.new @issue_count, per_page_option, params['page']
       @issues = @query.issues(:offset => @issue_pages.offset, :limit => @issue_pages.per_page)
       @number_of_notes = params["number_of_notes"]&.to_i || 3
+      @enable_compact_mode = params["enable_compact_mode"] == "1"
     end
 
   rescue ActiveRecord::RecordNotFound
