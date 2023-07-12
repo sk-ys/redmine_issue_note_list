@@ -61,11 +61,13 @@ module IssueNotesHelper
 
   def render_issue_note(issue, journal)
     project = issue.project
+    indice = journal.indice || journal.issue.visible_journals_with_index.find{|j| j.id == journal.id}.indice
 
     content = +''
     content << "<div class=\"#{journal.css_classes}\" id=\"change-#{journal.id}\">"
     content <<   "<h4 class=\"note-header\">"
     content <<     "<div class=\"header-text\">"
+    content <<       "<span class=\"note-id\">#{l(:field_notes)}-#{indice}</span>"
     content <<       link_to(
                        format_time(journal.created_on),
                        @project.present? ?
@@ -85,7 +87,6 @@ module IssueNotesHelper
                          :class => 'icon-only icon-edit'
       )
     end
-    indice = journal.indice || journal.issue.visible_journals_with_index.find{|j| j.id == journal.id}.indice
     content <<       button_tag(
                        '', class: "ui-icon ui-icon-arrowreturnthick-1-n pop-out",
                        type: "button",
