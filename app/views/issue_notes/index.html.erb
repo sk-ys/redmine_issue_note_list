@@ -45,7 +45,8 @@
       <%= number_field_tag :number_of_notes, @number_of_notes, :min => 1, :max => 10, :autocomplete => false %>
     </span>
     <span>
-      <%= check_box_tag :enable_compact_mode, 1, @enable_compact_mode %>
+      <%= check_box_tag :enable_compact_mode, 1, @enable_compact_mode,
+        onclick: "collapseNoteRow('all', this.checked)" %>
       <%= label_tag :enable_compact_mode, l(:issue_note_list_label_enable_compact_mode) %>
     </span>
   </p>

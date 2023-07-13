@@ -188,7 +188,7 @@ function setNoteHeightVariable(e, state = true) {
 
 function collapseNoteRow(e, state = false) {
   const $target =
-    e.ctrlKey || e.metaKey
+    e === 'all' || e.ctrlKey || e.metaKey
       ? $("table.list.issues").find("tr.issue")
       : $(e.target).closest("tr.issue");
   $target.toggleClass("collapse-row", state);
