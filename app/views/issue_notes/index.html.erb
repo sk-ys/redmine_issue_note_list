@@ -39,9 +39,16 @@
 <% html_title(@query.new_record? ? l(:redmine_issue_note_list) : @query.name) %>
 
 <%= form_tag(_project_issue_notes_path(@project), :method => :get, :id => 'query_form') do %>
-  <p>
-    <%= label_tag :number_of_notes, l(:issue_note_list_label_number_of_notes) %>
-    <%= number_field_tag :number_of_notes, @number_of_notes, :min => 1, :max => 10, :autocomplete => false %>
+  <p id="issue_note_list_query">
+    <span>
+      <%= label_tag :number_of_notes, l(:issue_note_list_label_number_of_notes) %>
+      <%= number_field_tag :number_of_notes, @number_of_notes, :min => 1, :max => 10, :autocomplete => false %>
+    </span>
+    <span>
+      <%= check_box_tag :enable_compact_mode, 1, @enable_compact_mode,
+        onclick: "collapseNoteRow('all', this.checked)" %>
+      <%= label_tag :enable_compact_mode, l(:issue_note_list_label_enable_compact_mode) %>
+    </span>
   </p>
   <%= render :partial => 'queries/query_form' %>
 <% end %>

@@ -93,19 +93,27 @@ table.list.issues
   float: none;
   display: inline-table;
 }
-td.issue-status div.header-buttons {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 5px;
+td.issue-status div.header {
+  display: flex;
+  justify-content: space-between;
+  width: 250px;
+}
+td.issue-status div.header div.header-text {
+  flex: 0 1 auto;
+  text-align: left;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+td.issue-status div.header div.header-buttons {
+  padding: 0;
 }
 tr.issue:not(.variable-height)
   > td.issue-status
-  > div.header-buttons
+  div.header-buttons
   > button.fixed-height,
 tr.issue.variable-height
   > td.issue-status
-  > div.header-buttons
+  div.header-buttons
   > button.variable-height {
   display: none;
 }
@@ -460,4 +468,47 @@ div.ui-dialog.note-pop-out-dialog .ui-dialog-titlebar-button-group button {
 /* Prevent tooltip flickering on dialog */
 .ui-dialog.note-pop-out-dialog > .ui-tooltip {
   width: max-content;
+}
+
+tr.collapse-row > td {
+  height: 20px !important;
+  overflow: hidden;
+}
+tr.collapse-row form {
+  display: none;
+}
+tr.collapse-row td.issue-status div.column-items {
+  display: none !important;
+}
+tr.collapse-row div.journal.has-notes > div.note-info,
+tr.collapse-row div.journal.has-notes > div.wiki {
+  display: none;
+}
+tr.collapse-row
+  div.header-buttons
+  > *:not(button.pop-out):not(button.expand-row) {
+  display: none;
+}
+tr:not(.collapse-row) div.header-buttons > button.expand-row {
+  display: none;
+}
+tr.collapse-row div.journal.has-notes > div.note-info {
+  display: none;
+}
+tr.collapse-row .close-pop-out-button-outer {
+  font-size: smaller;
+  height: auto;
+}
+tr.collapse-row .close-pop-out-button-outer > button {
+  padding: 2px 3px;
+}
+div.journal.has-notes h4.note-header div.header-text span.note-id {
+  font-size: smaller;
+  border: 1px solid #aaa;
+  margin: 0 3px;
+  padding: 1px 2px;
+  color: #aaa;
+}
+#issue_note_list_query > span {
+  margin-right: 5px;
 }
