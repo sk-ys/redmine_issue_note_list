@@ -59,6 +59,10 @@ module IssueNotesHelper
     end
   end
 
+  def render_journal_update_info_empty()
+    content_tag('span', '', :class => 'update-info empty')
+  end
+
   def render_issue_note(issue, journal)
     project = issue.project
     indice = journal.indice || journal.issue.visible_journals_with_index.find{|j| j.id == journal.id}.indice
@@ -75,7 +79,7 @@ module IssueNotesHelper
                        activity_path( :from => User.current.time_to_date(journal.created_on))
                      )
     content <<       render_private_notes_indicator(journal)
-    content <<       (respond_to?(:render_journal_update_info) ? (render_journal_update_info(journal) || '') : '')
+    content <<       (respond_to?(:render_journal_update_info) ? (render_journal_update_info(journal) || render_journal_update_info_empty()) : '')
     content <<     "</div>"
     content <<     "<div class=\"header-buttons\">"
     if journal.editable_by?(User.current)
