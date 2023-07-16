@@ -1,3 +1,8 @@
+table.list.issues > tbody > tr > td {
+  height: 200px;
+  box-sizing: border-box;
+}
+
 table.list th.issue-status,
 table.list td.issue-status {
   width: 250px;
@@ -130,6 +135,7 @@ div.journal_outer {
   min-width: 150px;
   padding: 0 5px;
   border-left: 1px solid #ddd;
+  overflow: hidden;
 }
 div.journal_outer:first-of-type {
   border-left: none;
@@ -137,14 +143,18 @@ div.journal_outer:first-of-type {
 div.journal_outer > div.journal.has-notes,
 div.add_notes_form_outer > div.journal.has-notes {
   padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 div.journal.has-notes > div.wiki {
   width: 100%;
-  height: 200px;
   overflow: auto;
   text-align: left;
   padding: 5px;
   box-sizing: border-box;
+  overflow: auto;
+  flex: 1 1 auto;
 }
 tr.issue.variable-height div.journal.has-notes > div.wiki {
   height: auto;
@@ -164,6 +174,7 @@ div.journal.has-notes > h4.note-header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex: 0 0 auto;
 }
 div.journal.has-notes > h4.note-header > .header-text {
   overflow: hidden;
@@ -196,25 +207,33 @@ div.journal.has-notes > div.note-info {
   text-align: right;
   padding-right: 3px;
   font-size: smaller;
+  flex: 0 0 12px;
 }
 div.journal.has-notes > form {
   position: relative;
   text-align: left;
   display: block;
 }
+td.add-notes form label[for$="private_notes"],
 td.last_notes div.journal.has-notes > form label[for$="private_notes"] {
   font-size: smaller;
+  position: absolute;
+  left: 24px;
+  bottom: 12px;
 }
 div.journal.has-notes > form > div.jstBlock {
   text-align: center;
-  margin-bottom: 9px;
+  flex-direction: column;
+  flex: 1 1 auto;
 }
-div.journal.has-notes > form > div.jstBlock div.jstEditor > div.wiki-preview {
-  text-align: left;
-  box-sizing: border-box;
-  margin-bottom: 12px;
-  margin-left: 3px;
-  width: calc(100% - 6px);
+div.journal.has-notes > form > div.jstBlock div.jstTabs,
+div.add_notes_form_outer > form > div.jstBlock div.jstTabs {
+  z-index: 1;
+}
+div.journal.has-notes > form > div.jstBlock div.jstEditor,
+div.add_notes_form_outer > form > div.jstBlock div.jstEditor {
+  flex: 1 1 auto;
+  position: relative;
 }
 div.journal.has-notes > form > div.jstBlock div.jstEditor > textarea.wiki-edit {
   width: 100%;
@@ -224,7 +243,7 @@ div.journal.has-notes > form > p {
   position: absolute;
   right: 0;
   bottom: 0;
-  margin: 3px 5px;
+  margin: 0 5px;
 }
 
 table.list td.add-notes {
@@ -237,30 +256,41 @@ table.list th.add-notes,
 table.list td.add-notes {
   border-left: 1px solid #ccc;
 }
+div.journal.has-notes > form,
 td.add-notes > form {
   vertical-align: top;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
+  flex: 1 1 auto;
 }
+div.journal.has-notes div.jstBlock > .jstEditor > textarea,
 td.add-notes textarea {
-  height: 100px;
-  resize: vertical;
-}
-td.add-notes form.edit_issue {
+  resize: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
   width: 100%;
-  box-sizing: border-box;
-  min-width: 200px;
 }
+div.journal.has-notes div.jstBlock,
 td.add-notes div.jstBlock {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  margin-bottom: 3px;
 }
+div.journal.has-notes div.jstEditor > div.wiki-preview,
 td.add-notes div.jstEditor div.wiki-preview {
   text-align: left;
   width: 100%;
   box-sizing: border-box;
-  margin-bottom: 5px;
+  margin-bottom: 0;
   overflow: auto;
+  min-height: unset !important;
+  height: 100%;
+  position: absolute;
 }
 form div.commands {
   width: 100%;
@@ -277,6 +307,9 @@ td.add-notes.submitted div.jstTabs {
 td.add-notes.submitted div.wiki-preview {
   background-color: #fff0;
   border: 0;
+}
+div.journal.has-notes > form > input[name="journal[private_notes]"] {
+  margin-bottom: 6px;
 }
 
 div.ui-dialog.note-pop-out-dialog {
@@ -308,6 +341,9 @@ div.ui-dialog.note-pop-out-dialog div.journal.has-notes > div.wiki {
 
 div.add_notes_form_outer {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 div.add_notes_form_outer .action_buttons {
   display: flex;
@@ -326,6 +362,11 @@ div.ui-dialog.note-pop-out-dialog
   .action_buttons
   > button.pop-out {
   display: none;
+}
+div.add_notes_form_outer > form {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
 }
 
 div.ui-dialog.note-pop-out-dialog {
@@ -367,7 +408,7 @@ div.ui-dialog.note-pop-out-dialog form > div.jstBlock > div.jstEditor > * {
   flex: 1 1 auto;
   resize: none;
   min-height: auto !important;
-  width: auto;
+  width: 100%;
 }
 div.ui-dialog.note-pop-out-dialog
   form[id^="journal-"][id$="-form"]
@@ -387,7 +428,7 @@ div.ui-dialog.note-pop-out-dialog
   > input[name="journal[private_notes]"]
   + label {
   position: absolute;
-  bottom: 10px;
+  bottom: 15px;
   left: 30px;
   line-height: 15px;
 }
@@ -471,7 +512,7 @@ div.ui-dialog.note-pop-out-dialog .ui-dialog-titlebar-button-group button {
 }
 
 tr.collapse-row > td {
-  height: 20px !important;
+  height: 24px !important;
   overflow: hidden;
 }
 tr.collapse-row form {
