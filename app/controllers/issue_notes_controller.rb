@@ -39,6 +39,7 @@ class IssueNotesController < ApplicationController
       @issues = @query.issues(:offset => @issue_pages.offset, :limit => @issue_pages.per_page)
       @number_of_notes = params["number_of_notes"]&.to_i || 3
       @enable_compact_mode = params["enable_compact_mode"] == "1"
+      @notes_field_height = params["notes_field_height"]&.to_i || 200
     end
 
   rescue ActiveRecord::RecordNotFound
