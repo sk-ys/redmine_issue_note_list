@@ -211,4 +211,30 @@ $(() => {
     minWidth: $("td.issue-status").width(),
   });
   $("td.add-notes").resizable({ handles: "w" });
+
+  // Set notes field height
+  function generateNotesFieldHeightStyle(height) {
+    return `table.list.issues > tbody > tr > td { height: ${height}px; }`;
+  }
+  const $notes_field_height_style = $("<style />")
+    .text(generateNotesFieldHeightStyle($("#notes_field_height").val()))
+    .appendTo("head");
+
+  // Setup adjust notes field height slider
+  $("#adjust_notes_field_height_slider").slider({
+    min: 100,
+    max: 1000,
+    step: 50,
+    value: $("#notes_field_height").val(),
+    slide: function () {
+      $("#notes_field_height").val($(this).slider("value")).change();
+    }
+  });
+  $("#notes_field_height").on("change", function () {
+    const notes_field_height = parseInt($(this).val());
+    $("#adjust_notes_field_height_slider").slider("value", notes_field_height);
+    $notes_field_height_style.text(
+      generateNotesFieldHeightStyle(notes_field_height)
+    );
+  });
 });

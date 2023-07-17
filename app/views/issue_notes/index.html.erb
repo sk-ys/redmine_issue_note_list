@@ -14,6 +14,7 @@
     labelRestore: "<%= l(:issue_note_list_label_restore) %>",
   }}
   <% end -%>
+  <style>table.list.issues > tbody > tr > td { height: <%=@notes_field_height%>px; }</style>
 <% end %>
 
 <div class="contextual">
@@ -48,6 +49,11 @@
       <%= check_box_tag :enable_compact_mode, 1, @enable_compact_mode,
         onclick: "collapseNoteRow('all', this.checked)" %>
       <%= label_tag :enable_compact_mode, l(:issue_note_list_label_enable_compact_mode) %>
+    </span>
+    <span id="notes_field_height_outer">
+      <%= label_tag :notes_field_height, l(:issue_note_list_label_notes_field_height) %>
+      <%= number_field_tag :notes_field_height, @notes_field_height, :min => 100, :max => 1000, :step => 10, :autocomplete => false %>
+      <span id="adjust_notes_field_height_slider"></span>
     </span>
   </p>
   <%= render :partial => 'queries/query_form' %>

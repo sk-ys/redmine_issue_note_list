@@ -1,5 +1,4 @@
 table.list.issues > tbody > tr > td {
-  height: 200px;
   box-sizing: border-box;
 }
 
@@ -551,5 +550,19 @@ div.journal.has-notes h4.note-header div.header-text span.note-id {
   color: #aaa;
 }
 #issue_note_list_query > span {
-  margin-right: 5px;
+  margin-right: 10px;
+}
+
+#notes_field_height_outer {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+}
+#notes_field_height {
+  margin-left: 5px;
+}
+#adjust_notes_field_height_slider {
+  display: inline-block;
+  width: 100px;
+  margin-left: 10px;
 }
