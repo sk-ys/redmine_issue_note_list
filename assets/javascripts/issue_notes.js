@@ -227,8 +227,12 @@ $(() => {
     max: 1000,
     step: 50,
     value: $("#notes_field_height").val(),
-    slide: function () {
-      $("#notes_field_height").val($(this).slider("value")).change();
+    slide: () => {
+      setTimeout(() => {
+        $("#notes_field_height")
+          .val($("#adjust_notes_field_height_slider").slider("value"))
+          .change();
+      });
     },
   });
   $("#notes_field_height").on("change", function () {
