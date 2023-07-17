@@ -237,4 +237,23 @@ $(() => {
       generateNotesFieldHeightStyle(notes_field_height)
     );
   });
+
+  // Explicitly state whether the query condition is valid or invalid
+  function updateFieldStatus() {
+    const enable_compact_mode = $("#enable_compact_mode")[0].checked;
+    const enable_variable_height = $("#enable_variable_height")[0].checked;
+    $("#enable_variable_height").prop("disabled", enable_compact_mode);
+    $("#notes_field_height").prop(
+      "disabled",
+      enable_variable_height || enable_compact_mode
+    );
+    $("#adjust_notes_field_height_slider").slider(
+      "option",
+      "disabled",
+      enable_variable_height || enable_compact_mode
+    );
+  }
+  $("#enable_compact_mode").on("change", updateFieldStatus);
+  $("#enable_variable_height").on("change", updateFieldStatus);
+  updateFieldStatus(); // Initialize
 });
