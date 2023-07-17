@@ -180,7 +180,7 @@ function toggleNotesPopOutState(elem, title) {
 
 function setNoteHeightVariable(e, state = true) {
   const $target =
-    e.ctrlKey || e.metaKey
+    e === 'all' || e.ctrlKey || e.metaKey
       ? $("table.list.issues").find("tr.issue")
       : $(e.target).closest("tr.issue");
   $target.toggleClass("variable-height", state);

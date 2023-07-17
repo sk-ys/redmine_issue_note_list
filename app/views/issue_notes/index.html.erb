@@ -50,6 +50,11 @@
         onclick: "collapseNoteRow('all', this.checked)" %>
       <%= label_tag :enable_compact_mode, l(:issue_note_list_label_enable_compact_mode) %>
     </span>
+    <span>
+      <%= check_box_tag :enable_variable_height, 1, @enable_variable_height,
+        onclick: "setNoteHeightVariable('all', this.checked)" %>
+      <%= label_tag :enable_variable_height, l(:issue_note_list_label_variable_height) %>
+    </span>
     <span id="notes_field_height_outer">
       <%= label_tag :notes_field_height, l(:issue_note_list_label_notes_field_height) %>
       <%= number_field_tag :notes_field_height, @notes_field_height, :min => 100, :max => 1000, :step => 10, :autocomplete => false %>
