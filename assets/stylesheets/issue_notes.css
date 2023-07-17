@@ -155,7 +155,7 @@ div.journal.has-notes > div.wiki {
   overflow: auto;
   flex: 1 1 auto;
 }
-tr.issue.variable-height div.journal.has-notes > div.wiki {
+table.list.issues > tbody > tr.issue.variable-height > td {
   height: auto;
 }
 div.journal.has-notes.private-notes > div.wiki {
@@ -339,10 +339,15 @@ div.ui-dialog.note-pop-out-dialog div.journal.has-notes > div.wiki {
 }
 
 div.add_notes_form_outer {
-  position: relative;
+  position: absolute;
   display: flex;
   flex-direction: column;
+  width: 100%;
   height: 100%;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  padding: 3px;
 }
 div.add_notes_form_outer .action_buttons {
   display: flex;
