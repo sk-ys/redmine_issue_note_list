@@ -180,7 +180,7 @@ function toggleNotesPopOutState(elem, title) {
 
 function setNoteHeightVariable(e, state = true) {
   const $target =
-    e === 'all' || e.ctrlKey || e.metaKey
+    e === "all" || e.ctrlKey || e.metaKey
       ? $("table.list.issues").find("tr.issue")
       : $(e.target).closest("tr.issue");
   $target.toggleClass("variable-height", state);
@@ -188,7 +188,7 @@ function setNoteHeightVariable(e, state = true) {
 
 function collapseNoteRow(e, state = false) {
   const $target =
-    e === 'all' || e.ctrlKey || e.metaKey
+    e === "all" || e.ctrlKey || e.metaKey
       ? $("table.list.issues").find("tr.issue")
       : $(e.target).closest("tr.issue");
   $target.toggleClass("collapse-row", state);
@@ -207,7 +207,8 @@ $(() => {
   // Set resizable
   $("td.issue-status").resizable({
     handles: "e",
-    alsoResize: "td.issue-status > div.column-items, td.issue-status > div.header",
+    alsoResize:
+      "td.issue-status > div.column-items, td.issue-status > div.header",
     minWidth: $("td.issue-status").width(),
   });
   $("td.add-notes").resizable({ handles: "w" });
@@ -228,7 +229,7 @@ $(() => {
     value: $("#notes_field_height").val(),
     slide: function () {
       $("#notes_field_height").val($(this).slider("value")).change();
-    }
+    },
   });
   $("#notes_field_height").on("change", function () {
     const notes_field_height = parseInt($(this).val());

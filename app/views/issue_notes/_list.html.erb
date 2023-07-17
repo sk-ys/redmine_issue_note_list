@@ -3,141 +3,152 @@
 <% query_options = nil unless defined?(query_options) %>
 <% query_options ||= {} %>
 
-<%= hidden_field_tag 'back_url', url_for(:params => request.query_parameters), :id => nil %>
+<%= hidden_field_tag "back_url", url_for(params: request.query_parameters), id: nil %>
 <%= query_columns_hidden_tags(query) %>
 <div class="autoscroll">
-<table class="list issues odd-even <%= query.css_classes %>">
-  <thead>
-    <tr>
-      <th class="issue-status">
-        <%= l(:issue_note_list_label_issue_details) %>
-        <div class="column-filter">
-          <span class="icon-only icon-list" title=<%= l(:label_sort) %>></span>
-        <% query.inline_columns.each do |column| %>
-          <%= column_names(query, column, query_options) %>
-        <% end %>
-        </div>
-      </th>
-      <th class="last_notes"><%= l(:label_last_notes) %></th>
-      <th class="add-notes"><%= l(:label_add_note) %></th>
-    </tr>
-  </thead>
-  <tbody>
-  <% grouped_issue_list(issues, query) do |issue, level, group_name, group_count, group_totals| -%>
-  <% if group_name %>
-    <% reset_cycle %>
-    <tr class="group open">
-      <td colspan="3">
-        <span class="expander icon icon-expanded" onclick="toggleRowGroup(this);">&nbsp;</span>
-        <span class="name"><%= group_name %></span> <span class="badge badge-count count"><%= group_count %></span> <span class="totals"><%= group_totals %></span>
-        <%= link_to_function("#{l(:button_collapse_all)}/#{l(:button_expand_all)}",
-                             "toggleAllRowGroups(this)", :class => 'toggle-all') %>
-      </td>
-    </tr>
-  <% end %>
-  <tr id="issue-<%= issue.id %>" class="<%= cycle('odd', 'even') %> <%= issue.css_classes %> <%= level > 0 ? "idnt idnt-#{level}" : nil %> <%= @enable_compact_mode ? "collapse-row" : nil %> <%= @enable_variable_height ? "variable-height" : nil %>">
-    <td class="issue-status">
-      <div class="header">
-        <div class="header-text">
-          <%= link_to issue_path(issue), title: "##{issue.id}: #{issue.subject}" do %>
-            <%= '#' + issue.id.to_s  %>
-            <%= content_tag('span', ': ' + issue.subject, class: 'id-with-subject') %>
+  <table class="list issues odd-even <%= query.css_classes %>">
+    <thead>
+      <tr>
+        <th class="issue-status">
+          <%= l(:issue_note_list_label_issue_details) %>
+          <div class="column-filter">
+            <span class="icon-only icon-list" title=<%= l(:label_sort) %>></span>
+          <% query.inline_columns.each do |column| %>
+            <%= column_names(query, column, query_options) %>
           <% end %>
-        </div>
-        <div class="header-buttons">
-          <button
-            class="variable-height ui-icon ui-icon-locked"
-            title="<%=l(:issue_note_list_label_fixed_height)%>"
-            onclick="setNoteHeightVariable(arguments[0], true)">
-          </button>
-          <button
-            class="fixed-height ui-icon ui-icon-unlocked"
-            title="<%=l(:issue_note_list_label_variable_height)%>"
-            onclick="setNoteHeightVariable(arguments[0], false)">
-          </button>
-          <button
-            class="collapse-row ui-icon ui-icon-arrowstop-1-n"
-            title="<%=l(:issue_note_list_label_collapse_row)%>"
-            onclick="collapseNoteRow(arguments[0], true)">
-          </button>
-          <button
-            class="expand-row ui-icon ui-icon-arrowstop-1-s"
-            title="<%=l(:issue_note_list_label_expand_row)%>"
-            onclick="collapseNoteRow(arguments[0], false)">
-          </button>
-        </div>
-      </div>
-      <% query.inline_columns.each do |column| %>
-        <% if column.name == :id || column.name == :subject %>
-          <% next %>
+          </div>
+        </th>
+        <th class="last_notes"><%= l(:label_last_notes) %></th>
+        <th class="add-notes"><%= l(:label_add_note) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% grouped_issue_list(issues, query) do |issue, level, group_name, group_count, group_totals| -%>
+        <% if group_name %>
+          <% reset_cycle %>
+          <tr class="group open">
+            <td colspan="3">
+              <span class="expander icon icon-expanded" onclick="toggleRowGroup(this);">&nbsp;</span>
+              <span class="name"><%= group_name %></span>
+              <span class="badge badge-count count"><%= group_count %></span>
+              <span class="totals"><%= group_totals %></span>
+              <%= link_to_function("#{l(:button_collapse_all)}/#{l(:button_expand_all)}",
+                                   "toggleAllRowGroups(this)", class: "toggle-all") %>
+            </td>
+          </tr>
         <% end %>
-        <div class="column-items">
-          <%= column.caption %>
-          <%= content_tag('span', column_content(column, issue), :class => column.css_classes) %>
-        </div>
-      <% end %>
-    </td>
-    <td class="last_notes">
-      <% journals = issue.visible_journals_with_index.select{|journal| journal.notes.present?}.reverse.take(@number_of_notes) %>
-      <% (0..(@number_of_notes - 1)).reverse_each do |num| %>
-        <div class="journal_outer">
-          <% if journals.count <= num %>
-            <div class="journal empty"></div>
-          <% else %>
-            <%= render_issue_note(issue, journals[num]) %>
-          <% end %>
-        </div>
-      <% end %>
-    </td>
-    <td class="add-notes">
-      <div class="add_notes_form_outer">
-        <% if issue.notes_addable? %>
-          <div class="action_buttons">
-            <%= button_tag(
-                        '', class: "ui-icon ui-icon-arrowreturnthick-1-n pop-out", type: "button",
+        <tr
+          id="issue-<%= issue.id %>"
+          class="<%= issue_row_classes(issue, level, @enable_compact_mode, @enable_variable_height) %>">
+          <td class="issue-status">
+            <div class="header">
+              <div class="header-text">
+                <%= link_to issue_path(issue), title: "##{issue.id}: #{issue.subject}" do %>
+                  <%= "#" + issue.id.to_s  %>
+                  <%= content_tag("span", ": " + issue.subject, class: "id-with-subject") %>
+                <% end %>
+              </div>
+              <div class="header-buttons">
+                <button
+                  class="variable-height ui-icon ui-icon-locked"
+                  title="<%=l(:issue_note_list_label_fixed_height)%>"
+                  onclick="setNoteHeightVariable(arguments[0], true)">
+                </button>
+                <button
+                  class="fixed-height ui-icon ui-icon-unlocked"
+                  title="<%=l(:issue_note_list_label_variable_height)%>"
+                  onclick="setNoteHeightVariable(arguments[0], false)">
+                </button>
+                <button
+                  class="collapse-row ui-icon ui-icon-arrowstop-1-n"
+                  title="<%=l(:issue_note_list_label_collapse_row)%>"
+                  onclick="collapseNoteRow(arguments[0], true)">
+                </button>
+                <button
+                  class="expand-row ui-icon ui-icon-arrowstop-1-s"
+                  title="<%=l(:issue_note_list_label_expand_row)%>"
+                  onclick="collapseNoteRow(arguments[0], false)">
+                </button>
+              </div>
+            </div>
+            <% query.inline_columns.each do |column| %>
+              <% if column.name == :id || column.name == :subject %>
+                <% next %>
+              <% end %>
+              <div class="column-items">
+                <%= column.caption %>
+                <%= content_tag("span", column_content(column, issue), class: column.css_classes) %>
+              </div>
+            <% end %>
+          </td>
+          <td class="last_notes">
+            <% journals = issue.visible_journals_with_index
+                .select{|journal| journal.notes.present?}
+                .reverse
+                .take(@number_of_notes) %>
+            <% (0..(@number_of_notes - 1)).reverse_each do |num| %>
+              <div class="journal_outer">
+                <% if journals.count <= num %>
+                  <div class="journal empty"></div>
+                <% else %>
+                  <%= render_issue_note(issue, journals[num]) %>
+                <% end %>
+              </div>
+            <% end %>
+          </td>
+          <td class="add-notes">
+            <div class="add_notes_form_outer">
+              <% if issue.notes_addable? %>
+                <div class="action_buttons">
+                  <%= button_tag(
+                        "",
+                        class: "ui-icon ui-icon-arrowreturnthick-1-n pop-out",
+                        type: "button",
                         onclick: "toggleNotesPopOutState(" +
                           "$(this).closest('.add_notes_form_outer'), " +
                           "'##{issue.id}: #{issue.subject} - #{l(:label_add_note)}');",
                         title: l(:issue_note_list_label_pop_out)
                         ) %>
-          </div>
-          <%= form_tag "#{issue_notes_path}/#{issue.id.to_s}/add_note",
-            :id => "add_notes_form-#{issue.id.to_s}", :multipart => true,
-            remote: true do %>
-            <%= text_area_tag 'issue[notes]', nil, cols: 60, rows: 10, class: 'wiki-edit',
-                    data: { auto_complete: true },
-                    id: "add_issue_notes-#{issue.id.to_s}",
-                    no_label: true %>
-            <%= wikitoolbar_for "add_issue_notes-#{issue.id.to_s}", preview_issue_path(:project_id => issue.project_id, :issue_id => issue) %>
-
-            <div class="commands">
-              <% if issue.safe_attribute? 'private_notes' %>
-                <div class="private_notes">
-                  <%= check_box_tag 'issue[private_notes]', true, false, :id => "add_issue_private_notes-#{issue.id.to_s}" %>
-                  <label for="<%= "add_issue_private_notes-#{issue.id.to_s}" %>"><%= l(:field_private_notes) %></label>
                 </div>
+                <%= form_tag "#{issue_notes_path}/#{issue.id.to_s}/add_note",
+                  id: "add_notes_form-#{issue.id.to_s}", multipart: true,
+                  remote: true do %>
+                  <%= text_area_tag "issue[notes]", nil, cols: 60, rows: 10, class: "wiki-edit",
+                        data: { auto_complete: true },
+                        id: "add_issue_notes-#{issue.id.to_s}",
+                        no_label: true %>
+                  <%= wikitoolbar_for "add_issue_notes-#{issue.id.to_s}",
+                    preview_issue_path(project_id: issue.project_id, issue_id: issue) %>
+                  <div class="commands">
+                    <% if issue.safe_attribute? "private_notes" %>
+                      <div class="private_notes">
+                        <%= check_box_tag "issue[private_notes]", true, false,
+                              id: "add_issue_private_notes-#{issue.id.to_s}" %>
+                        <label for="<%= "add_issue_private_notes-#{issue.id.to_s}" %>">
+                          <%= l(:field_private_notes) %>
+                        </label>
+                      </div>
+                    <% end %>
+                    <%= submit_tag l(:button_submit) %>
+                  </div>
+                <% end %>
               <% end %>
-
-              <%= submit_tag l(:button_submit) %>
             </div>
-          <% end %>
-        <% end %>
-      </div>
-    </td>
-  </tr>
-  <% query.block_columns.each do |column|
-       if (text = column_content(column, issue)) && text.present? -%>
-  <tr class="<%= current_cycle %>">
-    <td colspan="3" class="<%= column.css_classes %> block_column">
-      <% if query.block_columns.count > 1 %>
-        <span><%= column.caption %></span>
-      <% end %>
-      <%= text %>
-    </td>
-  </tr>
-  <% end -%>
-  <% end -%>
-  <% end -%>
-  </tbody>
-</table>
+          </td>
+        </tr>
+        <% query.block_columns.each do |column|
+            if (text = column_content(column, issue)) && text.present? -%>
+          <tr class="<%= current_cycle %>">
+            <td colspan="3" class="<%= column.css_classes %> block_column">
+              <% if query.block_columns.count > 1 %>
+                <span><%= column.caption %></span>
+              <% end %>
+              <%= text %>
+            </td>
+          </tr>
+        <% end -%>
+      <% end -%>
+      <% end -%>
+    </tbody>
+  </table>
 </div>

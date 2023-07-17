@@ -7,13 +7,12 @@ Redmine::Plugin.register :redmine_issue_note_list do
   author_url "https://github.com/sk-ys"
 
   project_module :issue_note_list do
-    permission :view_issue_notes, :issue_notes => :index
+    permission :view_issue_notes, issue_notes: :index
   end
 
   menu :application_menu, :redmine_issue_note_list,
-    { :controller => "issue_notes", :action => "index" }, :after => :issues
+    { controller: "issue_notes", action: "index" }, after: :issues
   menu :project_menu, :redmine_issue_note_list,
-    { :controller => "issue_notes", :action => "index" }, :after => :issues,
-    :param => :project_id
-
+    { controller: "issue_notes", action: "index" }, after: :issues,
+                                                    param: :project_id
 end
