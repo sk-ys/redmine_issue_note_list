@@ -215,7 +215,7 @@ $(() => {
 
   // Set notes field height
   function generateNotesFieldHeightStyle(height) {
-    return `table.list.issues > tbody > tr > td { height: ${height}px; }`;
+    return `table.list.issues > tbody > tr.issue > td { height: ${height}px; }`;
   }
   const $notes_field_height_style = $("<style />")
     .text(generateNotesFieldHeightStyle($("#notes_field_height").val()))

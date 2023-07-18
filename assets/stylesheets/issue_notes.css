@@ -1,4 +1,4 @@
-table.list.issues > tbody > tr > td {
+table.list.issues > tbody > tr.issue > td {
   box-sizing: border-box;
 }
 
