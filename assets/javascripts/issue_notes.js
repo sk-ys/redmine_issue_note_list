@@ -41,6 +41,13 @@ function toggleNotesPopOutState(elem, title) {
         })
         .on("click", (e) => {
           const $dialog = $(e.target).closest(".ui-dialog.note-pop-out-dialog");
+          if ($dialog.hasClass(className)) {
+            // restore
+            removeAllClasses($dialog);
+            $dialog.css(storedSize);
+            return;
+          }
+
           if (!$dialog.hasClass("maximized") && !$dialog.hasClass("fixed")) {
             storedSize = {
               width: $dialog.width(),
@@ -54,19 +61,6 @@ function toggleNotesPopOutState(elem, title) {
           if (func !== null) func($dialog);
         });
     }
-
-    const $restoreButton = $("<button/>")
-      .addClass("restore")
-      .button({
-        icon: "ui-icon-newwin",
-        label: IssueNoteList.resources.labelRestore,
-        showLabel: false,
-      })
-      .on("click", (e) => {
-        const $dialog = $(e.target).closest(".ui-dialog.note-pop-out-dialog");
-        removeAllClasses($dialog);
-        $dialog.css(storedSize);
-      });
 
     const $fixToLeftButton = generateResizeWindowButton(
       "fixed fix-to-left",
@@ -112,7 +106,6 @@ function toggleNotesPopOutState(elem, title) {
       .append($fixToTopButton)
       .append($fixToBottomButton)
       .append($maximizeButton)
-      .append($restoreButton)
       .appendTo($titleBar);
   }
 
@@ -261,7 +254,7 @@ $(() => {
   $("#enable_compact_mode").on("change", updateFieldStatus);
   $("#enable_variable_height").on("change", updateFieldStatus);
   updateFieldStatus(); // Initialize
-  
+
   // Enable all fields before submitting
   $("#query_form").on("submit", () => {
     $("#enable_variable_height").prop("disabled", false);
