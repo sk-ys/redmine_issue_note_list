@@ -261,4 +261,10 @@ $(() => {
   $("#enable_compact_mode").on("change", updateFieldStatus);
   $("#enable_variable_height").on("change", updateFieldStatus);
   updateFieldStatus(); // Initialize
+  
+  // Enable all fields before submitting
+  $("#query_form").on("submit", () => {
+    $("#enable_variable_height").prop("disabled", false);
+    $("#notes_field_height").prop("disabled", false);
+  });
 });
