@@ -225,6 +225,9 @@ div.journal.has-notes > form > div.jstBlock {
   flex-direction: column;
   flex: 1 1 auto;
 }
+div.journal.has-notes > form > div.jstBlock > div.jstTabs{
+  text-align: left;
+}
 div.journal.has-notes > form > div.jstBlock div.jstTabs,
 div.add_notes_form_outer > form > div.jstBlock div.jstTabs {
   z-index: 1;
@@ -254,6 +257,7 @@ table.list td.add-notes {
 table.list th.add-notes,
 table.list td.add-notes {
   border-left: 1px solid #ccc;
+  position: relative;
 }
 div.journal.has-notes > form,
 td.add-notes > form {
