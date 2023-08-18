@@ -3,6 +3,7 @@
 <% query_options = nil unless defined?(query_options) %>
 <% query_options ||= {} %>
 
+<div class="autoscroll-outer">
 <div class="autoscroll">
   <table class="list issues odd-even <%= query.css_classes %>">
     <thead>
@@ -149,4 +150,5 @@
       <% end -%>
     </tbody>
   </table>
+</div>
 </div>
