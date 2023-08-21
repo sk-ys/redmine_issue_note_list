@@ -225,7 +225,7 @@ div.journal.has-notes > form > div.jstBlock {
   flex-direction: column;
   flex: 1 1 auto;
 }
-div.journal.has-notes > form > div.jstBlock > div.jstTabs{
+div.journal.has-notes > form > div.jstBlock > div.jstTabs {
   text-align: left;
 }
 div.journal.has-notes > form > div.jstBlock div.jstTabs,
