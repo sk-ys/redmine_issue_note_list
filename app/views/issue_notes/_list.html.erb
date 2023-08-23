@@ -49,22 +49,22 @@
               </div>
               <div class="header-buttons">
                 <button
-                  class="variable-height ui-icon ui-icon-locked"
-                  title="<%=l(:issue_note_list_label_fixed_height)%>"
+                  class="variable-height mui-icon mui-icon-expand"
+                  title="<%=l(:issue_note_list_label_variable_height)%>"
                   onclick="setNoteHeightVariable(arguments[0], true)">
                 </button>
                 <button
-                  class="fixed-height ui-icon ui-icon-unlocked"
-                  title="<%=l(:issue_note_list_label_variable_height)%>"
+                  class="fixed-height mui-icon mui-icon-compress"
+                  title="<%=l(:issue_note_list_label_fixed_height)%>"
                   onclick="setNoteHeightVariable(arguments[0], false)">
                 </button>
                 <button
-                  class="collapse-row ui-icon ui-icon-arrowstop-1-n"
+                  class="collapse-row mui-icon mui-icon-top_panel_close"
                   title="<%=l(:issue_note_list_label_collapse_row)%>"
                   onclick="collapseNoteRow(arguments[0], true)">
                 </button>
                 <button
-                  class="expand-row ui-icon ui-icon-arrowstop-1-s"
+                  class="expand-row mui-icon mui-icon-top_panel_open"
                   title="<%=l(:issue_note_list_label_expand_row)%>"
                   onclick="collapseNoteRow(arguments[0], false)">
                 </button>
@@ -101,7 +101,7 @@
                 <div class="action_buttons">
                   <%= button_tag(
                         "",
-                        class: "ui-icon ui-icon-arrowreturnthick-1-n pop-out",
+                        class: "pop-out mui-icon mui-icon-open_in_new",
                         type: "button",
                         onclick: "toggleNotesPopOutState(" +
                           "$(this).closest('.add_notes_form_outer'), " +

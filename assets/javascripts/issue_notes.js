@@ -31,17 +31,17 @@ function toggleNotesPopOutState(elem, title) {
       $dialog.removeClass("fix-to-bottom");
     }
 
-    function generateResizeWindowButton(className, icon, label, func = null) {
+    function generateResizeWindowButton(className, label, func = null) {
+      function hasAllClassNames(className, target) {
+        return className.split(" ").every((v) => target.includes(v));
+      }
       return $("<button/>")
+        .addClass("ui-button ui-corner-all ui-widget ui-button-icon-only")
         .addClass(className)
-        .button({
-          icon: icon,
-          label: label,
-          showLabel: false,
-        })
+        .attr("title", label)
         .on("click", (e) => {
           const $dialog = $(e.target).closest(".ui-dialog.note-pop-out-dialog");
-          if ($dialog.hasClass(className)) {
+          if (hasAllClassNames(className, $dialog.attr("class").split(" "))) {
             // restore
             removeAllClasses($dialog);
             $dialog.css(storedSize);
@@ -63,14 +63,12 @@ function toggleNotesPopOutState(elem, title) {
     }
 
     const $fixToLeftButton = generateResizeWindowButton(
-      "fixed fix-to-left",
-      "ui-icon-arrowstop-1-w",
+      "fixed fix-to-left mui-icon mui-icon-dock_to_left",
       IssueNoteList.resources.labelFixToLeft
     );
 
     const $fixToRightButton = generateResizeWindowButton(
-      "fixed fix-to-right",
-      "ui-icon-arrowstop-1-e",
+      "fixed fix-to-right mui-icon mui-icon-dock_to_right",
       IssueNoteList.resources.labelFixToRight,
       ($dialog) => {
         $dialog.css("left", $(window).width() - $dialog.outerWidth());
@@ -78,14 +76,12 @@ function toggleNotesPopOutState(elem, title) {
     );
 
     const $fixToTopButton = generateResizeWindowButton(
-      "fixed fix-to-top",
-      "ui-icon-arrowstop-1-n",
+      "fixed fix-to-top mui-icon mui-icon-dock_to_top",
       IssueNoteList.resources.labelFixToTop
     );
 
     const $fixToBottomButton = generateResizeWindowButton(
-      "fixed fix-to-bottom",
-      "ui-icon-arrowstop-1-s",
+      "fixed fix-to-bottom mui-icon mui-icon-dock_to_bottom",
       IssueNoteList.resources.labelFixToBottom,
       ($dialog) => {
         $dialog.css("top", $(window).height() - $dialog.outerHeight());
@@ -93,8 +89,7 @@ function toggleNotesPopOutState(elem, title) {
     );
 
     const $maximizeButton = generateResizeWindowButton(
-      "maximized",
-      "ui-icon-stop",
+      "maximized mui-icon",
       IssueNoteList.resources.labelMaximize
     );
 

@@ -88,10 +88,10 @@ module IssueNotesHelper
                          remote: true,
                          method: "get",
                          title: l(:button_edit),
-                         class: "icon-only icon-edit")
+                         class: "icon-only mui-icon-edit")
     end
     content << button_tag(
-      "", class: "ui-icon ui-icon-arrowreturnthick-1-n pop-out",
+      "", class: "pop-out mui-icon mui-icon-open_in_new",
           type: "button",
           onclick: "toggleNotesPopOutState(" +
                    "$(this).closest(\"div.journal.has-notes\"), " +

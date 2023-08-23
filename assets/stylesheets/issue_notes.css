@@ -356,6 +356,8 @@ div.add_notes_form_outer {
 div.add_notes_form_outer .action_buttons {
   display: flex;
   justify-content: flex-end;
+  height: 22px;
+  align-items: center;
 }
 div.add_notes_form_outer .action_buttons > button.pop-out {
   margin: 0;
@@ -520,7 +522,7 @@ div.ui-dialog.note-pop-out-dialog .ui-dialog-titlebar-button-group button {
 }
 
 tr.collapse-row > td {
-  height: 24px !important;
+  height: 30px !important;
   overflow: hidden;
 }
 tr.collapse-row form {
@@ -574,4 +576,113 @@ div.journal.has-notes h4.note-header div.header-text span.note-id {
   display: inline-block;
   width: 100px;
   margin-left: 10px;
+}
+
+button.mui-icon {
+  width: 16px;
+  height: 16px;
+  background-size: 18px;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+
+button.mui-icon:hover {
+  background-size: 18px;
+  background-position: center;
+}
+
+button.mui-icon-open_in_new {
+  background-image: url(../images/open_in_new_FILL0_wght400_GRAD0_opsz20.svg);
+  border: none;
+  background-color: transparent;
+}
+
+a.mui-icon-edit {
+  background-image: url(../images/edit_FILL0_wght400_GRAD0_opsz20.svg);
+  background-size: 18px;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+
+button.mui-icon-top_panel_close {
+  background-image: url(../images/top_panel_close_FILL0_wght400_GRAD0_opsz20.svg);
+  border: none;
+  background-color: transparent;
+}
+
+button.mui-icon-top_panel_open {
+  background-image: url(../images/top_panel_open_FILL0_wght400_GRAD0_opsz20.svg);
+  border: none;
+  background-color: transparent;
+}
+
+button.mui-icon-compress {
+  background-image: url(../images/compress_FILL0_wght400_GRAD0_opsz20.svg);
+  border: none;
+  background-color: transparent;
+}
+
+button.mui-icon-expand {
+  background-image: url(../images/expand_FILL0_wght400_GRAD0_opsz20.svg);
+  border: none;
+  background-color: transparent;
+}
+
+button.mui-icon-dock_to_left,
+button.mui-icon-dock_to_left:hover,
+button.mui-icon-dock_to_left:focus {
+  background-image: url(../images/dock_to_bottom_FILL0_wght400_GRAD0_opsz20.svg);
+  transform: rotate(90deg);
+  background-size: 18px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+button.mui-icon-dock_to_right,
+button.mui-icon-dock_to_right:hover,
+button.mui-icon-dock_to_right:focus {
+  background-image: url(../images/dock_to_bottom_FILL0_wght400_GRAD0_opsz20.svg);
+  transform: rotate(270deg);
+  background-size: 18px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+button.mui-icon-dock_to_top,
+button.mui-icon-dock_to_top:hover,
+button.mui-icon-dock_to_top:focus {
+  background-image: url(../images/dock_to_bottom_FILL0_wght400_GRAD0_opsz20.svg);
+  transform: rotate(180deg);
+  background-size: 18px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+button.mui-icon-dock_to_bottom,
+button.mui-icon-dock_to_bottom:hover,
+button.mui-icon-dock_to_bottom:focus {
+  background-image: url(../images/dock_to_bottom_FILL0_wght400_GRAD0_opsz20.svg);
+  background-size: 18px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.ui-dialog.note-pop-out-dialog:not(.maximized) button.maximized,
+.ui-dialog.note-pop-out-dialog:not(.maximized) button.maximized:hover,
+.ui-dialog.note-pop-out-dialog:not(.maximized) button.maximized:focus {
+  background-image: url(../images/zoom_out_map_FILL0_wght400_GRAD0_opsz20.svg);
+  background-size: 18px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.ui-dialog.note-pop-out-dialog.maximized button.maximized,
+.ui-dialog.note-pop-out-dialog.maximized button.maximized:hover,
+.ui-dialog.note-pop-out-dialog.maximized button.maximized:focus {
+  background-image: url(../images/zoom_in_map_FILL0_wght400_GRAD0_opsz20.svg);
+  background-size: 18px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
