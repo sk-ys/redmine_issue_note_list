@@ -197,9 +197,23 @@ $(() => {
     handles: "e",
     alsoResize:
       "td.issue-status > div.column-items, td.issue-status > div.header",
+    start: function (e) {
+      // Set width only for active element
+      const width = $(e.target).width();
+      $("td.issue-status").css("width", "");
+      $(e.target).css("width", width);
+    },
     minWidth: $("td.issue-status").width(),
   });
-  $("td.add-notes").resizable({ handles: "w" });
+  $("td.add-notes").resizable({
+    handles: "w",
+    start: function (e) {
+      // Set width only for active element
+      const width = $(e.target).width();
+      $("td.add-notes").css("width", "");
+      $(e.target).css("width", width);
+    },
+  });
 
   // Set notes field height
   function generateNotesFieldHeightStyle(height) {
