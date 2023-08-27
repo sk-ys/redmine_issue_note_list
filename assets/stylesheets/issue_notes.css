@@ -760,3 +760,20 @@ button.mui-icon-dock_to_bottom:focus {
     z-index: 20;
   }
 }
+
+/* Support theme "farend bleuclair" */
+#wrapper textarea.wiki-edit, .modal textarea.wiki-edit {
+    height: 100%;
+}
+@media screen and (min-width: 900px) and (min-height: 800px) {
+    body.theme-Bleuclair #content >
+    #sidebar-switch-panel:not([style*="display: none;"]) + div.contextual {
+        right: 43px;
+    }
+    #sidebar-switch-panel {
+        position: absolute;
+        top: 16px;
+        left: auto;
+        right: 4px;
+    }
+}
