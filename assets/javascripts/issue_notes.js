@@ -134,6 +134,7 @@ function toggleNotesPopOutState(elem, title) {
     create: function () {
       const $dialog = $note.dialog("widget");
       addButtonsToDialogTitlebar($dialog);
+      $dialog.css("position", "fixed");
     },
     open: function () {
       // Disable automatic display of tooltips in content.

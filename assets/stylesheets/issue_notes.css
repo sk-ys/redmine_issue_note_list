@@ -252,6 +252,7 @@ table.list td.add-notes {
   vertical-align: top;
   padding: 3px;
   width: 300px;
+  min-width: 200px;
   left: 0 !important; /* Support resizable */
 }
 table.list th.add-notes,
@@ -685,4 +686,65 @@ button.mui-icon-dock_to_bottom:focus {
   background-size: 18px;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+/* Fixed table header */
+@media screen and (min-width: 900px) and (min-height: 800px) {
+  #content > div.contextual {
+    position: absolute;
+    right: 15px;
+  }
+  #content > p.query-totals {
+    margin: 0;
+  }
+}
+@media screen and (min-height: 800px) {
+  #wrapper {
+    height: 100vh;
+  }
+
+  #wrapper > div {
+    flex: 0 0 auto;
+  }
+
+  #wrapper > div#main {
+    flex: 1 1 auto;
+    overflow: auto;
+  }
+
+  #content {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    flex: 1 1 auto;
+  }
+
+  #content > * {
+    flex: 0 0 auto;
+  }
+
+  #content > div.autoscroll-outer {
+    flex: 1 1 auto;
+    overflow: hidden;
+  }
+
+  #content > div.autoscroll-outer > div.autoscroll {
+    height: calc(100% - 1em);
+    padding: 0;
+    margin: 0;
+    grid-template-columns: 1fr auto;
+    border: 1px solid #ddd;
+  }
+
+  table.list.issues {
+    overflow: auto;
+    margin: 0;
+    border: none;
+  }
+
+  table.list > thead {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
 }
