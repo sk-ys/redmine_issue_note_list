@@ -30,8 +30,11 @@ class IssueNotesController < ApplicationController
 
   def index
     @is_global = @project == nil
-    @allowed_to_add_note = @is_global ? false
-      : User.current.allowed_to?(:add_note_to_issue_note_list, @project)
+    if @is_global
+      @allowed_to_add_note = Setting.plugin_redmine_issue_note_list[:add_note_to_issue_note_list_on_global]
+    else
+      @allowed_to_add_note = User.current.allowed_to?(:add_note_to_issue_note_list, @project)
+    end
 
     use_session = true
     retrieve_default_query(use_session)

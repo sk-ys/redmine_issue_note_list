@@ -16,4 +16,8 @@ Redmine::Plugin.register :redmine_issue_note_list do
   menu :project_menu, :redmine_issue_note_list,
     { controller: "issue_notes", action: "index" }, after: :issues,
                                                     param: :project_id
+
+  settings default: {
+    add_note_to_issue_note_list_on_global: false},
+    partial: 'settings/issue_notes'
 end
