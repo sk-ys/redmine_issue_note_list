@@ -18,7 +18,9 @@
           </div>
         </th>
         <th class="last_notes"><%= l(:label_last_notes) %></th>
+        <% if @allowed_to_add_note %>
         <th class="add-notes"><%= l(:label_add_note) %></th>
+        <% end %>
       </tr>
     </thead>
     <tbody>
@@ -26,7 +28,7 @@
         <% if group_name %>
           <% reset_cycle %>
           <tr class="group open">
-            <td colspan="3">
+            <td colspan="<% @allowed_to_add_note ? 3 : 2 %>">
               <span class="expander icon icon-expanded" onclick="toggleRowGroup(this);">&nbsp;</span>
               <span class="name"><%= group_name %></span>
               <span class="badge badge-count count"><%= group_count %></span>
@@ -95,6 +97,7 @@
               </div>
             <% end %>
           </td>
+          <% if @allowed_to_add_note %>
           <td class="add-notes">
             <div class="add_notes_form_outer">
               <% if issue.notes_addable? %>
@@ -134,11 +137,12 @@
               <% end %>
             </div>
           </td>
+          <% end %>
         </tr>
         <% query.block_columns.each do |column|
             if (text = column_content(column, issue)) && text.present? -%>
           <tr class="<%= current_cycle %>">
-            <td colspan="3" class="<%= column.css_classes %> block_column">
+            <td colspan="<% @allowed_to_add_note ? 3 : 2 %>" class="<%= column.css_classes %> block_column">
               <% if query.block_columns.count > 1 %>
                 <span><%= column.caption %></span>
               <% end %>

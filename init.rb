@@ -7,7 +7,8 @@ Redmine::Plugin.register :redmine_issue_note_list do
   author_url "https://github.com/sk-ys"
 
   project_module :issue_note_list do
-    permission :view_issue_notes, issue_notes: :index
+    permission :view_issue_note_list, issue_notes: :index
+    permission :add_note_to_issue_note_list, issue_notes: :add_note
   end
 
   menu :application_menu, :redmine_issue_note_list,

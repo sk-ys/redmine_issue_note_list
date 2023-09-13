@@ -20,8 +20,8 @@
 class IssueNotesController < ApplicationController
   unloadable
   menu_item :redmine_issue_note_list
-  before_action :find_optional_project, :only => [:index]
-  before_action :find_issue, :only => [:add_note]
+  before_action :find_optional_project, :authorize, :only => [:index]
+  before_action :find_issue, :authorize, :only => [:add_note]
 
   helper :issues
   helper :queries
@@ -29,6 +29,10 @@ class IssueNotesController < ApplicationController
   include QueriesHelper
 
   def index
+    @is_global = @project == nil
+    @allowed_to_add_note = @is_global ? false
+      : User.current.allowed_to?(:add_note_to_issue_note_list, @project)
+
     use_session = true
     retrieve_default_query(use_session)
     retrieve_query(IssueQuery, use_session)
