@@ -155,4 +155,18 @@
     </tbody>
   </table>
 </div>
+<div class="toggle-add-notes-field-buttons">
+    <button class="mui-icon mui-icon-right_panel_open show-add-note-fields" title="<%= l(:issue_note_list_label_show_the_new_note_input_fields) %>"></button>
+    <button class="mui-icon mui-icon-right_panel_close hide-add-note-fields" title="<%= l(:issue_note_list_label_hide_the_new_note_input_fields) %>"></button>
+    <script>
+      $('.toggle-add-notes-field-buttons > button.show-add-note-fields').click(function() {
+        $('div.autoscroll-outer').removeClass('hide-add-note-fields');
+        localStorage.setItem("issue-note-list_hide-add-note-fields", false);
+      });
+      $('.toggle-add-notes-field-buttons > button.hide-add-note-fields').click(function() {
+        $('div.autoscroll-outer').addClass('hide-add-note-fields');
+        localStorage.setItem("issue-note-list_hide-add-note-fields", true);
+      });
+    </script>
+</div>
 </div>

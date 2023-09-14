@@ -23,3 +23,5 @@ en:
   issue_note_list_label_enable_compact_mode: Compact mode
   issue_note_list_label_notes_field_height: Notes field height
   issue_note_list_label_add_note_to_issue_note_list_on_global: Add note to issue note list on global
+  issue_note_list_label_hide_the_new_note_input_fields: Hide the new note input field.
+  issue_note_list_label_show_the_new_note_input_fields: Show the new note input field.

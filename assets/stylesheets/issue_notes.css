@@ -738,6 +738,7 @@ button.mui-icon-dock_to_bottom:focus {
   #content > div.autoscroll-outer {
     flex: 1 1 auto;
     overflow: hidden;
+    position: relative;
   }
 
   #content > div.autoscroll-outer > div.autoscroll {
@@ -776,4 +777,39 @@ button.mui-icon-dock_to_bottom:focus {
         left: auto;
         right: 4px;
     }
+}
+
+.toggle-add-notes-field-buttons {
+  position: absolute;
+  top: 0;
+  right: 15px;
+  z-index: 30;
+  padding: 3px;
+  cursor: pointer;
+}
+
+div.autoscroll-outer.hide-add-note-fields .add-notes,
+div.autoscroll-outer.hide-add-note-fields button.hide-add-note-fields,
+div.autoscroll-outer:not(.hide-add-note-fields) button.show-add-note-fields {
+  display: none;
+}
+
+.toggle-add-notes-field-buttons > button {
+  opacity: 0.3;
+}
+
+.toggle-add-notes-field-buttons > button:hover {
+  opacity: 1;
+}
+
+button.mui-icon-right_panel_close {
+  background-image: url(../images/right_panel_close_FILL0_wght400_GRAD0_opsz20.svg);
+  border: none;
+  background-color: transparent;
+}
+
+button.mui-icon-right_panel_open {
+  background-image: url(../images/right_panel_open_FILL0_wght400_GRAD0_opsz20.svg);
+  border: none;
+  background-color: transparent;
 }
