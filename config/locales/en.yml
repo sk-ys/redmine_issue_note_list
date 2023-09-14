@@ -1,6 +1,9 @@
 # English strings go here for Rails i18n
 en:
   redmine_issue_note_list: Note list
+  project_module_issue_note_list: Note list
+  permission_view_issue_note_list: View note list
+  permission_add_note_to_issue_note_list: Add notes to note list
   label_redmine_issue_note_list: Note list
   issue_note_list_label_number_of_notes: Number of notes
   issue_note_list_failed_to_add_note: Failed to add note.
@@ -19,3 +22,6 @@ en:
   issue_note_list_label_expand_row: Expand row
   issue_note_list_label_enable_compact_mode: Compact mode
   issue_note_list_label_notes_field_height: Notes field height
+  issue_note_list_label_add_note_to_issue_note_list_on_global: Add note to issue note list on global
+  issue_note_list_label_hide_the_new_note_input_fields: Hide the new note input field.
+  issue_note_list_label_show_the_new_note_input_fields: Show the new note input field.

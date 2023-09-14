@@ -1,3 +1,10 @@
+window.addEventListener("DOMContentLoaded", () => {
+  // Hide the new note field
+  if (localStorage.getItem("issue-note-list_hide-add-note-fields") == "true") {
+    $('div.autoscroll-outer').addClass('hide-add-note-fields');
+  }
+})
+
 function fixPopUpWindowPosition($dialog) {
   if ($dialog.hasClass("fix-to-right")) {
     $dialog.css("left", $(window).width() - $dialog.outerWidth());
