@@ -104,7 +104,7 @@ module IssueNotesHelper
           onclick: "toggleNotesPopOutState(" +
                    "$(this).closest(\"div.journal.has-notes\"), " +
                    "'##{issue.id}: #{issue.subject} - #{l(:field_notes)}-#{indice}');",
-          title: l(:issue_note_list_label_pop_out),
+          title: l(:label_pop_out, scope: :issue_note_list),
     )
     content << "</div>"
     content << "</h4>"

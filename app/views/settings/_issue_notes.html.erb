@@ -1,4 +1,4 @@
 <p>
-  <%= label_tag 'settings[add_note_to_issue_note_list_on_global]', l(:issue_note_list_label_add_note_to_issue_note_list_on_global) %>
+  <%= label_tag 'settings[add_note_to_issue_note_list_on_global]', l(:label_add_note_to_issue_note_list_on_global, scope: :issue_note_list) %>
   <%= check_box_tag 'settings[add_note_to_issue_note_list_on_global]', 1, @settings[:add_note_to_issue_note_list_on_global] %>
 </p> 

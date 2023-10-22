@@ -5,24 +5,25 @@ ja:
   permission_view_issue_note_list: コメント一覧の閲覧
   permission_add_note_to_issue_note_list: コメント一覧へのコメントの追加
   label_redmine_issue_note_list: コメント一覧
-  issue_note_list_label_recent_notes: 直近のコメント
-  issue_note_list_label_number_of_notes: コメント数
-  issue_note_list_failed_to_add_note: コメントの追加に失敗しました。
-  issue_note_list_label_pop_out: ポップアウト
-  issue_note_list_label_close_pop_out: ポップアウトを終了する
-  issue_note_list_label_fix_to_left: 左側に固定する
-  issue_note_list_label_fix_to_right: 右側に固定する
-  issue_note_list_label_fix_to_top: 上側に固定する
-  issue_note_list_label_fix_to_bottom: 下側に固定する
-  issue_note_list_label_maximize: 最大化
-  issue_note_list_label_restore: 元に戻す
-  issue_note_list_label_issue_details: チケット詳細
-  issue_note_list_label_variable_height: 高さ可変
-  issue_note_list_label_fixed_height: 高さ固定
-  issue_note_list_label_collapse_row: 行を縮小
-  issue_note_list_label_expand_row: 行を拡張
-  issue_note_list_label_enable_compact_mode: コンパクトモード
-  issue_note_list_label_notes_field_height: コメント欄高さ
-  issue_note_list_label_add_note_to_issue_note_list_on_global: グローバルなコメント一覧へのコメントの追加
-  issue_note_list_label_hide_the_new_note_input_fields: コメント追加欄を隠す
-  issue_note_list_label_show_the_new_note_input_fields: コメント追加欄を表示する
+  issue_note_list:
+    label_recent_notes: 直近のコメント
+    label_number_of_notes: コメント数
+    failed_to_add_note: コメントの追加に失敗しました。
+    label_pop_out: ポップアウト
+    label_close_pop_out: ポップアウトを終了する
+    label_fix_to_left: 左側に固定する
+    label_fix_to_right: 右側に固定する
+    label_fix_to_top: 上側に固定する
+    label_fix_to_bottom: 下側に固定する
+    label_maximize: 最大化
+    label_restore: 元に戻す
+    label_issue_details: チケット詳細
+    label_variable_height: 高さ可変
+    label_fixed_height: 高さ固定
+    label_collapse_row: 行を縮小
+    label_expand_row: 行を拡張
+    label_enable_compact_mode: コンパクトモード
+    label_notes_field_height: コメント欄高さ
+    label_add_note_to_issue_note_list_on_global: グローバルなコメント一覧へのコメントの追加
+    label_hide_the_new_note_input_fields: コメント追加欄を隠す
+    label_show_the_new_note_input_fields: コメント追加欄を表示する

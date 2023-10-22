@@ -9,7 +9,7 @@
     <thead>
       <tr>
         <th class="issue-status">
-          <%= l(:issue_note_list_label_issue_details) %>
+          <%= l(:label_issue_details, scope: :issue_note_list) %>
           <div class="column-filter">
             <span class="icon-only icon-list" title=<%= l(:label_sort) %>></span>
           <% query.inline_columns.each do |column| %>
@@ -17,7 +17,7 @@
           <% end %>
           </div>
         </th>
-        <th class="recent_notes"><%= l(:issue_note_list_label_recent_notes) %></th>
+        <th class="recent_notes"><%= l(:label_recent_notes, scope: :issue_note_list) %></th>
         <% if @allowed_to_add_note %>
         <th class="add-notes"><%= l(:label_add_note) %></th>
         <% end %>
@@ -52,22 +52,22 @@
               <div class="header-buttons">
                 <button
                   class="variable-height mui-icon mui-icon-expand"
-                  title="<%=l(:issue_note_list_label_variable_height)%>"
+                  title="<%=l(:label_variable_height, scope: :issue_note_list)%>"
                   onclick="setNoteHeightVariable(arguments[0], true)">
                 </button>
                 <button
                   class="fixed-height mui-icon mui-icon-compress"
-                  title="<%=l(:issue_note_list_label_fixed_height)%>"
+                  title="<%=l(:label_fixed_height, scope: :issue_note_list)%>"
                   onclick="setNoteHeightVariable(arguments[0], false)">
                 </button>
                 <button
                   class="collapse-row mui-icon mui-icon-top_panel_close"
-                  title="<%=l(:issue_note_list_label_collapse_row)%>"
+                  title="<%=l(:label_collapse_row, scope: :issue_note_list)%>"
                   onclick="collapseNoteRow(arguments[0], true)">
                 </button>
                 <button
                   class="expand-row mui-icon mui-icon-top_panel_open"
-                  title="<%=l(:issue_note_list_label_expand_row)%>"
+                  title="<%=l(:label_expand_row, scope: :issue_note_list)%>"
                   onclick="collapseNoteRow(arguments[0], false)">
                 </button>
               </div>
@@ -97,7 +97,7 @@
                         onclick: "toggleNotesPopOutState(" +
                           "$(this).closest('.add_notes_form_outer'), " +
                           "'##{issue.id}: #{issue.subject} - #{l(:label_add_note)}');",
-                        title: l(:issue_note_list_label_pop_out)
+                        title: l(:label_pop_out, scope: :issue_note_list)
                         ) %>
                 </div>
                 <%= form_tag "#{issue_notes_path}/#{issue.id.to_s}/add_note",
@@ -146,8 +146,8 @@
 </div>
 <% if @allowed_to_add_note %>
 <div class="toggle-add-notes-field-buttons">
-    <button class="mui-icon mui-icon-right_panel_open show-add-note-fields" title="<%= l(:issue_note_list_label_show_the_new_note_input_fields) %>"></button>
-    <button class="mui-icon mui-icon-right_panel_close hide-add-note-fields" title="<%= l(:issue_note_list_label_hide_the_new_note_input_fields) %>"></button>
+    <button class="mui-icon mui-icon-right_panel_open show-add-note-fields" title="<%= l(:label_show_the_new_note_input_fields, scope: :issue_note_list) %>"></button>
+    <button class="mui-icon mui-icon-right_panel_close hide-add-note-fields" title="<%= l(:label_hide_the_new_note_input_fields, scope: :issue_note_list) %>"></button>
     <script>
       $('.toggle-add-notes-field-buttons > button.show-add-note-fields').click(function() {
         $('div.autoscroll-outer').removeClass('hide-add-note-fields');

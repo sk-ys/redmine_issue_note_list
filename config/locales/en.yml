@@ -5,24 +5,25 @@ en:
   permission_view_issue_note_list: View note list
   permission_add_note_to_issue_note_list: Add notes to note list
   label_redmine_issue_note_list: Note list
-  issue_note_list_label_recent_notes: Recent notes
-  issue_note_list_label_number_of_notes: Number of notes
-  issue_note_list_failed_to_add_note: Failed to add note.
-  issue_note_list_label_pop_out: pop-out
-  issue_note_list_label_close_pop_out: Close the pop-out
-  issue_note_list_label_fix_to_left: Fix to the left side
-  issue_note_list_label_fix_to_right: Fix to the right side
-  issue_note_list_label_fix_to_top: Fix to the top side
-  issue_note_list_label_fix_to_bottom: Fix to the bottom side
-  issue_note_list_label_maximize: Maximize
-  issue_note_list_label_restore: Restore
-  issue_note_list_label_issue_details: Issue details
-  issue_note_list_label_variable_height: Variable height
-  issue_note_list_label_fixed_height: Fixed height
-  issue_note_list_label_collapse_row: Collapse row
-  issue_note_list_label_expand_row: Expand row
-  issue_note_list_label_enable_compact_mode: Compact mode
-  issue_note_list_label_notes_field_height: Notes field height
-  issue_note_list_label_add_note_to_issue_note_list_on_global: Add note to issue note list on global
-  issue_note_list_label_hide_the_new_note_input_fields: Hide the new note input field.
-  issue_note_list_label_show_the_new_note_input_fields: Show the new note input field.
+  issue_note_list:
+    label_recent_notes: Recent notes
+    label_number_of_notes: Number of notes
+    failed_to_add_note: Failed to add note.
+    label_pop_out: pop-out
+    label_close_pop_out: Close the pop-out
+    label_fix_to_left: Fix to the left side
+    label_fix_to_right: Fix to the right side
+    label_fix_to_top: Fix to the top side
+    label_fix_to_bottom: Fix to the bottom side
+    label_maximize: Maximize
+    label_restore: Restore
+    label_issue_details: Issue details
+    label_variable_height: Variable height
+    label_fixed_height: Fixed height
+    label_collapse_row: Collapse row
+    label_expand_row: Expand row
+    label_enable_compact_mode: Compact mode
+    label_notes_field_height: Notes field height
+    label_add_note_to_issue_note_list_on_global: Add note to issue note list on global
+    label_hide_the_new_note_input_fields: Hide the new note input field.
+    label_show_the_new_note_input_fields: Show the new note input field.
