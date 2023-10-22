@@ -55,6 +55,7 @@ class IssueNotesController < ApplicationController
   end
 
   def add_note
+    @number_of_notes = params["number_of_notes"]&.to_i || 3
     @saved = false
     if update_issue_from_params
       begin

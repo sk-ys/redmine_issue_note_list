@@ -83,19 +83,7 @@
             <% end %>
           </td>
           <td class="last_notes">
-            <% journals = issue.visible_journals_with_index
-                .select{|journal| journal.notes.present?}
-                .reverse
-                .take(@number_of_notes) %>
-            <% (0..(@number_of_notes - 1)).reverse_each do |num| %>
-              <div class="journal_outer">
-                <% if journals.count <= num %>
-                  <div class="journal empty"></div>
-                <% else %>
-                  <%= render_issue_note(issue, journals[num]) %>
-                <% end %>
-              </div>
-            <% end %>
+            <%= render_issue_notes(issue, @number_of_notes) %>
           </td>
           <% if @allowed_to_add_note %>
           <td class="add-notes">
@@ -115,6 +103,7 @@
                 <%= form_tag "#{issue_notes_path}/#{issue.id.to_s}/add_note",
                   id: "add_notes_form-#{issue.id.to_s}", multipart: true,
                   remote: true do %>
+                  <%= hidden_field_tag 'number_of_notes', @number_of_notes, id: "number_of_notes-#{issue.id}" %>
                   <%= text_area_tag "issue[notes]", nil, cols: 60, rows: 10, class: "wiki-edit",
                         data: { auto_complete: true },
                         id: "add_issue_notes-#{issue.id.to_s}",
