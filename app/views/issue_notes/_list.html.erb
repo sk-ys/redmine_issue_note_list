@@ -17,7 +17,7 @@
           <% end %>
           </div>
         </th>
-        <th class="last_notes"><%= l(:label_last_notes) %></th>
+        <th class="recent_notes"><%= l(:issue_note_list_label_recent_notes) %></th>
         <% if @allowed_to_add_note %>
         <th class="add-notes"><%= l(:label_add_note) %></th>
         <% end %>
@@ -82,7 +82,7 @@
               </div>
             <% end %>
           </td>
-          <td class="last_notes">
+          <td class="recent_notes">
             <%= render_issue_notes(issue, @number_of_notes) %>
           </td>
           <% if @allowed_to_add_note %>

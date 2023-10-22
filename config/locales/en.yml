@@ -5,6 +5,7 @@ en:
   permission_view_issue_note_list: View note list
   permission_add_note_to_issue_note_list: Add notes to note list
   label_redmine_issue_note_list: Note list
+  issue_note_list_label_recent_notes: Recent notes
   issue_note_list_label_number_of_notes: Number of notes
   issue_note_list_failed_to_add_note: Failed to add note.
   issue_note_list_label_pop_out: pop-out
