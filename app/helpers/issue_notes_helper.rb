@@ -68,7 +68,7 @@ module IssueNotesHelper
     indice = journal.indice || journal.issue.visible_journals_with_index.find { |j| j.id == journal.id }.indice
 
     content = +""
-    content << "<div class=\"#{journal.css_classes}\" id=\"change-#{journal.id}\">"
+    content << "<div class=\"#{journal.css_classes} issue-#{issue.id}\" id=\"change-#{journal.id}\">"
     content << "<h4 class=\"note-header\">"
     content << "<div class=\"header-text\">"
     content << "<span class=\"note-id\">#{l(:field_notes)}-#{indice}</span>"
@@ -105,6 +105,26 @@ module IssueNotesHelper
     content << "</div>"
     content << render_notes(issue, journal)
     content << "</div>"
+
+    content.html_safe
+  end
+
+  def render_issue_notes(issue, number_of_notes)
+    journals = issue.visible_journals_with_index
+      .select{|journal| journal.notes.present?}
+      .reverse
+      .take(number_of_notes)
+
+    content = +""
+    (0..(number_of_notes - 1)).reverse_each do |num|
+      content << '<div class="journal_outer">'
+      if journals.count <= num
+        content << '<div class="journal empty"></div>'
+      else
+        content << render_issue_note(issue, journals[num])
+      end
+      content << '</div>'
+    end
 
     content.html_safe
   end
