@@ -144,6 +144,7 @@
     </tbody>
   </table>
 </div>
+<% if @allowed_to_add_note %>
 <div class="toggle-add-notes-field-buttons">
     <button class="mui-icon mui-icon-right_panel_open show-add-note-fields" title="<%= l(:issue_note_list_label_show_the_new_note_input_fields) %>"></button>
     <button class="mui-icon mui-icon-right_panel_close hide-add-note-fields" title="<%= l(:issue_note_list_label_hide_the_new_note_input_fields) %>"></button>
@@ -158,4 +159,5 @@
       });
     </script>
 </div>
+<% end %>
 </div>
