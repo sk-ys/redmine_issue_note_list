@@ -1,0 +1,11 @@
+(() => {
+  // Clear textarea
+  $("textarea#add_issue_notes-<%= @issue.id %>").val("");
+
+  // Close all pop-out contents
+  $(".ui-dialog-content.journal.issue-<%= @issue.id %>").dialog("close");
+  
+  // Update rows
+  const $notes = $("#issue-<%= @issue.id %>").children(".last_notes");
+  $notes.empty().append($('<%= escape_javascript(render_issue_notes(@issue, @number_of_notes)) %>'));
+})();

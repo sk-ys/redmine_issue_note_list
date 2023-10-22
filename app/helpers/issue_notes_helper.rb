@@ -89,6 +89,14 @@ module IssueNotesHelper
                          method: "get",
                          title: l(:button_edit),
                          class: "icon-only mui-icon-edit")
+      content << link_to(l(:button_delete),
+                        delete_note_issue_note_path(journal.id, number_of_notes: @number_of_notes),
+                        remote: true,
+                        method: 'delete',
+                        title: l(:button_delete),
+                        data: {confirm: l(:text_are_you_sure)},
+                        class: 'icon-only mui-icon-delete'
+                        )
     end
     content << button_tag(
       "", class: "pop-out mui-icon mui-icon-open_in_new",

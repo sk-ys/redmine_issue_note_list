@@ -22,6 +22,8 @@ class IssueNotesController < ApplicationController
   menu_item :redmine_issue_note_list
   before_action :find_optional_project, :authorize, :only => [:index]
   before_action :find_issue, :authorize, :only => [:add_note]
+  before_action :find_journal, :authorize_edit_journal, :only => [:delete_note]
+  before_action :parse_params, :only => [:index, :add_note, :delete_note]
 
   helper :issues
   helper :queries
@@ -44,10 +46,6 @@ class IssueNotesController < ApplicationController
       @issue_count = @query.issue_count
       @issue_pages = Paginator.new @issue_count, per_page_option, params['page']
       @issues = @query.issues(:offset => @issue_pages.offset, :limit => @issue_pages.per_page)
-      @number_of_notes = params["number_of_notes"]&.to_i || 3
-      @enable_compact_mode = params["enable_compact_mode"] == "1"
-      @enable_variable_height = params["enable_variable_height"] == "1"
-      @notes_field_height = params["notes_field_height"]&.to_i || 200
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -55,7 +53,6 @@ class IssueNotesController < ApplicationController
   end
 
   def add_note
-    @number_of_notes = params["number_of_notes"]&.to_i || 3
     @saved = false
     if update_issue_from_params
       begin
@@ -64,6 +61,11 @@ class IssueNotesController < ApplicationController
       end
     end
     render 'add_note'
+  end
+
+  def delete_note
+    @journal.destroy
+    render 'delete_note'
   end
 
   private
@@ -91,6 +93,14 @@ class IssueNotesController < ApplicationController
     raise Unauthorized unless @issue.visible?
 
     @project = @issue.project
+  rescue ActiveRecord::RecordNotFound
+    render_404
+  end
+
+  def find_journal
+    @journal = Journal.visible.find(params[:journal_id])
+    @issue = @journal.issue
+    @project = @journal.journalized.project
   rescue ActiveRecord::RecordNotFound
     render_404
   end
@@ -159,5 +169,16 @@ class IssueNotesController < ApplicationController
     @priorities = IssuePriority.active
     @allowed_statuses = @issue.new_statuses_allowed_to(User.current)
     true
+  end
+
+  def authorize_edit_journal
+    authorize_for :journal, :edit
+  end
+
+  def parse_params
+    @number_of_notes = params["number_of_notes"]&.to_i || 3
+    @enable_compact_mode = params["enable_compact_mode"] == "1"
+    @enable_variable_height = params["enable_variable_height"] == "1"
+    @notes_field_height = params["notes_field_height"]&.to_i || 200
   end
 end
