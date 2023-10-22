@@ -619,6 +619,14 @@ a.mui-icon-edit {
   cursor: pointer;
 }
 
+a.mui-icon-delete {
+  background-image: url(../images/delete_FILL0_wght400_GRAD0_opsz20.svg);
+  background-size: 18px;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+
 button.mui-icon-top_panel_close {
   background-image: url(../images/top_panel_close_FILL0_wght400_GRAD0_opsz20.svg);
   border: none;
