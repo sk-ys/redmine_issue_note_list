@@ -1,3 +1,5 @@
+require_dependency File.expand_path('../lib/issue_notes/hooks.rb', __FILE__)
+
 Redmine::Plugin.register :redmine_issue_note_list do
   name "Redmine Issue Note List plugin"
   author "sk-ys"

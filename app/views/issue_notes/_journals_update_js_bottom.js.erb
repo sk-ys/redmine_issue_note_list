@@ -1,0 +1,11 @@
+// Update class
+(() => {
+  if (location.pathname.split("/").slice(-1)[0] === "issue_notes") {
+    var target = $("#change-<%= @journal.id  %>");
+    target
+      .addClass("issue-<%= @journal.issue.id %>")
+      .addClass(
+        target.parent().hasClass("ui-dialog") ?
+          "ui-dialog-content ui-widget-content" : "");
+  }
+})();
