@@ -20,8 +20,8 @@
 class IssueNotesController < ApplicationController
   unloadable
   menu_item :redmine_issue_note_list
-  before_action :find_optional_project, :authorize, :only => [:index]
-  before_action :find_issue, :authorize, :only => [:add_note]
+  before_action :find_optional_project, :only => [:index]
+  before_action :find_issue, :authorize_add_journal, :only => [:add_note]
   before_action :find_journal, :authorize_edit_journal, :only => [:delete_note]
   before_action :parse_params, :only => [:index, :add_note, :delete_note]
 
@@ -169,6 +169,11 @@ class IssueNotesController < ApplicationController
     @priorities = IssuePriority.active
     @allowed_statuses = @issue.new_statuses_allowed_to(User.current)
     true
+  end
+
+  def authorize_add_journal
+    authorize
+    authorize_for :journal, :new
   end
 
   def authorize_edit_journal

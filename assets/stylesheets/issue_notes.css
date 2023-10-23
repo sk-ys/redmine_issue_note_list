@@ -134,7 +134,7 @@ tr.issue.variable-height
   display: none;
 }
 
-table.list tr.issue td.last_notes {
+table.list tr.issue td.recent_notes {
   display: grid;
   grid-auto-flow: column;
   align-items: stretch;
@@ -226,7 +226,7 @@ div.journal.has-notes > form {
   display: block;
 }
 td.add-notes form label[for$="private_notes"],
-td.last_notes div.journal.has-notes > form label[for$="private_notes"] {
+td.recent_notes div.journal.has-notes > form label[for$="private_notes"] {
   font-size: smaller;
   position: absolute;
   left: 24px;

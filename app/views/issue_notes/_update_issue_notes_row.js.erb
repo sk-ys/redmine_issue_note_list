@@ -6,6 +6,6 @@
   $(".ui-dialog-content.journal.issue-<%= @issue.id %>").dialog("close");
   
   // Update rows
-  const $notes = $("#issue-<%= @issue.id %>").children(".last_notes");
+  const $notes = $("#issue-<%= @issue.id %>").children(".recent_notes");
   $notes.empty().append($('<%= escape_javascript(render_issue_notes(@issue, @number_of_notes)) %>'));
 })();
