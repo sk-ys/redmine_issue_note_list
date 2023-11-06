@@ -9,8 +9,17 @@ table.list td.issue-status {
   border-right: 1px solid #ccc;
   overflow-x: hidden;
   overflow-y: auto;
+  padding-right: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+table.list tr:not(.idnt) td.issue-status {
   padding: 5px;
 }
+table.list tr.idnt td.issue-status {
+  background-position-y: 10px;
+}
+
 table.list th.issue-status {
   position: relative;
   overflow: unset;
@@ -67,9 +76,51 @@ table.list.issues
   display: flex;
 }
 
+tr td.issue-status > div.header,
+tr td.issue-status > div.column-items {
+  width: 250px;
+}
+/* The width of child issue elements is affected by application.css */
+tr.idnt-1 td.issue-status > div.header,
+tr.idnt-1 td.issue-status > div.column-items {
+  width: calc(250px + 5px - 24px);
+}
+tr.idnt-2 td.issue-status > div.header,
+tr.idnt-2 td.issue-status > div.column-items {
+  width: calc(250px + 5px - 40px);
+}
+tr.idnt-3 td.issue-status > div.header,
+tr.idnt-3 td.issue-status > div.column-items {
+  width: calc(250px + 5px - 56px);
+}
+tr.idnt-4 td.issue-status > div.header,
+tr.idnt-4 td.issue-status > div.column-items {
+  width: calc(250px + 5px - 72px);
+}
+tr.idnt-5 td.issue-status > div.header,
+tr.idnt-5 td.issue-status > div.column-items {
+  width: calc(250px + 5px - 88px);
+}
+tr.idnt-6 td.issue-status > div.header,
+tr.idnt-6 td.issue-status > div.column-items {
+  width: calc(250px + 5px - 104px);
+}
+tr.idnt-7 td.issue-status > div.header,
+tr.idnt-7 td.issue-status > div.column-items {
+  width: calc(250px + 5px - 120px);
+}
+tr.idnt-8 td.issue-status > div.header,
+tr.idnt-8 td.issue-status > div.column-items {
+  width: calc(250px + 5px - 136px);
+}
+tr.idnt-9 td.issue-status > div.header,
+tr.idnt-9 td.issue-status > div.column-items {
+  width: calc(250px + 5px - 152px);
+}
 table.list.issues > tbody > tr.issue > td.issue-status > div.column-items {
   display: flex;
-  width: 250px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 table.list.issues
   > tbody
@@ -112,7 +163,8 @@ table.list.issues
 td.issue-status div.header {
   display: flex;
   justify-content: space-between;
-  width: 250px;
+  width: 100%;
+  white-space: nowrap;
 }
 td.issue-status div.header div.header-text {
   flex: 0 1 auto;
@@ -771,20 +823,23 @@ button.mui-icon-dock_to_bottom:focus {
 }
 
 /* Support theme "farend bleuclair" */
-#wrapper textarea.wiki-edit, .modal textarea.wiki-edit {
-    height: 100%;
+#wrapper textarea.wiki-edit,
+.modal textarea.wiki-edit {
+  height: 100%;
 }
 @media screen and (min-width: 900px) and (min-height: 800px) {
-    body.theme-Bleuclair #content >
-    #sidebar-switch-panel:not([style*="display: none;"]) + div.contextual {
-        right: 43px;
-    }
-    #sidebar-switch-panel {
-        position: absolute;
-        top: 16px;
-        left: auto;
-        right: 4px;
-    }
+  body.theme-Bleuclair
+    #content
+    > #sidebar-switch-panel:not([style*="display: none;"])
+    + div.contextual {
+    right: 43px;
+  }
+  #sidebar-switch-panel {
+    position: absolute;
+    top: 16px;
+    left: auto;
+    right: 4px;
+  }
 }
 
 .toggle-add-notes-field-buttons {

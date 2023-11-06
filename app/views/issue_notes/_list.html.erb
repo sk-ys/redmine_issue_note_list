@@ -41,7 +41,7 @@
         <tr
           id="issue-<%= issue.id %>"
           class="<%= issue_row_classes(issue, level, @enable_compact_mode, @enable_variable_height) %>">
-          <td class="issue-status">
+          <td class="issue-status subject">
             <div class="header">
               <div class="header-text">
                 <%= link_to issue_path(issue), title: "##{issue.id}: #{issue.subject}" do %>
