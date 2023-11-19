@@ -204,7 +204,7 @@ $(() => {
   $("td.issue-status").resizable({
     handles: "e",
     alsoResize:
-      "td.issue-status > div.column-items, td.issue-status > div.header",
+      "td.issue-status > div.header, td.issue-status > div.columns",
     start: function (e) {
       // Set width only for active element
       const width = $(e.target).width();

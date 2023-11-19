@@ -72,15 +72,17 @@
                 </button>
               </div>
             </div>
-            <% query.inline_columns.each do |column| %>
-              <% if column.name == :id || column.name == :subject %>
-                <% next %>
+            <div class="columns">
+              <% query.inline_columns.each do |column| %>
+                <% if column.name == :id || column.name == :subject %>
+                  <% next %>
+                <% end %>
+                <div class="column-items">
+                  <%= column.caption %>
+                  <%= content_tag("span", column_content(column, issue), class: column.css_classes.to_s + " content") %>
+                </div>
               <% end %>
-              <div class="column-items">
-                <%= column.caption %>
-                <%= content_tag("span", column_content(column, issue), class: column.css_classes) %>
-              </div>
-            <% end %>
+            </div>
           </td>
           <td class="recent_notes">
             <%= render_issue_notes(issue, @number_of_notes) %>
