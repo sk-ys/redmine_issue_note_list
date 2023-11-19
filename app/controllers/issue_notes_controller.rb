@@ -21,7 +21,7 @@ class IssueNotesController < ApplicationController
   unloadable
   menu_item :redmine_issue_note_list
   before_action :find_optional_project, :only => [:index]
-  before_action :find_issue, :authorize_add_journal, :only => [:add_note]
+  before_action :find_issue, :only => [:add_note]
   before_action :find_journal, :authorize_edit_journal, :only => [:delete_note]
   before_action :parse_params, :only => [:index, :add_note, :delete_note]
 
