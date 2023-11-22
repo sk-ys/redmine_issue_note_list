@@ -181,6 +181,7 @@ td.issue-status div.header {
   width: 100%;
   white-space: nowrap;
   height: 18px;
+  font-weight: bold;
 }
 td.issue-status div.header div.header-text {
   flex: 0 1 auto;
