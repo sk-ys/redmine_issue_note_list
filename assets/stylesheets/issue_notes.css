@@ -893,3 +893,8 @@ button.mui-icon-right_panel_open {
   border: none;
   background-color: transparent;
 }
+
+/* Fix formatting of P elements in table cells */
+table.issues.list div.journal>.wiki>p {
+  margin: revert;
+}
