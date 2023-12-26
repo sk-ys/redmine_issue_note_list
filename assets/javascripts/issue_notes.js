@@ -1,255 +1,269 @@
-window.addEventListener("DOMContentLoaded", () => {
-  // Hide the new note field
-  if (localStorage.getItem("issue-note-list_hide-add-note-fields") == "true") {
-    $('div.autoscroll-outer').addClass('hide-add-note-fields');
-  }
-})
-
-function fixPopUpWindowPosition($dialog) {
-  if ($dialog.hasClass("fix-to-right")) {
-    $dialog.css("left", $(window).width() - $dialog.outerWidth());
-  } else if ($dialog.hasClass("fix-to-bottom")) {
-    $dialog.css("top", $(window).height() - $dialog.outerHeight());
-  }
-}
-
-function toggleNotesPopOutState(elem, title) {
-  const $note = $(elem);
-  const $noteParent = $note.parent();
-  const dialogStyle = {
-    width: 700,
-    height: 300,
-  };
-
-  // Keep current height
-  $noteParent.css("height", $noteParent.height());
-
-  function addButtonsToDialogTitlebar($dialog) {
-    const $titleBar = $dialog.find(".ui-dialog-titlebar");
-
-    let storedSize = dialogStyle;
-
-    function removeAllClasses($dialog) {
-      $dialog.removeClass("maximized");
-      $dialog.removeClass("fixed");
-      $dialog.removeClass("fix-to-left");
-      $dialog.removeClass("fix-to-top");
-      $dialog.removeClass("fix-to-right");
-      $dialog.removeClass("fix-to-bottom");
+var IssueNoteList = IssueNoteList || {};
+IssueNoteList.fn = {
+  fixPopUpWindowPosition($dialog) {
+    if ($dialog.hasClass("fix-to-right")) {
+      $dialog.css("left", $(window).width() - $dialog.outerWidth());
+    } else if ($dialog.hasClass("fix-to-bottom")) {
+      $dialog.css("top", $(window).height() - $dialog.outerHeight());
     }
+  },
 
-    function generateResizeWindowButton(className, label, func = null) {
-      function hasAllClassNames(className, target) {
-        return className.split(" ").every((v) => target.includes(v));
+  toggleNotesPopOutState(elem, title) {
+    const self = this;
+    const $note = $(elem);
+    const $noteParent = $note.parent();
+    const dialogStyle = {
+      width: 700,
+      height: 300,
+    };
+
+    // Keep current height
+    $noteParent.css("height", $noteParent.height());
+
+    function addButtonsToDialogTitlebar($dialog) {
+      const $titleBar = $dialog.find(".ui-dialog-titlebar");
+
+      let storedSize = dialogStyle;
+
+      function removeAllClasses($dialog) {
+        $dialog.removeClass("maximized");
+        $dialog.removeClass("fixed");
+        $dialog.removeClass("fix-to-left");
+        $dialog.removeClass("fix-to-top");
+        $dialog.removeClass("fix-to-right");
+        $dialog.removeClass("fix-to-bottom");
       }
-      return $("<button/>")
-        .addClass("ui-button ui-corner-all ui-widget ui-button-icon-only")
-        .addClass(className)
-        .attr("title", label)
-        .on("click", (e) => {
-          const $dialog = $(e.target).closest(".ui-dialog.note-pop-out-dialog");
-          if (hasAllClassNames(className, $dialog.attr("class").split(" "))) {
-            // restore
-            removeAllClasses($dialog);
-            $dialog.css(storedSize);
-            return;
-          }
 
-          if (!$dialog.hasClass("maximized") && !$dialog.hasClass("fixed")) {
-            storedSize = {
-              width: $dialog.width(),
-              height: $dialog.height(),
-              left: $dialog.position().left,
-              top: $dialog.position().top,
-            };
-          }
-          removeAllClasses($dialog);
-          $dialog.addClass(className);
-          if (func !== null) func($dialog);
-        });
-    }
-
-    const $fixToLeftButton = generateResizeWindowButton(
-      "fixed fix-to-left mui-icon mui-icon-dock_to_left",
-      IssueNoteList.resources.labelFixToLeft
-    );
-
-    const $fixToRightButton = generateResizeWindowButton(
-      "fixed fix-to-right mui-icon mui-icon-dock_to_right",
-      IssueNoteList.resources.labelFixToRight,
-      ($dialog) => {
-        $dialog.css("left", $(window).width() - $dialog.outerWidth());
-      }
-    );
-
-    const $fixToTopButton = generateResizeWindowButton(
-      "fixed fix-to-top mui-icon mui-icon-dock_to_top",
-      IssueNoteList.resources.labelFixToTop
-    );
-
-    const $fixToBottomButton = generateResizeWindowButton(
-      "fixed fix-to-bottom mui-icon mui-icon-dock_to_bottom",
-      IssueNoteList.resources.labelFixToBottom,
-      ($dialog) => {
-        $dialog.css("top", $(window).height() - $dialog.outerHeight());
-      }
-    );
-
-    const $maximizeButton = generateResizeWindowButton(
-      "maximized mui-icon",
-      IssueNoteList.resources.labelMaximize
-    );
-
-    $("<div/>")
-      .addClass("ui-dialog-titlebar-button-group")
-      .addClass("buttons")
-      .append($fixToLeftButton)
-      .append($fixToRightButton)
-      .append($fixToTopButton)
-      .append($fixToBottomButton)
-      .append($maximizeButton)
-      .appendTo($titleBar);
-  }
-
-  // Add button to close pop-out window
-  $noteParent.append(
-    $("<div />")
-      .addClass("close-pop-out-button-outer")
-      .append(
-        $("<button />")
-          .button({
-            icon: "ui-icon-cancel",
-            label: IssueNoteList.resources.labelClosePopOut,
-          })
-          .on("click", () => {
-            $note.dialog("close");
-          })
-      )
-  );
-
-  $note.dialog({
-    appendTo: "#content",
-    width: dialogStyle.width,
-    height: dialogStyle.height,
-    dialogClass: "note-pop-out-dialog",
-    position: {
-      my: "center",
-      at: "center",
-      of: $noteParent,
-    },
-    title: title,
-    create: function () {
-      const $dialog = $note.dialog("widget");
-      addButtonsToDialogTitlebar($dialog);
-      $dialog.css("position", "fixed");
-    },
-    open: function () {
-      // Disable automatic display of tooltips in content.
-      $(this).parent().focus();
-
-      // Set height of dialog
-      const $dialog = $note.dialog("widget");
-      if ($dialog.length > 0 && $dialog[0].style.height === "auto") {
-        if ($dialog.height() < dialogStyle.height) {
-          $dialog.css({
-            top:
-              $dialog.position().top +
-              ($dialog.height() - dialogStyle.height) / 2,
-            height: dialogStyle.height,
-          });
-        } else {
-          $dialog.css({ height: $dialog.height() });
+      function generateResizeWindowButton(className, label, func = null) {
+        function hasAllClassNames(className, target) {
+          return className.split(" ").every((v) => target.includes(v));
         }
+        return $("<button/>")
+          .addClass("ui-button ui-corner-all ui-widget ui-button-icon-only")
+          .addClass(className)
+          .attr("title", label)
+          .on("click", (e) => {
+            const $dialog = $(e.target).closest(
+              ".ui-dialog.note-pop-out-dialog"
+            );
+            if (hasAllClassNames(className, $dialog.attr("class").split(" "))) {
+              // restore
+              removeAllClasses($dialog);
+              $dialog.css(storedSize);
+              return;
+            }
+
+            if (!$dialog.hasClass("maximized") && !$dialog.hasClass("fixed")) {
+              storedSize = {
+                width: $dialog.width(),
+                height: $dialog.height(),
+                left: $dialog.position().left,
+                top: $dialog.position().top,
+              };
+            }
+            removeAllClasses($dialog);
+            $dialog.addClass(className);
+            if (func !== null) func($dialog);
+          });
       }
-    },
-    close: () => {
-      $noteParent.find("div.close-pop-out-button-outer").remove();
-      $note.appendTo($noteParent).dialog("destroy");
-      $noteParent.css("height", "");
-    },
-    resizeStop: () => {
-      const $dialog = $note.dialog("widget");
-      fixPopUpWindowPosition($dialog);
-    },
-  });
-}
 
-function setNoteHeightVariable(e, state = true) {
-  const $target =
-    e === "all" || e.ctrlKey || e.metaKey
-      ? $("table.list.issues").find("tr.issue")
-      : $(e.target).closest("tr.issue");
-  $target.toggleClass("variable-height", state);
-}
+      const $fixToLeftButton = generateResizeWindowButton(
+        "fixed fix-to-left mui-icon mui-icon-dock_to_left",
+        IssueNoteList.resources.labelFixToLeft
+      );
 
-function collapseNoteRow(e, state = false) {
-  const $target =
-    e === "all" || e.ctrlKey || e.metaKey
-      ? $("table.list.issues").find("tr.issue")
-      : $(e.target).closest("tr.issue");
-  $target.toggleClass("collapse-row", state);
-}
+      const $fixToRightButton = generateResizeWindowButton(
+        "fixed fix-to-right mui-icon mui-icon-dock_to_right",
+        IssueNoteList.resources.labelFixToRight,
+        ($dialog) => {
+          $dialog.css("left", $(window).width() - $dialog.outerWidth());
+        }
+      );
 
-$(() => {
-  $(window).on("resize", (e) => {
-    if (e.target === window) {
-      const $dialogs = $(".ui-dialog.note-pop-out-dialog");
-      $dialogs.each((i, dialog) => {
-        fixPopUpWindowPosition($(dialog));
-      });
+      const $fixToTopButton = generateResizeWindowButton(
+        "fixed fix-to-top mui-icon mui-icon-dock_to_top",
+        IssueNoteList.resources.labelFixToTop
+      );
+
+      const $fixToBottomButton = generateResizeWindowButton(
+        "fixed fix-to-bottom mui-icon mui-icon-dock_to_bottom",
+        IssueNoteList.resources.labelFixToBottom,
+        ($dialog) => {
+          $dialog.css("top", $(window).height() - $dialog.outerHeight());
+        }
+      );
+
+      const $maximizeButton = generateResizeWindowButton(
+        "maximized mui-icon",
+        IssueNoteList.resources.labelMaximize
+      );
+
+      $("<div/>")
+        .addClass("ui-dialog-titlebar-button-group")
+        .addClass("buttons")
+        .append($fixToLeftButton)
+        .append($fixToRightButton)
+        .append($fixToTopButton)
+        .append($fixToBottomButton)
+        .append($maximizeButton)
+        .appendTo($titleBar);
     }
-  });
 
-  // Set resizable
-  $("td.issue-status").resizable({
-    handles: "e",
-    alsoResize:
-      "td.issue-status > div.header, td.issue-status > div.columns",
-    start: function (e) {
-      // Set width only for active element
-      const width = $(e.target).width();
-      $("td.issue-status").css("width", "");
-      $(e.target).css("width", width);
-    },
-    minWidth: $("td.issue-status").width(),
-  });
-  $("td.add-notes").resizable({
-    handles: "w",
-    start: function (e) {
-      // Set width only for active element
-      const width = $(e.target).width();
-      $("td.add-notes").css("width", "");
-      $(e.target).css("width", width);
-    },
-  });
-
-  // Set notes field height
-  function generateNotesFieldHeightStyle(height) {
-    return `table.list.issues > tbody > tr.issue > td { height: ${height}px; }`;
-  }
-  const $notes_field_height_style = $("<style />")
-    .text(generateNotesFieldHeightStyle($("#notes_field_height").val()))
-    .appendTo("head");
-
-  // Setup adjust notes field height slider
-  $("#adjust_notes_field_height_slider").slider({
-    min: 100,
-    max: 1000,
-    step: 50,
-    value: $("#notes_field_height").val(),
-    slide: () => {
-      setTimeout(() => {
-        $("#notes_field_height")
-          .val($("#adjust_notes_field_height_slider").slider("value"))
-          .change();
-      });
-    },
-  });
-  $("#notes_field_height").on("change", function () {
-    const notes_field_height = parseInt($(this).val());
-    $("#adjust_notes_field_height_slider").slider("value", notes_field_height);
-    $notes_field_height_style.text(
-      generateNotesFieldHeightStyle(notes_field_height)
+    // Add button to close pop-out window
+    $noteParent.append(
+      $("<div />")
+        .addClass("close-pop-out-button-outer")
+        .append(
+          $("<button />")
+            .button({
+              icon: "ui-icon-cancel",
+              label: IssueNoteList.resources.labelClosePopOut,
+            })
+            .on("click", () => {
+              $note.dialog("close");
+            })
+        )
     );
-  });
+
+    $note.dialog({
+      appendTo: "#content",
+      width: dialogStyle.width,
+      height: dialogStyle.height,
+      dialogClass: "note-pop-out-dialog",
+      position: {
+        my: "center",
+        at: "center",
+        of: $noteParent,
+      },
+      title: title,
+      create: function () {
+        const $dialog = $note.dialog("widget");
+        addButtonsToDialogTitlebar($dialog);
+        $dialog.css("position", "fixed");
+      },
+      open: function () {
+        // Disable automatic display of tooltips in content.
+        $(this).parent().focus();
+
+        // Set height of dialog
+        const $dialog = $note.dialog("widget");
+        if ($dialog.length > 0 && $dialog[0].style.height === "auto") {
+          if ($dialog.height() < dialogStyle.height) {
+            $dialog.css({
+              top:
+                $dialog.position().top +
+                ($dialog.height() - dialogStyle.height) / 2,
+              height: dialogStyle.height,
+            });
+          } else {
+            $dialog.css({ height: $dialog.height() });
+          }
+        }
+      },
+      close: () => {
+        $noteParent.find("div.close-pop-out-button-outer").remove();
+        $note.appendTo($noteParent).dialog("destroy");
+        $noteParent.css("height", "");
+      },
+      resizeStop: () => {
+        const $dialog = $note.dialog("widget");
+        self.fixPopUpWindowPosition($dialog);
+      },
+    });
+  },
+
+  setNoteHeightVariable(e, state = true) {
+    const $target =
+      e === "all" || e.ctrlKey || e.metaKey
+        ? $("table.list.issues").find("tr.issue")
+        : $(e.target).closest("tr.issue");
+    $target.toggleClass("variable-height", state);
+  },
+
+  collapseNoteRow(e, state = false) {
+    const $target =
+      e === "all" || e.ctrlKey || e.metaKey
+        ? $("table.list.issues").find("tr.issue")
+        : $(e.target).closest("tr.issue");
+    $target.toggleClass("collapse-row", state);
+  },
+
+  initialize() {
+    const self = this;
+
+    // Hide the new note field
+    if (
+      localStorage.getItem("issue-note-list_hide-add-note-fields") == "true"
+    ) {
+      $("div.autoscroll-outer").addClass("hide-add-note-fields");
+    }
+
+    $(window).on("resize.issueNoteList", (e) => {
+      if (e.target === window) {
+        const $dialogs = $(".ui-dialog.note-pop-out-dialog");
+        $dialogs.each((i, dialog) => {
+          self.fixPopUpWindowPosition($(dialog));
+        });
+      }
+    });
+
+    // Set resizable
+    $("td.issue-status").resizable({
+      handles: "e",
+      alsoResize: "td.issue-status > div.header, td.issue-status > div.columns",
+      start: function (e) {
+        // Set width only for active element
+        const width = $(e.target).width();
+        $("td.issue-status").css("width", "");
+        $(e.target).css("width", width);
+      },
+      minWidth: $("td.issue-status").width(),
+    });
+    $("td.add-notes").resizable({
+      handles: "w",
+      start: function (e) {
+        // Set width only for active element
+        const width = $(e.target).width();
+        $("td.add-notes").css("width", "");
+        $(e.target).css("width", width);
+      },
+    });
+
+    // Set notes field height
+    function generateNotesFieldHeightStyle(height) {
+      return `table.list.issues > tbody > tr.issue > td { height: ${height}px; }`;
+    }
+    const $notes_field_height_style = $("<style />")
+      .text(generateNotesFieldHeightStyle($("#notes_field_height").val()))
+      .appendTo("head");
+
+    // Setup adjust notes field height slider
+    $("#adjust_notes_field_height_slider").slider({
+      min: 100,
+      max: 1000,
+      step: 50,
+      value: $("#notes_field_height").val(),
+      slide: () => {
+        setTimeout(() => {
+          $("#notes_field_height")
+            .val($("#adjust_notes_field_height_slider").slider("value"))
+            .change();
+        });
+      },
+    });
+    $("#notes_field_height").on("change.issueNoteList", function () {
+      const notes_field_height = parseInt($(this).val());
+      $("#adjust_notes_field_height_slider").slider(
+        "value",
+        notes_field_height
+      );
+      $notes_field_height_style.text(
+        generateNotesFieldHeightStyle(notes_field_height)
+      );
+    });
+  },
+};
+
+window.addEventListener("DOMContentLoaded", () => {
+  IssueNoteList.fn.initialize();
 });

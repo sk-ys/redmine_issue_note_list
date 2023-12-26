@@ -53,22 +53,22 @@
                 <button
                   class="variable-height mui-icon mui-icon-expand"
                   title="<%=l(:label_variable_height, scope: :issue_note_list)%>"
-                  onclick="setNoteHeightVariable(arguments[0], true)">
+                  onclick="IssueNoteList.fn.setNoteHeightVariable(arguments[0], true)">
                 </button>
                 <button
                   class="fixed-height mui-icon mui-icon-compress"
                   title="<%=l(:label_fixed_height, scope: :issue_note_list)%>"
-                  onclick="setNoteHeightVariable(arguments[0], false)">
+                  onclick="IssueNoteList.fn.setNoteHeightVariable(arguments[0], false)">
                 </button>
                 <button
                   class="collapse-row mui-icon mui-icon-top_panel_close"
                   title="<%=l(:label_collapse_row, scope: :issue_note_list)%>"
-                  onclick="collapseNoteRow(arguments[0], true)">
+                  onclick="IssueNoteList.fn.collapseNoteRow(arguments[0], true)">
                 </button>
                 <button
                   class="expand-row mui-icon mui-icon-top_panel_open"
                   title="<%=l(:label_expand_row, scope: :issue_note_list)%>"
-                  onclick="collapseNoteRow(arguments[0], false)">
+                  onclick="IssueNoteList.fn.collapseNoteRow(arguments[0], false)">
                 </button>
               </div>
             </div>
@@ -96,7 +96,7 @@
                         "",
                         class: "pop-out mui-icon mui-icon-open_in_new",
                         type: "button",
-                        onclick: "toggleNotesPopOutState(" +
+                        onclick: "IssueNoteList.fn.toggleNotesPopOutState(" +
                           "$(this).closest('.add_notes_form_outer'), " +
                           "'##{issue.id}: #{issue.subject} - #{l(:label_add_note)}');",
                         title: l(:label_pop_out, scope: :issue_note_list)

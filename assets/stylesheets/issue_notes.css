@@ -83,7 +83,7 @@ tr td.issue-status > div.columns {
 tr td.issue-status > div.columns {
   overflow-y: auto;
   overflow-x: hidden;
-  height: calc(100% - 18px);
+  height: calc(100% - 18px) !important;
   box-sizing: border-box;
 }
 /* The width of child issue elements is affected by application.css */
@@ -180,6 +180,8 @@ td.issue-status div.header {
   justify-content: space-between;
   width: 100%;
   white-space: nowrap;
+  height: 18px;
+  font-weight: bold;
 }
 td.issue-status div.header div.header-text {
   flex: 0 1 auto;
@@ -890,4 +892,9 @@ button.mui-icon-right_panel_open {
   background-image: url(../images/right_panel_open_FILL0_wght400_GRAD0_opsz20.svg);
   border: none;
   background-color: transparent;
+}
+
+/* Fix formatting of P elements in table cells */
+table.issues.list div.journal>.wiki>p {
+  margin: revert;
 }

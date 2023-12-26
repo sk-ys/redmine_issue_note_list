@@ -3,15 +3,16 @@
   <%= stylesheet_link_tag "issue_notes", plugin: "redmine_issue_note_list" %>
   <%= javascript_include_tag "issue_notes", plugin: "redmine_issue_note_list" %>
   <%= javascript_tag type: "application/javascript" do -%>
-    var IssueNoteList = { resources: {
-    labelClosePopOut: "<%= l(:label_close_pop_out, scope: :issue_note_list) %>",
-    labelFixToLeft: "<%= l(:label_fix_to_left, scope: :issue_note_list) %>",
-    labelFixToRight: "<%= l(:label_fix_to_right, scope: :issue_note_list) %>",
-    labelFixToTop: "<%= l(:label_fix_to_top, scope: :issue_note_list) %>",
-    labelFixToBottom: "<%= l(:label_fix_to_bottom, scope: :issue_note_list) %>",
-    labelMaximize: "<%= l(:label_maximize, scope: :issue_note_list) %>",
-    labelRestore: "<%= l(:label_restore, scope: :issue_note_list) %>",
-    }}
+    var IssueNoteList = IssueNoteList || {};
+    IssueNoteList.resources = {
+      labelClosePopOut: "<%= l(:label_close_pop_out, scope: :issue_note_list) %>",
+      labelFixToLeft: "<%= l(:label_fix_to_left, scope: :issue_note_list) %>",
+      labelFixToRight: "<%= l(:label_fix_to_right, scope: :issue_note_list) %>",
+      labelFixToTop: "<%= l(:label_fix_to_top, scope: :issue_note_list) %>",
+      labelFixToBottom: "<%= l(:label_fix_to_bottom, scope: :issue_note_list) %>",
+      labelMaximize: "<%= l(:label_maximize, scope: :issue_note_list) %>",
+      labelRestore: "<%= l(:label_restore, scope: :issue_note_list) %>",
+    }
   <% end -%>
   <style>
     table.list.issues > tbody > tr.issue > td { height: <%=@notes_field_height%>px; }
@@ -43,12 +44,12 @@
     </span>
     <span>
       <%= check_box_tag :enable_compact_mode, 1, @enable_compact_mode,
-        onclick: "collapseNoteRow('all', this.checked)" %>
+        onclick: "IssueNoteList.fn.collapseNoteRow('all', this.checked)" %>
       <%= label_tag :enable_compact_mode, l(:label_enable_compact_mode, scope: :issue_note_list) %>
     </span>
     <span>
       <%= check_box_tag :enable_variable_height, 1, @enable_variable_height,
-        onclick: "setNoteHeightVariable('all', this.checked)" %>
+        onclick: "IssueNoteList.fn.setNoteHeightVariable('all', this.checked)" %>
       <%= label_tag :enable_variable_height, l(:label_variable_height, scope: :issue_note_list) %>
     </span>
     <span id="notes_field_height_outer">
