@@ -180,6 +180,10 @@ IssueNoteList.fn = {
     $target.toggleClass("variable-height", state);
   },
 
+  enableSimpleEditor(enable = true) {
+    $("#content").toggleClass("simple-editor", enable);
+  },
+
   collapseNoteRow(e, state = false) {
     const $target =
       e === "all" || e.ctrlKey || e.metaKey
@@ -311,6 +315,9 @@ IssueNoteList.fn = {
         generateNotesFieldHeightStyle(notes_field_height)
       );
     });
+
+    // Enable simple editor
+    this.enableSimpleEditor($("#enable_simple_editor:checked").length === 1);
   },
 };
 

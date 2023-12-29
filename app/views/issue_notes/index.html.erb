@@ -57,6 +57,11 @@
       <%= number_field_tag :notes_field_height, @notes_field_height, min: 100, max: 1000, step: 10, autocomplete: false %>
       <span id="adjust_notes_field_height_slider"></span>
     </span>
+    <span>
+      <%= check_box_tag :enable_simple_editor, 1, @enable_simple_editor,
+        onclick: "IssueNoteList.fn.enableSimpleEditor(this.checked)" %>
+      <%= label_tag :enable_simple_editor, l(:label_simple_editor, scope: :issue_note_list) %>
+    </span>
   </p>
   <%= render partial: "queries/query_form" %>
 <% end %>
