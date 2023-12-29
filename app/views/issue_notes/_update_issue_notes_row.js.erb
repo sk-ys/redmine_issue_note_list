@@ -1,6 +1,6 @@
 (() => {
   // Clear textarea
-  $("textarea#add_issue_notes-<%= @issue.id %>").val("");
+  $("textarea#add_issue_notes-<%= @issue.id %>").val("").removeData("changed");
 
   // Close all pop-out contents
   $(".ui-dialog-content.journal.issue-<%= @issue.id %>").dialog("close");
