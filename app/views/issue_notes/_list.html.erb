@@ -9,6 +9,10 @@
     <thead>
       <tr>
         <th class="issue-status">
+          <div class="buttons">
+            <button class="prev ui-icon  ui-icon-triangle-1-n" onclick="IssueNoteList.fn.prevNote(event)"></button>
+            <button class="next ui-icon  ui-icon-triangle-1-s" onclick="IssueNoteList.fn.nextNote(event)"></button>
+          </div>
           <%= l(:label_issue_details, scope: :issue_note_list) %>
           <div class="column-filter">
             <span class="icon-only icon-list" title=<%= l(:label_sort) %>></span>

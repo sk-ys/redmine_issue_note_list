@@ -203,6 +203,14 @@ tr.issue.variable-height
   display: none;
 }
 
+table.list th.issue-status>.buttons {
+  position: absolute;
+  margin: 0;
+}
+table.list th.issue-status>.buttons>.ui-icon {
+  cursor: pointer;
+}
+
 table.list tr.issue td.recent_notes {
   display: grid;
   grid-auto-flow: column;
