@@ -185,5 +185,6 @@ class IssueNotesController < ApplicationController
     @enable_compact_mode = params["enable_compact_mode"] == "1"
     @enable_variable_height = params["enable_variable_height"] == "1"
     @notes_field_height = params["notes_field_height"]&.to_i || 200
+    @enable_simple_editor = params["enable_simple_editor"] == "1"
   end
 end

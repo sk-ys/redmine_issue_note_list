@@ -906,3 +906,7 @@ button.mui-icon-right_panel_open {
 table.issues.list div.journal>.wiki>p {
   margin: revert;
 }
+
+#content.simple-editor .jstTabs.tabs {
+  display: none;
+}

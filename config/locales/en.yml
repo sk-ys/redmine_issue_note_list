@@ -19,6 +19,7 @@ en:
     label_restore: Restore
     label_issue_details: Issue details
     label_variable_height: Variable height
+    label_simple_editor: Simple editor
     label_fixed_height: Fixed height
     label_collapse_row: Collapse row
     label_expand_row: Expand row

@@ -19,6 +19,7 @@ ja:
     label_restore: 元に戻す
     label_issue_details: チケット詳細
     label_variable_height: 高さ可変
+    label_simple_editor: シンプルなエディタ
     label_fixed_height: 高さ固定
     label_collapse_row: 行を縮小
     label_expand_row: 行を拡張
