@@ -188,6 +188,56 @@ IssueNoteList.fn = {
     $target.toggleClass("collapse-row", state);
   },
 
+  _scrollToNextNote(event, prev = true) {
+    const scrollContainer = $("#content .autoscroll");
+    const containerScrollTop = scrollContainer.scrollTop();
+    const containerHeight = scrollContainer.height();
+    const cellTops = scrollContainer
+      .find("table.list.issues>tbody>tr")
+      .map((_, e) => $(e).position().top)
+      .toArray();
+    const scrollSpeed = 200;
+    const scrollOnePage = event.ctrlKey || event.metaKey;
+    const margin = 5;
+
+    function getNewScrollTop(condition, modifier, defaultValue) {
+      const filteredCellTops = cellTops.filter(condition);
+      return filteredCellTops.length === 0
+        ? defaultValue
+        : modifier(filteredCellTops);
+    }
+
+    const scrollTop = prev
+      ? getNewScrollTop(
+          (i) =>
+            i <
+            containerScrollTop +
+              cellTops[0] -
+              (scrollOnePage ? containerHeight : margin),
+          (arr) => arr.slice(-1)[0] - cellTops[0],
+          0
+        )
+      : getNewScrollTop(
+          (i) =>
+            i >
+            containerScrollTop +
+              cellTops[0] +
+              (scrollOnePage ? containerHeight : margin),
+          (arr) => arr[0] - cellTops[0],
+          cellTops.slice(-1)[0]
+        );
+
+    scrollContainer.animate({ scrollTop: scrollTop }, scrollSpeed);
+  },
+
+  nextNote(event) {
+    this._scrollToNextNote(event, false);
+  },
+
+  prevNote(event) {
+    this._scrollToNextNote(event, true);
+  },
+
   initialize() {
     const self = this;
 
