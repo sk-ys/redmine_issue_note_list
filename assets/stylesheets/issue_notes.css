@@ -20,8 +20,11 @@ table.list tr.idnt td.issue-status {
   background-position-y: 10px;
 }
 
-table.list th.issue-status {
+table.list.issues th {
   position: relative;
+}
+
+table.list th.issue-status {
   overflow: unset;
 }
 table.list th.issue-status > div.column-filter {
@@ -74,6 +77,35 @@ table.list.issues
   > div.column-filter:hover
   > span {
   display: flex;
+}
+
+table.list.issues th .buttons {
+  position: absolute;
+  box-sizing: border-box;
+  top: 0;
+  margin: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 2px;
+}
+
+table.list.issues th .buttons.buttons-right-side {
+  right: 0;
+}
+
+table.list.issues th .buttons.buttons-left-side {
+  left: 0;
+}
+
+table.list.issues th .buttons > button {
+  cursor: pointer;
+  margin: auto 1px;
+  opacity: 0.3;
+}
+
+table.list.issues th .buttons > button:hover {
+  opacity: 1;
 }
 
 tr td.issue-status > div.header,
@@ -201,14 +233,6 @@ tr.issue.variable-height
   div.header-buttons
   > button.variable-height {
   display: none;
-}
-
-table.list th.issue-status>.buttons {
-  position: absolute;
-  margin: 0;
-}
-table.list th.issue-status>.buttons>.ui-icon {
-  cursor: pointer;
 }
 
 table.list tr.issue td.recent_notes {
@@ -875,27 +899,10 @@ button.mui-icon-dock_to_bottom:focus {
   }
 }
 
-.toggle-add-notes-field-buttons {
-  position: absolute;
-  top: 0;
-  right: 15px;
-  z-index: 30;
-  padding: 3px;
-  cursor: pointer;
-}
-
 div.autoscroll-outer.hide-add-note-fields .add-notes,
 div.autoscroll-outer.hide-add-note-fields button.hide-add-note-fields,
 div.autoscroll-outer:not(.hide-add-note-fields) button.show-add-note-fields {
   display: none;
-}
-
-.toggle-add-notes-field-buttons > button {
-  opacity: 0.3;
-}
-
-.toggle-add-notes-field-buttons > button:hover {
-  opacity: 1;
 }
 
 button.mui-icon-right_panel_close {
