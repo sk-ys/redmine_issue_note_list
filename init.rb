@@ -1,4 +1,7 @@
 require_dependency File.expand_path('../lib/issue_notes/hooks.rb', __FILE__)
+Dir[File.join(File.expand_path('../lib/issue_notes/patches', __FILE__), '*.rb')].each do |patch|
+  require_dependency patch
+end
 
 Redmine::Plugin.register :redmine_issue_note_list do
   name "Redmine Issue Note List plugin"

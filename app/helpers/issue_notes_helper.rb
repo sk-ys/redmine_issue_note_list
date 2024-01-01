@@ -89,6 +89,12 @@ module IssueNotesHelper
                          method: "get",
                          title: l(:button_edit),
                          class: "icon-only mui-icon-edit")
+      content << link_to(l(:button_quote),
+                        quoted_issue_path(issue, journal_id: journal, journal_indice: indice, issue_notes: 1),
+                        remote: true,
+                        method: "post",
+                        title: l(:button_quote),
+                        class: "icon-only mui-icon-chat_paste_go")
       content << link_to(l(:button_delete),
                         delete_note_issue_note_path(journal.id, number_of_notes: @number_of_notes),
                         remote: true,
