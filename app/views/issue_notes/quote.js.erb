@@ -1,0 +1,19 @@
+// Insert quoted text into the add-notes form.
+(function() {
+  const form = $("#add_notes_form-<%= @issue.id %>");
+  const textArea = form.find('textarea#add_issue_notes-<%= @issue.id %>');
+  if (textArea.length === 0) return;
+
+  var notes = textArea.val();
+  if (notes > "") notes = notes + "\n\n";
+
+  textArea.blur().focus().val(notes + "<%= raw escape_javascript(@content) %>");
+
+  // Update preview
+  const previewTab = form.find(".tab-preview.selected");
+  if (previewTab.length > 0) previewTab[0].click();
+
+  <% if @journal && @journal.private_notes? %>
+    form.find(".private_notes > input").prop('checked', true);
+  <% end %>
+})();
