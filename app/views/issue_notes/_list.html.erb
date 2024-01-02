@@ -36,6 +36,13 @@
         <% if @allowed_to_add_note %>
         <th class="add-notes">
           <%= l(:label_add_note) %>
+          <div class="buttons buttons-left-side">
+            <button
+              class="mui-icon mui-icon-forms_add_on"
+              title="<%= l(:label_submit_all, scope: :issue_note_list) %>"
+              onclick="IssueNoteList.fn.submitAll()">
+            </button>
+          </div>
           <div class="buttons buttons-right-side">
             <button
               class="mui-icon mui-icon-right_panel_close hide-add-note-fields"

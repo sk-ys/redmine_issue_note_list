@@ -760,6 +760,12 @@ button.mui-icon-expand {
   background-color: transparent;
 }
 
+button.mui-icon-forms_add_on {
+  background-image: url(../images/forms_add_on_FILL0_wght400_GRAD0_opsz20.svg);
+  border: none;
+  background-color: transparent;
+}
+
 button.mui-icon-dock_to_left,
 button.mui-icon-dock_to_left:hover,
 button.mui-icon-dock_to_left:focus {

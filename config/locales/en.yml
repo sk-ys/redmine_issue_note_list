@@ -28,3 +28,5 @@ en:
     label_add_note_to_issue_note_list_on_global: Add note to issue note list on global
     label_hide_the_new_note_input_fields: Hide the new note input field.
     label_show_the_new_note_input_fields: Show the new note input field.
+    label_submit_all: Submit all
+    text_submit_all_confirmation: This action will submit the contents of all forms. Are you sure you want to proceed?

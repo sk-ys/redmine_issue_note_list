@@ -254,6 +254,18 @@ IssueNoteList.fn = {
     );
   },
 
+  submitAll() {
+    if (!window.confirm(IssueNoteList.resources.textSubmitAllConfirmation)) {
+      return;
+    }
+
+    $("form[id^=add_notes_form-]").each((_, e) => {
+      if ($(e).find("textarea").val() !== "") {
+        $(e).find("input[type=submit]")[0].click();
+      }
+    });
+  },
+
   initialize() {
     const self = this;
 
