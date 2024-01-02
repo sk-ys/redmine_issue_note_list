@@ -415,6 +415,9 @@ form div.commands {
   align-items: flex-start;
   justify-content: space-between;
 }
+form div.commands:not(:has(.private_notes)) {
+  justify-content: end;
+}
 td.add-notes div.private_notes label {
   font-size: smaller;
 }
