@@ -242,6 +242,30 @@ IssueNoteList.fn = {
     this._scrollToNextNote(event, true);
   },
 
+  toggleAddNotesField() {
+    const container = $("div.autoscroll-outer");
+    if (container.length === 0) return;
+
+    const className = "hide-add-note-fields";
+    container.toggleClass(className);
+    localStorage.setItem(
+      "issue-note-list_hide-add-note-fields",
+      container.hasClass(className)
+    );
+  },
+
+  submitAll() {
+    if (!window.confirm(IssueNoteList.resources.textSubmitAllConfirmation)) {
+      return;
+    }
+
+    $("form[id^=add_notes_form-]").each((_, e) => {
+      if ($(e).find("textarea").val() !== "") {
+        $(e).find("input[type=submit]")[0].click();
+      }
+    });
+  },
+
   initialize() {
     const self = this;
 

@@ -9,7 +9,7 @@
     <thead>
       <tr>
         <th class="issue-status">
-          <div class="buttons">
+          <div class="buttons buttons-left-side">
             <button class="prev ui-icon  ui-icon-triangle-1-n" onclick="IssueNoteList.fn.prevNote(event)"></button>
             <button class="next ui-icon  ui-icon-triangle-1-s" onclick="IssueNoteList.fn.nextNote(event)"></button>
           </div>
@@ -21,9 +21,36 @@
           <% end %>
           </div>
         </th>
-        <th class="recent_notes"><%= l(:label_recent_notes, scope: :issue_note_list) %></th>
+        <th class="recent_notes">
+          <%= l(:label_recent_notes, scope: :issue_note_list) %>
+          <div class="buttons buttons-right-side">
+            <% if @allowed_to_add_note %>
+            <button
+              class="mui-icon mui-icon-right_panel_open show-add-note-fields"
+              title="<%= l(:label_show_the_new_note_input_fields, scope: :issue_note_list) %>"
+              onclick="IssueNoteList.fn.toggleAddNotesField()">
+            </button>
+            <% end %>
+          </div>
+        </th>
         <% if @allowed_to_add_note %>
-        <th class="add-notes"><%= l(:label_add_note) %></th>
+        <th class="add-notes">
+          <%= l(:label_add_note) %>
+          <div class="buttons buttons-left-side">
+            <button
+              class="mui-icon mui-icon-forms_add_on"
+              title="<%= l(:label_submit_all, scope: :issue_note_list) %>"
+              onclick="IssueNoteList.fn.submitAll()">
+            </button>
+          </div>
+          <div class="buttons buttons-right-side">
+            <button
+              class="mui-icon mui-icon-right_panel_close hide-add-note-fields"
+              title="<%= l(:label_hide_the_new_note_input_fields, scope: :issue_note_list) %>"
+              onclick="IssueNoteList.fn.toggleAddNotesField()">
+            </button>
+          </div>
+        </th>
         <% end %>
       </tr>
     </thead>
@@ -150,20 +177,4 @@
     </tbody>
   </table>
 </div>
-<% if @allowed_to_add_note %>
-<div class="toggle-add-notes-field-buttons">
-    <button class="mui-icon mui-icon-right_panel_open show-add-note-fields" title="<%= l(:label_show_the_new_note_input_fields, scope: :issue_note_list) %>"></button>
-    <button class="mui-icon mui-icon-right_panel_close hide-add-note-fields" title="<%= l(:label_hide_the_new_note_input_fields, scope: :issue_note_list) %>"></button>
-    <script>
-      $('.toggle-add-notes-field-buttons > button.show-add-note-fields').click(function() {
-        $('div.autoscroll-outer').removeClass('hide-add-note-fields');
-        localStorage.setItem("issue-note-list_hide-add-note-fields", false);
-      });
-      $('.toggle-add-notes-field-buttons > button.hide-add-note-fields').click(function() {
-        $('div.autoscroll-outer').addClass('hide-add-note-fields');
-        localStorage.setItem("issue-note-list_hide-add-note-fields", true);
-      });
-    </script>
-</div>
-<% end %>
 </div>
