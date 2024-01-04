@@ -355,6 +355,13 @@ IssueNoteList.fn = {
             .css({ height: "", width: "" })
             .outerHeight($(this).children("td.issue-status").outerHeight());
         },
+        create: function () {
+          const $tr = $(this);
+          $tr.children(".ui-resizable-handle").on("dblclick", () => {
+            // Reset height
+            $tr.children("td").css("height", "");
+          });
+        },
       });
     });
   },
