@@ -342,6 +342,21 @@ IssueNoteList.fn = {
 
     // Enable simple editor
     this.enableSimpleEditor($("#enable_simple_editor:checked").length === 1);
+
+    // Apply Resizable to cell height
+    $("table.list.issues tr").each(function () {
+      $(this).resizable({
+        handles: "s",
+        alsoResize: $(this).children("td.issue-status, td.recent_notes"),
+        resize: function () {
+          $(this)
+            .css("height", "")
+            .children("td.recent_notes")
+            .css({ height: "", width: "" })
+            .outerHeight($(this).children("td.issue-status").outerHeight());
+        },
+      });
+    });
   },
 };
 
