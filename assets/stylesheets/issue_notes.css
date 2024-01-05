@@ -1,6 +1,9 @@
 table.list.issues > tbody > tr.issue > td {
   box-sizing: border-box;
 }
+table.list.issues > tbody > tr.issue > td.recent_notes {
+  box-sizing: content-box;
+}
 
 table.list th.issue-status,
 table.list td.issue-status {

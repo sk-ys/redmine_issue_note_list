@@ -178,6 +178,9 @@ IssueNoteList.fn = {
         ? $("table.list.issues").find("tr.issue")
         : $(e.target).closest("tr.issue");
     $target.toggleClass("variable-height", state);
+    if (!state) {
+      $target.children("td").css("height", "");
+    }
   },
 
   enableSimpleEditor(enable = true) {
@@ -348,13 +351,6 @@ IssueNoteList.fn = {
       $(this).resizable({
         handles: "s",
         alsoResize: $(this).children("td.issue-status, td.recent_notes"),
-        resize: function () {
-          $(this)
-            .css("height", "")
-            .children("td.recent_notes")
-            .css({ height: "", width: "" })
-            .outerHeight($(this).children("td.issue-status").outerHeight());
-        },
         create: function () {
           const $tr = $(this);
           $tr.children(".ui-resizable-handle").on("dblclick", () => {
@@ -362,6 +358,16 @@ IssueNoteList.fn = {
             $tr.children("td").css("height", "");
           });
         },
+        start: function () {
+          $(this).addClass("variable-height");
+        },
+        stop: function () {
+          $(this)
+            .css("height", "")
+            .children("td.recent_notes")
+            .css({ width: "" });
+        },
+        minHeight: 100,
       });
     });
   },
