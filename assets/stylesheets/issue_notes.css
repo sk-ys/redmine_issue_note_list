@@ -1,6 +1,9 @@
 table.list.issues > tbody > tr.issue > td {
   box-sizing: border-box;
 }
+table.list.issues > tbody > tr.issue > td.recent_notes {
+  box-sizing: content-box;
+}
 
 table.list th.issue-status,
 table.list td.issue-status {
@@ -670,6 +673,9 @@ tr.collapse-row .close-pop-out-button-outer {
 tr.collapse-row .close-pop-out-button-outer > button {
   padding: 2px 3px;
 }
+tr.collapse-row > div.ui-resizable-handle {
+  display: none;
+}
 div.journal.has-notes h4.note-header div.header-text span.note-id {
   font-size: smaller;
   border: 1px solid #aaa;
@@ -927,7 +933,7 @@ button.mui-icon-right_panel_open {
 }
 
 /* Fix formatting of P elements in table cells */
-table.issues.list div.journal>.wiki>p {
+table.issues.list div.journal > .wiki > p {
   margin: revert;
 }
 
