@@ -1,6 +1,6 @@
 // Update class
 (() => {
-  if (location.pathname.split("/").slice(-1)[0] === "issue_notes") {
+  if (location.pathname.split("/").slice(-1)[0] === "issue_note_list") {
     var target = $("#change-<%= @journal.id  %>");
     target
       .addClass("issue-<%= @journal.issue.id %>")

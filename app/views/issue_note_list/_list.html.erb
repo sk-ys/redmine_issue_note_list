@@ -133,7 +133,7 @@
                         title: l(:label_pop_out, scope: :issue_note_list)
                         ) %>
                 </div>
-                <%= form_tag "#{issue_notes_path}/#{issue.id.to_s}/add_note",
+                <%= form_tag "#{issue_note_list_index_path}/#{issue.id.to_s}/add_note",
                   id: "add_notes_form-#{issue.id.to_s}", multipart: true,
                   remote: true do %>
                   <%= hidden_field_tag 'number_of_notes', @number_of_notes, id: "number_of_notes-#{issue.id}" %>
