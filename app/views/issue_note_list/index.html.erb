@@ -1,7 +1,7 @@
 <!-- This program is based on redmine/app/views/issues/index.html.erb -->
 <% content_for :header_tags do %>
-  <%= stylesheet_link_tag "issue_notes", plugin: "redmine_issue_note_list" %>
-  <%= javascript_include_tag "issue_notes", plugin: "redmine_issue_note_list" %>
+  <%= stylesheet_link_tag "issue_note_list", plugin: "redmine_issue_note_list" %>
+  <%= javascript_include_tag "issue_note_list", plugin: "redmine_issue_note_list" %>
   <%= javascript_tag type: "application/javascript" do -%>
     var IssueNoteList = IssueNoteList || {};
     IssueNoteList.resources = {
@@ -37,7 +37,7 @@
 </div>
 <h2><%= @query.new_record? ? l(:redmine_issue_note_list) : @query.name %></h2>
 <% html_title(@query.new_record? ? l(:redmine_issue_note_list) : @query.name) %>
-<%= form_tag(_project_issue_notes_path(@project), method: :get, id: "query_form") do %>
+<%= form_tag(_project_issue_note_list_index_path(@project), method: :get, id: "query_form") do %>
   <p id="issue_note_list_query">
     <span>
       <%= label_tag :number_of_notes, l(:label_number_of_notes, scope: :issue_note_list) %>
@@ -71,7 +71,7 @@
     <p class="nodata"><%= l(:label_no_data) %></p>
   <% else %>
     <%= render_query_totals(@query) %>
-    <%= render partial: "issue_notes/list", locals: {issues: @issues, query: @query} %>
+    <%= render partial: "issue_note_list/list", locals: {issues: @issues, query: @query} %>
     <span class="pagination"><%= pagination_links_full @issue_pages, @issue_count %></span>
   <% end %>
   <% other_formats_links do |f| %>
@@ -81,7 +81,7 @@
   <% end %>
   <div id="csv-export-options" style="display:none;">
     <h3 class="title"><%= l(:label_export_options, export_format: "CSV") %></h3>
-    <%= form_tag(_project_issue_notes_path(@project, format: "csv"), method: :get, id: "csv-export-form") do %>
+    <%= form_tag(_project_issue_note_list_index_path(@project, format: "csv"), method: :get, id: "csv-export-form") do %>
       <%= query_as_hidden_field_tags(@query) %>
       <%= hidden_field_tag("query_name", @query.name) %>
       <p>

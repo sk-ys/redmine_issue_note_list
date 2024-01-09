@@ -15,7 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-module IssueNotesHelper
+module IssueNoteListHelper
   # This program is based on QueriesHelper#column_header
   def column_names(query, column, options = {})
     if column.sortable?
@@ -51,11 +51,11 @@ module IssueNotesHelper
     content_tag("span", content, class: column.css_classes)
   end
 
-  def _project_issue_notes_path(project, *args)
+  def _project_issue_note_list_index_path(project, *args)
     if project
-      project_issue_notes_path(project, *args)
+      project_issue_note_list_index_path(project, *args)
     else
-      issue_notes_path(*args)
+      issue_note_list_index_path(*args)
     end
   end
 
@@ -90,13 +90,13 @@ module IssueNotesHelper
                          title: l(:button_edit),
                          class: "icon-only mui-icon-edit")
       content << link_to(l(:button_quote),
-                        quoted_issue_path(issue, journal_id: journal, journal_indice: indice, issue_notes: 1),
+                        quoted_issue_path(issue, journal_id: journal, journal_indice: indice, issue_note_list: 1),
                         remote: true,
                         method: "post",
                         title: l(:button_quote),
                         class: "icon-only mui-icon-chat_paste_go")
       content << link_to(l(:button_delete),
-                        delete_note_issue_note_path(journal.id, number_of_notes: @number_of_notes),
+                        delete_note_issue_note_list_path(journal.id, number_of_notes: @number_of_notes),
                         remote: true,
                         method: 'delete',
                         title: l(:button_delete),
