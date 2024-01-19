@@ -377,6 +377,9 @@ div.journal.has-notes > form > div.jstBlock div.jstTabs,
 div.add_notes_form_outer > form > div.jstBlock div.jstTabs {
   z-index: 1;
 }
+td.add-notes div.add_notes_form_outer > form > div.jstBlock div.jstTabs {
+  width: calc(100% - 30px);
+}
 div.journal.has-notes > form > div.jstBlock div.jstEditor,
 div.add_notes_form_outer > form > div.jstBlock div.jstEditor {
   flex: 1 1 auto;
@@ -507,6 +510,8 @@ div.add_notes_form_outer .action_buttons {
   justify-content: flex-end;
   height: 22px;
   align-items: center;
+  position: absolute;
+  right: 5px;
 }
 div.add_notes_form_outer .action_buttons > button.pop-out {
   margin: 0;
