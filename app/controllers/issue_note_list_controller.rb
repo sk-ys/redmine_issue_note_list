@@ -29,6 +29,8 @@ class IssueNoteListController < ApplicationController
   helper :queries
   helper :journals
   include QueriesHelper
+  
+  @@private_notes_filter_params = ["contains", "only", "not_contains"]
 
   def index
     @is_global = @project == nil
@@ -186,5 +188,6 @@ class IssueNoteListController < ApplicationController
     @enable_variable_height = params["enable_variable_height"] == "1"
     @notes_field_height = params["notes_field_height"]&.to_i || 200
     @enable_simple_editor = params["enable_simple_editor"] == "1"
+    @private_notes_filter = @@private_notes_filter_params.include?(params["private_notes_filter"]) ? params["private_notes_filter"] : "contains"
   end
 end
