@@ -63,6 +63,14 @@
         onclick: "IssueNoteList.fn.enableSimpleEditor(this.checked)" %>
       <%= label_tag :enable_simple_editor, l(:label_simple_editor, scope: :issue_note_list) %>
     </span>
+    <span>
+      <%= label_tag :private_notes_filter, l(:field_private_notes) %>
+      <%= select_tag :private_notes_filter, options_for_select([
+        [l(:label_contains), 'contains'],
+        [l(:label_only, scope: :issue_note_list), 'only'],
+        [l(:label_not_contains), 'not_contains']],
+        selected: @private_notes_filter) %>
+    </span>
   </p>
   <%= render partial: "queries/query_form" %>
 <% end %>

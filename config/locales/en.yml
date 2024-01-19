@@ -30,3 +30,4 @@ en:
     label_show_the_new_note_input_fields: Show the new note input field.
     label_submit_all: Submit all
     text_submit_all_confirmation: This action will submit the contents of all forms. Are you sure you want to proceed?
+    label_only: only

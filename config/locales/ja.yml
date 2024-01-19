@@ -30,3 +30,4 @@ ja:
     label_show_the_new_note_input_fields: コメント追加欄を表示する
     label_submit_all: 全てを送信
     text_submit_all_confirmation: この操作により、すべてのフォームの内容が送信されます。続行しますか？
+    label_only: のみ

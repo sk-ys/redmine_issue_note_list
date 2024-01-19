@@ -1,3 +1,11 @@
+/* Adjust the position of query params */
+#issue_note_list_query > span {
+  float: left;
+}
+#query_form_with_buttons {
+  clear: left;
+}
+
 table.list.issues > tbody > tr.issue > td {
   box-sizing: border-box;
 }

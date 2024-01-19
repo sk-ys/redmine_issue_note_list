@@ -123,9 +123,10 @@ module IssueNoteListHelper
     content.html_safe
   end
 
-  def render_issue_notes(issue, number_of_notes)
+  def render_issue_notes(issue, number_of_notes, private_notes_filter)
     journals = issue.visible_journals_with_index
       .select{|journal| journal.notes.present?}
+      .select{|journal| filter_private_notes(journal, private_notes_filter)}
       .reverse
       .take(number_of_notes)
 
@@ -149,5 +150,21 @@ module IssueNoteListHelper
     classes << "collapse-row" if enable_compact_mode
     classes << "variable-height" if enable_variable_height
     classes.join(" ")
+  end
+  
+  private
+  
+  def filter_private_notes(journal, filter_param)
+    case filter_param
+    when "contains" then
+      return true
+    when "only" then
+      return journal.private_notes == true
+    when "not_contains" then
+      return journal.private_notes == false
+    else
+      # default
+      return true
+    end
   end
 end

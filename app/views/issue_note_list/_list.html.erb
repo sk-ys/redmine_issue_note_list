@@ -116,7 +116,7 @@
             </div>
           </td>
           <td class="recent_notes">
-            <%= render_issue_notes(issue, @number_of_notes) %>
+            <%= render_issue_notes(issue, @number_of_notes, @private_notes_filter) %>
           </td>
           <% if @allowed_to_add_note %>
           <td class="add-notes">
