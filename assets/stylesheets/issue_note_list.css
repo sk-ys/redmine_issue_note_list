@@ -256,7 +256,7 @@ table.list tr.issue td.recent_notes {
 }
 div.journal_outer {
   min-width: 150px;
-  padding: 0 5px;
+  padding: 0 2px 2px 2px;
   border-left: 1px solid #ddd;
   overflow: hidden;
 }
@@ -272,13 +272,34 @@ div.add_notes_form_outer > div.journal.has-notes {
 }
 div.journal.has-notes > div.wiki {
   width: 100%;
-  overflow: auto;
   text-align: left;
   padding: 5px;
   box-sizing: border-box;
-  overflow: auto;
   flex: 1 1 auto;
+  scrollbar-width: 0.5em;
 }
+.wiki {
+  overflow: overlay;
+}
+.wiki::-webkit-scrollbar {
+  width: 0.5em;
+  height: 0.5em;
+}
+.wiki::-webkit-scrollbar-track,
+.wiki::-webkit-scrollbar-corner {
+  display: none;
+}
+.wiki::-webkit-scrollbar-thumb {
+  background-color: #a8a8a833;
+  border-radius: 3px;
+}
+.wiki:hover::-webkit-scrollbar-thumb {
+  background-color: #a8a8a888;
+}
+.wiki::-webkit-scrollbar-thumb:hover {
+  background-color: #a8a8a8ff;
+}
+
 table.list.issues > tbody > tr.issue.variable-height > td {
   height: auto;
 }
