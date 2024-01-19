@@ -347,7 +347,7 @@ IssueNoteList.fn = {
     this.enableSimpleEditor($("#enable_simple_editor:checked").length === 1);
 
     // Apply Resizable to cell height
-    $("table.list.issues tr").each(function () {
+    $("table.list.issues > tbody > tr").each(function () {
       $(this).resizable({
         handles: "s",
         alsoResize: $(this).children("td.issue-status, td.recent_notes"),
