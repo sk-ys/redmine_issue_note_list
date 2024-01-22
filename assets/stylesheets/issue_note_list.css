@@ -522,6 +522,7 @@ div.add_notes_form_outer .action_buttons > button.pop-out {
   margin: 0;
   cursor: pointer;
   opacity: 0.3;
+  z-index: 1;
 }
 div.add_notes_form_outer .action_buttons > button.pop-out:hover {
   opacity: 1;
