@@ -124,8 +124,7 @@ tr td.issue-status > div.columns {
   width: 250px;
 }
 tr td.issue-status > div.columns {
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: overlay;
   height: calc(100% - 18px) !important;
   box-sizing: border-box;
 }
@@ -281,22 +280,28 @@ div.journal.has-notes > div.wiki {
 .wiki {
   overflow: overlay;
 }
-.wiki::-webkit-scrollbar {
+.wiki::-webkit-scrollbar,
+td.issue-status>div.columns::-webkit-scrollbar {
   width: 0.5em;
   height: 0.5em;
 }
 .wiki::-webkit-scrollbar-track,
-.wiki::-webkit-scrollbar-corner {
+td.issue-status>div.columns::-webkit-scrollbar-track,
+.wiki::-webkit-scrollbar-corner,
+td.issue-status>div.columns::-webkit-scrollbar-corner {
   display: none;
 }
-.wiki::-webkit-scrollbar-thumb {
+.wiki::-webkit-scrollbar-thumb,
+td.issue-status>div.columns::-webkit-scrollbar-thumb {
   background-color: #a8a8a833;
   border-radius: 3px;
 }
-.wiki:hover::-webkit-scrollbar-thumb {
+.wiki:hover::-webkit-scrollbar-thumb,
+td.issue-status>div.columns:hover::-webkit-scrollbar-thumb {
   background-color: #a8a8a888;
 }
-.wiki::-webkit-scrollbar-thumb:hover {
+.wiki::-webkit-scrollbar-thumb:hover,
+td.issue-status>div.columns::-webkit-scrollbar-thumb:hover {
   background-color: #a8a8a8ff;
 }
 
