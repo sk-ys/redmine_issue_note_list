@@ -368,6 +368,7 @@ IssueNoteList.fn = {
             .css({ width: "" });
         },
         minHeight: 100,
+        autoHide: true
       });
     });
   },
