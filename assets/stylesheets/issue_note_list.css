@@ -281,27 +281,27 @@ div.journal.has-notes > div.wiki {
   overflow: overlay;
 }
 .wiki::-webkit-scrollbar,
-td.issue-status>div.columns::-webkit-scrollbar {
+td.issue-status > div.columns::-webkit-scrollbar {
   width: 0.5em;
   height: 0.5em;
 }
 .wiki::-webkit-scrollbar-track,
-td.issue-status>div.columns::-webkit-scrollbar-track,
+td.issue-status > div.columns::-webkit-scrollbar-track,
 .wiki::-webkit-scrollbar-corner,
-td.issue-status>div.columns::-webkit-scrollbar-corner {
+td.issue-status > div.columns::-webkit-scrollbar-corner {
   display: none;
 }
 .wiki::-webkit-scrollbar-thumb,
-td.issue-status>div.columns::-webkit-scrollbar-thumb {
+td.issue-status > div.columns::-webkit-scrollbar-thumb {
   background-color: #a8a8a833;
   border-radius: 3px;
 }
 .wiki:hover::-webkit-scrollbar-thumb,
-td.issue-status>div.columns:hover::-webkit-scrollbar-thumb {
+td.issue-status > div.columns:hover::-webkit-scrollbar-thumb {
   background-color: #a8a8a888;
 }
 .wiki::-webkit-scrollbar-thumb:hover,
-td.issue-status>div.columns::-webkit-scrollbar-thumb:hover {
+td.issue-status > div.columns::-webkit-scrollbar-thumb:hover {
   background-color: #a8a8a8ff;
 }
 
@@ -979,4 +979,19 @@ table.issues.list div.journal > .wiki > p {
 
 #content.simple-editor .jstTabs.tabs {
   display: none;
+}
+
+/*
+Temporary solution to the issue of broken design of the code block in the issue
+list block column.
+Reference: https://www.redmine.org/issues/40303
+TODO: Font-weight is incorrect
+*/
+table.issues td.block_column code {
+  white-space: break-spaces;
+  span {
+    font-weight: revert;
+    display: revert;
+    margin-bottom: revert;
+  }
 }
