@@ -163,7 +163,7 @@
         </tr>
         <% query.block_columns.each do |column|
             if (text = column_content(column, issue)) && text.present? -%>
-          <tr class="<%= current_cycle %>">
+          <tr class="issue-<%= issue.id %> <%= current_cycle %> <%= "variable-height" if @enable_variable_height %>">
             <td colspan="<%= @allowed_to_add_note ? 3 : 2 %>" class="<%= column.css_classes %> block_column">
               <% if query.block_columns.count > 1 %>
                 <span><%= column.caption %></span>

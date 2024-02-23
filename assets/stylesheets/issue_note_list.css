@@ -995,3 +995,7 @@ table.issues td.block_column code {
     margin-bottom: revert;
   }
 }
+
+table.issues tr:not(.variable-height) td.block_column > div.wiki {
+  max-height: 150px;
+}

@@ -173,13 +173,17 @@ IssueNoteList.fn = {
   },
 
   setNoteHeightVariable(e, state = true) {
-    const $target =
-      e === "all" || e.ctrlKey || e.metaKey
-        ? $("table.list.issues").find("tr.issue")
-        : $(e.target).closest("tr.issue");
+    let $target;
+    if (e === "all" || e.ctrlKey || e.metaKey) {
+      $target = $("table.list.issues > tbody > tr");
+    } else {
+      const issueId = $(e.target).closest("tr.issue").attr("id");
+      $target = $(`#${issueId}, table.list.issues > tbody > tr.${issueId}`);
+    }
     $target.toggleClass("variable-height", state);
     if (!state) {
       $target.children("td").css("height", "");
+      $target.find("> td > div.wiki").css("height", "");
     }
   },
 
@@ -350,12 +354,33 @@ IssueNoteList.fn = {
     $("table.list.issues > tbody > tr").each(function () {
       $(this).resizable({
         handles: "s",
-        alsoResize: $(this).children("td.issue-status, td.recent_notes"),
+        alsoResize: $(this).find(
+          "> td.issue-status" +
+            ", > td.recent_notes" +
+            ", > td.block_column > div.wiki"
+        ),
         create: function () {
           const $tr = $(this);
           $tr.children(".ui-resizable-handle").on("dblclick", () => {
             // Reset height
-            $tr.children("td").css("height", "");
+            const $targets = $tr.find(
+              "> td.issue-status" +
+                ", > td.recent_notes" +
+                ", > td.block_column > div.wiki"
+            );
+
+            if (
+              $targets
+                .map((_, e) => /(^|\w)height:/.test($(e).attr("style")))
+                .toArray()
+                .includes(true)
+            ) {
+              $targets.each((_, e) => $(e).css("height", ""));
+            } else if (!$tr.hasClass("variable-height")) {
+              $tr.addClass("variable-height");
+            } else {
+              $tr.removeClass("variable-height");
+            }
           });
         },
         start: function () {
@@ -364,11 +389,11 @@ IssueNoteList.fn = {
         stop: function () {
           $(this)
             .css("height", "")
-            .children("td.recent_notes")
-            .css({ width: "" });
+            .find("> td.recent_notes" + ", > td.block_column > div.wiki")
+            .css("width", "");
         },
         minHeight: 100,
-        autoHide: true
+        autoHide: true,
       });
     });
   },
