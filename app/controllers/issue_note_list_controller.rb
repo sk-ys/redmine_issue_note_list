@@ -29,7 +29,7 @@ class IssueNoteListController < ApplicationController
   helper :queries
   helper :journals
   include QueriesHelper
-  
+
   @@private_notes_filter_params = ["contains", "only", "not_contains"]
 
   def index
@@ -183,7 +183,7 @@ class IssueNoteListController < ApplicationController
   end
 
   def parse_params
-    @number_of_notes = params["number_of_notes"]&.to_i || 3
+    @number_of_notes = params["number_of_notes"]&.to_i || 2
     @enable_compact_mode = params["enable_compact_mode"] == "1"
     @enable_variable_height = params["enable_variable_height"] == "1"
     @notes_field_height = params["notes_field_height"]&.to_i || 200
