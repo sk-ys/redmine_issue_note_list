@@ -717,7 +717,7 @@ tr.collapse-row .close-pop-out-button-outer > button {
   padding: 2px 3px;
 }
 tr.collapse-row > div.ui-resizable-handle {
-  display: none;
+  display: none !important;
 }
 div.journal.has-notes h4.note-header div.header-text span.note-id {
   font-size: smaller;
