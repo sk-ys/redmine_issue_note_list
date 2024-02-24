@@ -6,217 +6,238 @@
   clear: left;
 }
 
-table.list.issues > tbody > tr.issue > td {
-  box-sizing: border-box;
-}
-table.list.issues > tbody > tr.issue > td.recent_notes {
-  box-sizing: content-box;
+/* Style for each table cell */
+table.list.issues {
+  & > tbody > tr.issue {
+    & > td {
+      box-sizing: border-box;
+
+      &.recent_notes {
+        box-sizing: content-box;
+      }
+    }
+
+    &.variable-height > td {
+      height: auto;
+    }
+  }
+
+  /* Style for issue-status */
+  :is(th.issue-status, td.issue-status) {
+    width: 250px;
+    vertical-align: top;
+    border-right: 1px solid #ccc;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  tr {
+    &:not(.idnt) td.issue-status {
+      padding: 5px;
+    }
+    &.idnt td.issue-status {
+      background-position-y: 10px;
+    }
+    td.issue-status {
+      & > :is(div.header, div.columns) {
+        width: 250px;
+      }
+      & > div.columns {
+        overflow: overlay;
+        height: calc(100% - 18px) !important;
+        box-sizing: border-box;
+      }
+    }
+  }
+
+  th {
+    position: relative;
+
+    /* Style for issue-status column filter */
+    &.issue-status {
+      overflow: unset;
+
+      & > div.column-filter {
+        vertical-align: top;
+        padding: 2px 10px;
+        overflow: hidden;
+        position: absolute;
+        background-color: inherit;
+        box-sizing: border-box;
+        right: 0;
+        top: 0;
+        z-index: 1;
+        height: 100%;
+        align-items: center;
+        border: 1px solid transparent;
+        border-radius: 5px;
+
+        &:hover {
+          overflow: unset;
+          height: auto;
+          border: 1px solid #ccc;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          padding-bottom: 10px;
+        }
+      }
+    }
+
+    /* Style for buttons in table header */
+    .buttons {
+      position: absolute;
+      box-sizing: border-box;
+      top: 0;
+      margin: 0;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding: 0 2px;
+
+      &.buttons-right-side {
+        right: 0;
+      }
+
+      &.buttons-left-side {
+        left: 0;
+      }
+
+      & > button {
+        cursor: pointer;
+        margin: auto 1px;
+        opacity: 0.3;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  & > thead > tr > th.issue-status > div.column-filter {
+    & > span {
+      display: none;
+      margin-top: 0.3em;
+
+      &:first-of-type {
+        display: flex;
+        user-select: none;
+        -webkit-user-select: none;
+        margin-top: 0;
+        margin-left: auto;
+        margin-right: -4px;
+        cursor: pointer;
+      }
+
+      & > a.icon.sort {
+        padding-left: 0;
+      }
+    }
+
+    &:hover > span {
+      display: flex;
+    }
+  }
+
+  & > tbody > tr.issue {
+    & > td.issue-status {
+      & > div.columns > div.column-items {
+        display: flex;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        align-items: baseline;
+
+        & > span {
+          flex: 1 1 auto;
+          text-align: left;
+          text-overflow: ellipsis;
+          overflow: hidden;
+
+          &:first-of-type:before {
+            content: ": ";
+          }
+
+          &.done_ratio > table.progress {
+            float: none;
+            display: inline-table;
+          }
+        }
+      }
+    }
+
+    & > td.recent_notes {
+      display: grid;
+      grid-auto-flow: column;
+      align-items: stretch;
+      justify-content: center;
+      grid-auto-columns: 1fr;
+      padding: 3px;
+    }
+  }
+
+  /* Style for scrollbar in wiki field */
+  div.wiki {
+    overflow: overlay;
+  }
+  div.wiki::-webkit-scrollbar,
+  td.issue-status > div.columns::-webkit-scrollbar {
+    width: 0.5em;
+    height: 0.5em;
+  }
+  div.wiki::-webkit-scrollbar-track,
+  td.issue-status > div.columns::-webkit-scrollbar-track,
+  div.wiki::-webkit-scrollbar-corner,
+  td.issue-status > div.columns::-webkit-scrollbar-corner {
+    display: none;
+  }
+  div.wiki::-webkit-scrollbar-thumb,
+  td.issue-status > div.columns::-webkit-scrollbar-thumb {
+    background-color: #a8a8a833;
+    border-radius: 3px;
+  }
+  div.wiki:hover::-webkit-scrollbar-thumb,
+  td.issue-status > div.columns:hover::-webkit-scrollbar-thumb {
+    background-color: #a8a8a888;
+  }
+  div.wiki::-webkit-scrollbar-thumb:hover,
+  td.issue-status > div.columns::-webkit-scrollbar-thumb:hover {
+    background-color: #a8a8a8ff;
+  }
 }
 
-table.list th.issue-status,
-table.list td.issue-status {
-  width: 250px;
-  vertical-align: top;
-  border-right: 1px solid #ccc;
-  overflow-x: hidden;
-  overflow-y: auto;
-  padding-right: 5px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-table.list tr:not(.idnt) td.issue-status {
-  padding: 5px;
-}
-table.list tr.idnt td.issue-status {
-  background-position-y: 10px;
-}
-
-table.list.issues th {
-  position: relative;
-}
-
-table.list th.issue-status {
-  overflow: unset;
-}
-table.list th.issue-status > div.column-filter {
-  vertical-align: top;
-  padding: 2px 10px;
-  overflow: hidden;
-  position: absolute;
-  background-color: inherit;
-  box-sizing: border-box;
-  right: 0;
-  top: 0;
-  z-index: 1;
-  height: 100%;
-  align-items: center;
-  border: 1px solid transparent;
-  border-radius: 5px;
-}
-table.list th.issue-status > div.column-filter:hover {
-  overflow: unset;
-  height: auto;
-  border: 1px solid #ccc;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding-bottom: 10px;
-}
-
-table.list.issues > thead > tr > th.issue-status > div.column-filter > span {
-  display: none;
-  margin-top: 0.3em;
-}
-table.list.issues
-  > thead
-  > tr
-  > th.issue-status
-  > div.column-filter
-  > span:first-of-type {
-  display: flex;
-  user-select: none;
-  -webkit-user-select: none;
-  margin-top: 0;
-  margin-left: auto;
-  margin-right: -4px;
-  cursor: pointer;
-}
-table.list.issues
-  > thead
-  > tr
-  > th.issue-status
-  > div.column-filter:hover
-  > span {
-  display: flex;
-}
-
-table.list.issues th .buttons {
-  position: absolute;
-  box-sizing: border-box;
-  top: 0;
-  margin: 0;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  padding: 0 2px;
-}
-
-table.list.issues th .buttons.buttons-right-side {
-  right: 0;
-}
-
-table.list.issues th .buttons.buttons-left-side {
-  left: 0;
-}
-
-table.list.issues th .buttons > button {
-  cursor: pointer;
-  margin: auto 1px;
-  opacity: 0.3;
-}
-
-table.list.issues th .buttons > button:hover {
-  opacity: 1;
-}
-
-tr td.issue-status > div.header,
-tr td.issue-status > div.columns {
-  width: 250px;
-}
-tr td.issue-status > div.columns {
-  overflow: overlay;
-  height: calc(100% - 18px) !important;
-  box-sizing: border-box;
-}
 /* The width of child issue elements is affected by application.css */
-tr.idnt-1 td.issue-status > div.header,
-tr.idnt-1 td.issue-status > div.columns {
+tr.idnt-1 td.issue-status > :is(div.header, div.columns) {
   width: calc(250px + 5px - 24px);
 }
-tr.idnt-2 td.issue-status > div.header,
-tr.idnt-2 td.issue-status > div.columns {
+tr.idnt-2 td.issue-status > :is(div.header, div.columns) {
   width: calc(250px + 5px - 40px);
 }
-tr.idnt-3 td.issue-status > div.header,
-tr.idnt-3 td.issue-status > div.columns {
+tr.idnt-3 td.issue-status > :is(div.header, div.columns) {
   width: calc(250px + 5px - 56px);
 }
-tr.idnt-4 td.issue-status > div.header,
-tr.idnt-4 td.issue-status > div.columns {
+tr.idnt-4 td.issue-status > :is(div.header, div.columns) {
   width: calc(250px + 5px - 72px);
 }
-tr.idnt-5 td.issue-status > div.header,
-tr.idnt-5 td.issue-status > div.columns {
+tr.idnt-5 td.issue-status > :is(div.header, div.columns) {
   width: calc(250px + 5px - 88px);
 }
-tr.idnt-6 td.issue-status > div.header,
-tr.idnt-6 td.issue-status > div.columns {
+tr.idnt-6 td.issue-status > :is(div.header, div.columns) {
   width: calc(250px + 5px - 104px);
 }
-tr.idnt-7 td.issue-status > div.header,
-tr.idnt-7 td.issue-status > div.columns {
+tr.idnt-7 td.issue-status > :is(div.header, div.columns) {
   width: calc(250px + 5px - 120px);
 }
-tr.idnt-8 td.issue-status > div.header,
-tr.idnt-8 td.issue-status > div.columns {
+tr.idnt-8 td.issue-status > :is(div.header, div.columns) {
   width: calc(250px + 5px - 136px);
 }
-tr.idnt-9 td.issue-status > div.header,
-tr.idnt-9 td.issue-status > div.columns {
+tr.idnt-9 td.issue-status > :is(div.header, div.columns) {
   width: calc(250px + 5px - 152px);
 }
-table.list.issues
-  > tbody
-  > tr.issue
-  > td.issue-status
-  > div.columns
-  > div.column-items {
-  display: flex;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  align-items: baseline;
-}
-table.list.issues
-  > tbody
-  > tr.issue
-  > td.issue-status
-  > div.columns
-  > div.column-items
-  > span {
-  flex: 1 1 auto;
-  text-align: left;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-table.list.issues
-  > thead
-  > tr
-  > th.issue-status
-  > div.column-filter
-  > span
-  > a.icon.sort {
-  padding-left: 0;
-}
-table.list.issues
-  > tbody
-  > tr.issue
-  > td.issue-status
-  > div.columns
-  > div.column-items
-  > span:first-of-type:before {
-  content: ": ";
-}
-table.list.issues
-  > tbody
-  > tr.issue
-  > td.issue-status
-  > div.columns
-  > div.column-items
-  > span.done_ratio
-  > table.progress {
-  float: none;
-  display: inline-table;
-}
+
+/* Style for header of issue-status field */
 td.issue-status div.header {
   display: flex;
   justify-content: space-between;
@@ -224,16 +245,20 @@ td.issue-status div.header {
   white-space: nowrap;
   height: 18px;
   font-weight: bold;
+
+  div.header-text {
+    flex: 0 1 auto;
+    text-align: left;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  div.header-buttons {
+    padding: 0;
+  }
 }
-td.issue-status div.header div.header-text {
-  flex: 0 1 auto;
-  text-align: left;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-td.issue-status div.header div.header-buttons {
-  padding: 0;
-}
+
+/* Style for fixed-height button and variable-height button */
 tr.issue:not(.variable-height)
   > td.issue-status
   div.header-buttons
@@ -245,260 +270,226 @@ tr.issue.variable-height
   display: none;
 }
 
-table.list tr.issue td.recent_notes {
-  display: grid;
-  grid-auto-flow: column;
-  align-items: stretch;
-  justify-content: center;
-  grid-auto-columns: 1fr;
-  padding: 3px;
-}
 div.journal_outer {
   min-width: 150px;
   padding: 0 2px 2px 2px;
   border-left: 1px solid #ddd;
   overflow: hidden;
+
+  &:first-of-type {
+    border-left: none;
+  }
 }
-div.journal_outer:first-of-type {
-  border-left: none;
-}
-div.journal_outer > div.journal.has-notes,
-div.add_notes_form_outer > div.journal.has-notes {
+
+/* Style for notes */
+:is(div.journal_outer, div.add_notes_form_outer) > div.journal.has-notes {
   padding-left: 0;
   display: flex;
   flex-direction: column;
   height: 100%;
 }
-div.journal.has-notes > div.wiki {
-  width: 100%;
-  text-align: left;
-  padding: 5px;
-  box-sizing: border-box;
-  flex: 1 1 auto;
-  scrollbar-width: 0.5em;
-}
-.wiki {
-  overflow: overlay;
-}
-.wiki::-webkit-scrollbar,
-td.issue-status > div.columns::-webkit-scrollbar {
-  width: 0.5em;
-  height: 0.5em;
-}
-.wiki::-webkit-scrollbar-track,
-td.issue-status > div.columns::-webkit-scrollbar-track,
-.wiki::-webkit-scrollbar-corner,
-td.issue-status > div.columns::-webkit-scrollbar-corner {
-  display: none;
-}
-.wiki::-webkit-scrollbar-thumb,
-td.issue-status > div.columns::-webkit-scrollbar-thumb {
-  background-color: #a8a8a833;
-  border-radius: 3px;
-}
-.wiki:hover::-webkit-scrollbar-thumb,
-td.issue-status > div.columns:hover::-webkit-scrollbar-thumb {
-  background-color: #a8a8a888;
-}
-.wiki::-webkit-scrollbar-thumb:hover,
-td.issue-status > div.columns::-webkit-scrollbar-thumb:hover {
-  background-color: #a8a8a8ff;
+div.journal.has-notes {
+  & > div.wiki {
+    width: 100%;
+    text-align: left;
+    padding: 5px;
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    scrollbar-width: 0.5em;
+  }
+
+  &.private-notes > div.wiki {
+    margin-left: 0;
+    padding-left: 3px;
+  }
+
+  & > h4.note-header {
+    text-align: left;
+    overflow: hidden;
+    padding-left: 0;
+    padding-right: 0;
+    text-overflow: ellipsis;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex: 0 0 auto;
+
+    & > .header-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  & > div.note-info {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: -10px;
+    margin-bottom: 5px;
+    text-align: right;
+    padding-right: 3px;
+    font-size: smaller;
+    flex: 0 0 12px;
+  }
+
+  & > form {
+    position: relative;
+    text-align: left;
+    display: block;
+
+    & > div.jstBlock {
+      text-align: center;
+      flex-direction: column;
+      flex: 1 1 auto;
+
+      & > div.jstTabs {
+        text-align: left;
+      }
+
+      div.jstEditor > textarea.wiki-edit {
+        width: 100%;
+      }
+    }
+
+    /* Notes submit button */
+    & > p {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      margin: 0 5px;
+    }
+  }
 }
 
-table.list.issues > tbody > tr.issue.variable-height > td {
-  height: auto;
-}
-div.journal.has-notes.private-notes > div.wiki {
-  margin-left: 0;
-  padding-left: 3px;
+/* Style for header-buttons */
+:is(div.journal.has-notes, td.issue-status) div.header-buttons {
+  display: flex;
+  flex-direction: row;
+
+  & > * {
+    margin-left: 2px;
+    opacity: 0.3;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  & > button.ui-icon {
+    cursor: pointer;
+    margin-top: 0;
+  }
 }
 
-div.journal.has-notes > h4.note-header {
-  text-align: left;
-  overflow: hidden;
-  padding-left: 0;
-  padding-right: 0;
-  text-overflow: ellipsis;
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  flex: 0 0 auto;
-}
-div.journal.has-notes > h4.note-header > .header-text {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-div.journal.has-notes div.header-buttons,
-td.issue-status div.header-buttons {
-  display: flex;
-  flex-direction: row;
-}
-div.journal.has-notes div.header-buttons > *,
-td.issue-status div.header-buttons > * {
-  margin-left: 2px;
-  opacity: 0.3;
-}
-div.journal.has-notes div.header-buttons > button.ui-icon,
-td.issue-status div.header-buttons > button.ui-icon {
-  cursor: pointer;
-  margin-top: 0;
-}
-div.journal.has-notes div.header-buttons > *:hover,
-td.issue-status div.header-buttons > *:hover {
-  opacity: 1;
-}
-div.journal.has-notes > div.note-info {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-top: -10px;
-  margin-bottom: 5px;
-  text-align: right;
-  padding-right: 3px;
-  font-size: smaller;
-  flex: 0 0 12px;
-}
-div.journal.has-notes > form {
-  position: relative;
-  text-align: left;
-  display: block;
-}
+/* Style for notes form */
 td.add-notes form label[for$="private_notes"],
 td.recent_notes div.journal.has-notes > form label[for$="private_notes"] {
   font-size: smaller;
   position: absolute;
   left: 24px;
-  bottom: 12px;
+  bottom: 6px;
 }
-div.journal.has-notes > form > div.jstBlock {
-  text-align: center;
-  flex-direction: column;
-  flex: 1 1 auto;
-}
-div.journal.has-notes > form > div.jstBlock > div.jstTabs {
-  text-align: left;
-}
-div.journal.has-notes > form > div.jstBlock div.jstTabs,
-div.add_notes_form_outer > form > div.jstBlock div.jstTabs {
-  z-index: 1;
-}
-td.add-notes div.add_notes_form_outer > form > div.jstBlock div.jstTabs {
-  width: calc(100% - 30px);
-}
-div.journal.has-notes > form > div.jstBlock div.jstEditor,
-div.add_notes_form_outer > form > div.jstBlock div.jstEditor {
-  flex: 1 1 auto;
-  position: relative;
-}
-div.journal.has-notes > form > div.jstBlock div.jstEditor > textarea.wiki-edit {
-  width: 100%;
-}
-div.journal.has-notes > form > p {
-  /* submit button */
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  margin: 0 5px;
+:is(div.journal.has-notes, div.add_notes_form_outer) > form > div.jstBlock {
+  div.jstTabs {
+    z-index: 1;
+  }
+
+  div.jstEditor {
+    flex: 1 1 auto;
+    position: relative;
+  }
 }
 
-table.list td.add-notes {
+/* Style for add-notes field */
+table.list.issues td.add-notes {
   vertical-align: top;
   padding: 3px;
   width: 300px;
   min-width: 200px;
   left: 0 !important; /* Support resizable */
+
+  div.add_notes_form_outer > form > div.jstBlock div.jstTabs {
+    width: calc(100% - 30px);
+  }
 }
-table.list th.add-notes,
-table.list td.add-notes {
+
+/* Style for all notes field */
+table.list.issues :is(th.add-notes, td.add-notes) {
   border-left: 1px solid #ccc;
   position: relative;
 }
-div.journal.has-notes > form,
-td.add-notes > form {
-  vertical-align: top;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  flex: 1 1 auto;
-}
-div.journal.has-notes div.jstBlock > .jstEditor > textarea,
-td.add-notes textarea {
-  resize: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-}
-div.journal.has-notes div.jstBlock,
-td.add-notes div.jstBlock {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-  margin-bottom: 3px;
-}
-div.journal.has-notes div.jstEditor > div.wiki-preview,
-td.add-notes div.jstEditor div.wiki-preview {
-  text-align: left;
-  width: 100%;
-  box-sizing: border-box;
-  margin-bottom: 0;
-  overflow: auto;
-  min-height: unset !important;
-  height: 100%;
-  position: absolute;
-}
-form div.commands {
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-}
-form div.commands:not(:has(.private_notes)) {
-  justify-content: end;
-}
-td.add-notes div.private_notes label {
-  font-size: smaller;
-}
-td.add-notes.submitted div.jstTabs {
-  display: none;
-}
-td.add-notes.submitted div.wiki-preview {
-  background-color: #fff0;
-  border: 0;
-}
-div.journal.has-notes > form > input[name="journal[private_notes]"] {
-  margin-bottom: 6px;
+
+/* Style for notes form */
+:is(div.journal.has-notes, div.add_notes_form_outer) {
+  & > form {
+    vertical-align: top;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1 1 auto;
+
+    div.commands {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+
+      &:not(:has(.private_notes)) {
+        justify-content: end;
+      }
+    }
+
+    div.jstBlock {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+      margin-bottom: 3px;
+
+      & > div.jstEditor {
+        div.wiki-preview {
+          text-align: left;
+          width: 100%;
+          box-sizing: border-box;
+          margin-bottom: 0;
+          overflow: auto;
+          min-height: unset !important;
+          height: 100%;
+          position: absolute;
+        }
+
+        & > textarea {
+          resize: none;
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+  }
 }
 
-div.ui-dialog.note-pop-out-dialog {
-  box-shadow: #0003 0 0 5px 0;
-}
-div.ui-dialog.note-pop-out-dialog div.journal.has-notes {
-  padding: 5px;
-  /* ??? */
-  width: unset !important;
-}
-div.ui-dialog.note-pop-out-dialog
-  div.journal.has-notes
-  div.header-buttons
-  button.collapse,
-div.ui-dialog.note-pop-out-dialog
-  div.journal.has-notes
-  div.header-buttons
-  button.expand,
-div.ui-dialog.note-pop-out-dialog
-  div.journal.has-notes
-  div.header-buttons
-  button.pop-out {
-  display: none;
-}
-div.ui-dialog.note-pop-out-dialog div.journal.has-notes > div.wiki {
-  height: auto;
-  flex: 1 1 auto;
+/* Style for add-notes cell */
+td.add-notes {
+  div.private_notes label {
+    font-size: smaller;
+  }
+
+  &.submitted {
+    div.jstTabs {
+      display: none;
+    }
+
+    div.wiki-preview {
+      background-color: #fff0;
+      border: 0;
+    }
+  }
 }
 
+/* Style for add-notes form */
 div.add_notes_form_outer {
   position: absolute;
   display: flex;
@@ -509,7 +500,15 @@ div.add_notes_form_outer {
   top: 0;
   left: 0;
   padding: 3px;
+
+  & > form {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+  }
 }
+
+/* Style for action buttons */
 :is(div.add_notes_form_outer, td.block_column) .action_buttons {
   display: flex;
   justify-content: flex-end;
@@ -530,211 +529,239 @@ div.add_notes_form_outer {
     }
   }
 }
-div.ui-dialog.note-pop-out-dialog
-  div.add_notes_form_outer
-  .action_buttons
-  > button.pop-out {
-  display: none;
-}
-div.add_notes_form_outer > form {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-}
 
+/* Style for pop-out-dialog */
 div.ui-dialog.note-pop-out-dialog {
   display: flex;
   flex-direction: column;
+  box-shadow: #0003 0 0 5px 0;
+
+  div.journal.has-notes {
+    padding: 5px;
+    /* ??? */
+    width: unset !important;
+
+    & > form > input[name="journal[private_notes]"] {
+      margin-bottom: 6px;
+    }
+
+    div.header-buttons :is(button.collapse, button.expand, button.pop-out) {
+      display: none;
+    }
+    & > div.wiki {
+      height: auto;
+      flex: 1 1 auto;
+    }
+  }
+
+  div.add_notes_form_outer .action_buttons > button.pop-out {
+    display: none;
+  }
+
+  div.ui-dialog-content {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    height: auto !important;
+    width: auto !important;
+
+    & > * {
+      flex: 0 0 auto;
+    }
+
+    & > form {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+
+      & > div.jstBlock {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 3px;
+      }
+    }
+
+    form > div.jstBlock > div.jstEditor {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+
+      & > * {
+        flex: 1 1 auto;
+        resize: none;
+        min-height: auto !important;
+        width: 100%;
+      }
+    }
+  }
+
+  form[id^="journal-"][id$="-form"] {
+    & > div.jstBlock {
+      margin-bottom: 40px;
+    }
+    & > input[name="journal[private_notes]"] {
+      position: absolute;
+      bottom: 10px;
+      left: 5px;
+      height: 15px;
+
+      & + label {
+        position: absolute;
+        bottom: 15px;
+        left: 30px;
+        line-height: 15px;
+      }
+    }
+  }
+
+  .ui-dialog-titlebar-button-group {
+    position: absolute;
+    right: 30px;
+    height: 20px;
+    top: 50%;
+    margin-top: -10px;
+    display: inline-flex;
+
+    button {
+      width: 20px;
+      height: 20px;
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  &.maximized {
+    width: 100% !important;
+    height: 100% !important;
+    box-sizing: border-box !important;
+    top: 0 !important;
+    left: 0 !important;
+    position: fixed !important;
+  }
+
+  &.fixed {
+    position: fixed !important;
+  }
+
+  &:is(.fix-to-left, .fix-to-right) {
+    height: calc(100% - (0.2em + 1px) * 2) !important;
+    top: 0 !important;
+  }
+
+  &.fix-to-left {
+    left: 0 !important;
+  }
+
+  &:is(.fix-to-top, .fix-to-bottom) {
+    width: calc(100% - (0.2em + 1px) * 2) !important;
+    left: 0 !important;
+  }
+
+  &.fix-to-top {
+    top: 0 !important;
+  }
+
+  &.fix-to-left .ui-dialog-titlebar-button-group button.fix-to-left,
+  &.fix-to-right .ui-dialog-titlebar-button-group button.fix-to-right,
+  &.fix-to-top .ui-dialog-titlebar-button-group button.fix-to-top,
+  &.fix-to-bottom .ui-dialog-titlebar-button-group button.fix-to-bottom,
+  &.maximized .ui-dialog-titlebar-button-group button.maximized {
+    background-color: #ddd;
+  }
+
+  &:not(.maximized):not(.fixed)
+    .ui-dialog-titlebar-button-group
+    button.restore {
+    display: none;
+  }
+
+  /* Prevent tooltip flickering on dialog */
+  & > .ui-tooltip {
+    width: max-content;
+  }
 }
-div.ui-dialog.note-pop-out-dialog div.ui-dialog-content {
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-  height: auto !important;
-  width: auto !important;
-}
-div.ui-dialog.note-pop-out-dialog div.ui-dialog-content > * {
-  flex: 0 0 auto;
-}
-div.ui-dialog.note-pop-out-dialog div.ui-dialog-content > form {
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-}
-div.ui-dialog.note-pop-out-dialog div.ui-dialog-content > form > div.jstBlock {
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 3px;
-}
-div.ui-dialog.note-pop-out-dialog
-  form[id^="journal-"][id$="-form"]
-  > div.jstBlock {
-  margin-bottom: 40px;
-}
-div.ui-dialog.note-pop-out-dialog form > div.jstBlock > div.jstEditor {
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-}
-div.ui-dialog.note-pop-out-dialog form > div.jstBlock > div.jstEditor > * {
-  flex: 1 1 auto;
-  resize: none;
-  min-height: auto !important;
-  width: 100%;
-}
-div.ui-dialog.note-pop-out-dialog
-  form[id^="journal-"][id$="-form"]
-  > div.jstBlock {
-  margin-bottom: 40px;
-}
-div.ui-dialog.note-pop-out-dialog
-  form[id^="journal-"][id$="-form"]
-  > input[name="journal[private_notes]"] {
-  position: absolute;
-  bottom: 10px;
-  left: 5px;
-  height: 15px;
-}
-div.ui-dialog.note-pop-out-dialog
-  form[id^="journal-"][id$="-form"]
-  > input[name="journal[private_notes]"]
-  + label {
-  position: absolute;
-  bottom: 15px;
-  left: 30px;
-  line-height: 15px;
-}
-div.close-pop-out-button-outer {
+
+/* Style for close-pop-out-button */
+table.issues div.close-pop-out-button-outer {
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  & > button {
+    height: min-content;
+    white-space: normal;
+    display: flex;
+    align-items: center;
+
+    & > .ui-button-icon {
+      margin-bottom: 0;
+    }
+  }
 }
 td.block_column {
   position: relative;
-}
-td.block_column div.close-pop-out-button-outer {
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-div.close-pop-out-button-outer > button {
-  height: min-content;
-  white-space: normal;
-  display: flex;
-  align-items: center;
-}
-table.issues div.close-pop-out-button-outer > button > .ui-button-icon {
-  margin-bottom: 0;
-}
-div.ui-dialog.note-pop-out-dialog .ui-dialog-titlebar-button-group {
-  position: absolute;
-  right: 30px;
-  height: 20px;
-  top: 50%;
-  margin-top: -10px;
-  display: inline-flex;
-}
-div.ui-dialog.note-pop-out-dialog .ui-dialog-titlebar-button-group button {
-  width: 20px;
-  height: 20px;
-  padding: 0;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-.ui-dialog.note-pop-out-dialog.maximized {
-  width: 100% !important;
-  height: 100% !important;
-  box-sizing: border-box !important;
-  top: 0 !important;
-  left: 0 !important;
-  position: fixed !important;
-}
-.ui-dialog.note-pop-out-dialog.fixed {
-  position: fixed !important;
-}
-.ui-dialog.note-pop-out-dialog.fix-to-left,
-.ui-dialog.note-pop-out-dialog.fix-to-right {
-  height: calc(100% - (0.2em + 1px) * 2) !important;
-  top: 0 !important;
-}
-.ui-dialog.note-pop-out-dialog.fix-to-left {
-  left: 0 !important;
-}
-.ui-dialog.note-pop-out-dialog.fix-to-top,
-.ui-dialog.note-pop-out-dialog.fix-to-bottom {
-  width: calc(100% - (0.2em + 1px) * 2) !important;
-  left: 0 !important;
-}
-.ui-dialog.note-pop-out-dialog.fix-to-top {
-  top: 0 !important;
-}
-.ui-dialog.note-pop-out-dialog.fix-to-left
-  .ui-dialog-titlebar-button-group
-  button.fix-to-left,
-.ui-dialog.note-pop-out-dialog.fix-to-right
-  .ui-dialog-titlebar-button-group
-  button.fix-to-right,
-.ui-dialog.note-pop-out-dialog.fix-to-top
-  .ui-dialog-titlebar-button-group
-  button.fix-to-top,
-.ui-dialog.note-pop-out-dialog.fix-to-bottom
-  .ui-dialog-titlebar-button-group
-  button.fix-to-bottom,
-.ui-dialog.note-pop-out-dialog.maximized
-  .ui-dialog-titlebar-button-group
-  button.maximized {
-  background-color: #ddd;
-}
-.ui-dialog.note-pop-out-dialog:not(.maximized):not(.fixed)
-  .ui-dialog-titlebar-button-group
-  button.restore {
-  display: none;
-}
-/* Prevent tooltip flickering on dialog */
-.ui-dialog.note-pop-out-dialog > .ui-tooltip {
-  width: max-content;
+
+  div.close-pop-out-button-outer {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 }
 
-tr.collapse-row > td {
-  height: 30px !important;
-  overflow: hidden;
-}
-tr.collapse-row form {
-  display: none;
-}
-tr.collapse-row td.issue-status div.column-items {
-  display: none !important;
-}
-tr.collapse-row > td.block_column {
-  display: none;
-}
-tr.collapse-row div.journal.has-notes > div.note-info,
-tr.collapse-row div.journal.has-notes > div.wiki {
-  display: none;
-}
-tr.collapse-row
-  div.header-buttons
-  > *:not(button.pop-out):not(button.expand-row) {
-  display: none;
+/* Style for compact mode */
+tr.collapse-row {
+  & > td {
+    height: 30px !important;
+    overflow: hidden;
+  }
+
+  form {
+    display: none;
+  }
+
+  td.issue-status div.column-items {
+    display: none !important;
+  }
+
+  & > td.block_column {
+    display: none;
+  }
+
+  div.journal.has-notes {
+    & > :is(div.note-info, div.wiki) {
+      display: none;
+    }
+
+    & > div.note-info {
+      display: none;
+    }
+  }
+
+  div.header-buttons > *:not(button.pop-out):not(button.expand-row) {
+    display: none;
+  }
+
+  .close-pop-out-button-outer {
+    height: 30px;
+
+    & > button {
+      padding: 2px 3px;
+    }
+  }
+
+  & > div.ui-resizable-handle {
+    display: none !important;
+  }
 }
 tr:not(.collapse-row) div.header-buttons > button.expand-row {
   display: none;
 }
-tr.collapse-row div.journal.has-notes > div.note-info {
-  display: none;
-}
-tr.collapse-row .close-pop-out-button-outer {
-  height: 30px;
-}
-tr.collapse-row .close-pop-out-button-outer > button {
-  padding: 2px 3px;
-}
-tr.collapse-row > div.ui-resizable-handle {
-  display: none !important;
-}
+
+/* Enclose the note-ID with a square frame */
 div.journal.has-notes h4.note-header div.header-text span.note-id {
   font-size: smaller;
   border: 1px solid #aaa;
@@ -742,10 +769,11 @@ div.journal.has-notes h4.note-header div.header-text span.note-id {
   padding: 1px 2px;
   color: #aaa;
 }
+
+/* Style for issue-note-list query. */
 #issue_note_list_query > span {
   margin-right: 10px;
 }
-
 #notes_field_height_outer {
   display: inline-flex;
   flex-direction: row;
@@ -760,6 +788,7 @@ div.journal.has-notes h4.note-header div.header-text span.note-id {
   margin-left: 10px;
 }
 
+/* Button and icon styles */
 button.mui-icon {
   width: 16px;
   height: 16px;
@@ -767,11 +796,11 @@ button.mui-icon {
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
-}
 
-button.mui-icon:hover {
-  background-size: 18px;
-  background-position: center;
+  &:hover {
+    background-size: 18px;
+    background-position: center;
+  }
 }
 
 button.mui-icon-open_in_new {
@@ -891,94 +920,6 @@ button.mui-icon-dock_to_bottom:focus {
   background-position: center;
 }
 
-/* Fixed table header */
-@media screen and (min-width: 900px) and (min-height: 800px) {
-  #content > div.contextual {
-    position: absolute;
-    right: 15px;
-  }
-  #content > p.query-totals {
-    margin: 0;
-  }
-}
-@media screen and (min-height: 800px) {
-  #wrapper {
-    height: 100vh;
-  }
-
-  #wrapper > div {
-    flex: 0 0 auto;
-  }
-
-  #wrapper > div#main {
-    flex: 1 1 auto;
-    overflow: auto;
-  }
-
-  #content {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    flex: 1 1 auto;
-  }
-
-  #content > * {
-    flex: 0 0 auto;
-  }
-
-  #content > div.autoscroll-outer {
-    flex: 1 1 auto;
-    overflow: hidden;
-    position: relative;
-  }
-
-  #content > div.autoscroll-outer > div.autoscroll {
-    height: calc(100% - 1em);
-    padding: 0;
-    margin: 0;
-    grid-template-columns: 1fr auto;
-    border: 1px solid #ddd;
-  }
-
-  table.list.issues {
-    overflow: auto;
-    margin: 0;
-    border: none;
-  }
-
-  table.list > thead {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-  }
-}
-
-/* Support theme "farend bleuclair" */
-#wrapper textarea.wiki-edit,
-.modal textarea.wiki-edit {
-  height: 100%;
-}
-@media screen and (min-width: 900px) and (min-height: 800px) {
-  body.theme-Bleuclair
-    #content
-    > #sidebar-switch-panel:not([style*="display: none;"])
-    + div.contextual {
-    right: 43px;
-  }
-  #sidebar-switch-panel {
-    position: absolute;
-    top: 16px;
-    left: auto;
-    right: 4px;
-  }
-}
-
-div.autoscroll-outer.hide-add-note-fields .add-notes,
-div.autoscroll-outer.hide-add-note-fields button.hide-add-note-fields,
-div.autoscroll-outer:not(.hide-add-note-fields) button.show-add-note-fields {
-  display: none;
-}
-
 button.mui-icon-right_panel_close {
   background-image: url(../images/right_panel_close_FILL0_wght400_GRAD0_opsz20.svg);
   border: none;
@@ -989,6 +930,92 @@ button.mui-icon-right_panel_open {
   background-image: url(../images/right_panel_open_FILL0_wght400_GRAD0_opsz20.svg);
   border: none;
   background-color: transparent;
+}
+
+/* Fixed table header */
+@media screen and (min-width: 900px) and (min-height: 800px) {
+  #content {
+    & > div.contextual {
+      position: absolute;
+      right: 15px;
+    }
+    & > p.query-totals {
+      margin: 0;
+    }
+  }
+}
+@media screen and (min-height: 800px) {
+  #wrapper {
+    height: 100vh;
+
+    & > div {
+      flex: 0 0 auto;
+    }
+    & > div#main {
+      flex: 1 1 auto;
+      overflow: auto;
+    }
+  }
+
+  #content {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    flex: 1 1 auto;
+
+    & > * {
+      flex: 0 0 auto;
+    }
+
+    & > div.autoscroll-outer {
+      flex: 1 1 auto;
+      overflow: hidden;
+      position: relative;
+
+      & > div.autoscroll {
+        height: calc(100% - 1em);
+        padding: 0;
+        margin: 0;
+        grid-template-columns: 1fr auto;
+        border: 1px solid #ddd;
+      }
+    }
+  }
+
+  table.list.issues {
+    overflow: auto;
+    margin: 0;
+    border: none;
+
+    & > thead {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+  }
+}
+
+/* Support theme "farend bleuclair" */
+:is(#wrapper, .modal) textarea.wiki-edit {
+  height: 100%;
+}
+@media screen and (min-width: 900px) and (min-height: 800px) {
+  body.theme-Bleuclair #content > #sidebar-switch-panel {
+    position: absolute;
+    top: 16px;
+    left: auto;
+    right: 4px;
+
+    &:not([style*="display: none;"]) + div.contextual {
+      right: 43px;
+    }
+  }
+}
+
+div.autoscroll-outer.hide-add-note-fields
+  :is(.add-notes, button.hide-add-note-fields),
+div.autoscroll-outer:not(.hide-add-note-fields) button.show-add-note-fields {
+  display: none;
 }
 
 /* Fix formatting of P elements in table cells */
