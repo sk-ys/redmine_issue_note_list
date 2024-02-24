@@ -281,27 +281,27 @@ div.journal.has-notes > div.wiki {
   overflow: overlay;
 }
 .wiki::-webkit-scrollbar,
-td.issue-status>div.columns::-webkit-scrollbar {
+td.issue-status > div.columns::-webkit-scrollbar {
   width: 0.5em;
   height: 0.5em;
 }
 .wiki::-webkit-scrollbar-track,
-td.issue-status>div.columns::-webkit-scrollbar-track,
+td.issue-status > div.columns::-webkit-scrollbar-track,
 .wiki::-webkit-scrollbar-corner,
-td.issue-status>div.columns::-webkit-scrollbar-corner {
+td.issue-status > div.columns::-webkit-scrollbar-corner {
   display: none;
 }
 .wiki::-webkit-scrollbar-thumb,
-td.issue-status>div.columns::-webkit-scrollbar-thumb {
+td.issue-status > div.columns::-webkit-scrollbar-thumb {
   background-color: #a8a8a833;
   border-radius: 3px;
 }
 .wiki:hover::-webkit-scrollbar-thumb,
-td.issue-status>div.columns:hover::-webkit-scrollbar-thumb {
+td.issue-status > div.columns:hover::-webkit-scrollbar-thumb {
   background-color: #a8a8a888;
 }
 .wiki::-webkit-scrollbar-thumb:hover,
-td.issue-status>div.columns::-webkit-scrollbar-thumb:hover {
+td.issue-status > div.columns::-webkit-scrollbar-thumb:hover {
   background-color: #a8a8a8ff;
 }
 
@@ -510,22 +510,25 @@ div.add_notes_form_outer {
   left: 0;
   padding: 3px;
 }
-div.add_notes_form_outer .action_buttons {
+:is(div.add_notes_form_outer, td.block_column) .action_buttons {
   display: flex;
   justify-content: flex-end;
   height: 22px;
   align-items: center;
   position: absolute;
   right: 5px;
-}
-div.add_notes_form_outer .action_buttons > button.pop-out {
-  margin: 0;
-  cursor: pointer;
-  opacity: 0.3;
-  z-index: 1;
-}
-div.add_notes_form_outer .action_buttons > button.pop-out:hover {
-  opacity: 1;
+  top: 5px;
+
+  & > button.pop-out {
+    margin: 0;
+    cursor: pointer;
+    opacity: 0.3;
+    z-index: 1;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
 }
 div.ui-dialog.note-pop-out-dialog
   div.add_notes_form_outer
@@ -608,9 +611,23 @@ div.close-pop-out-button-outer {
   align-items: center;
   justify-content: center;
 }
+td.block_column {
+  position: relative;
+}
+td.block_column div.close-pop-out-button-outer {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 div.close-pop-out-button-outer > button {
   height: min-content;
   white-space: normal;
+  display: flex;
+  align-items: center;
+}
+table.issues div.close-pop-out-button-outer > button > .ui-button-icon {
+  margin-bottom: 0;
 }
 div.ui-dialog.note-pop-out-dialog .ui-dialog-titlebar-button-group {
   position: absolute;
@@ -691,6 +708,9 @@ tr.collapse-row form {
 tr.collapse-row td.issue-status div.column-items {
   display: none !important;
 }
+tr.collapse-row > td.block_column {
+  display: none;
+}
 tr.collapse-row div.journal.has-notes > div.note-info,
 tr.collapse-row div.journal.has-notes > div.wiki {
   display: none;
@@ -707,14 +727,13 @@ tr.collapse-row div.journal.has-notes > div.note-info {
   display: none;
 }
 tr.collapse-row .close-pop-out-button-outer {
-  font-size: smaller;
-  height: auto;
+  height: 30px;
 }
 tr.collapse-row .close-pop-out-button-outer > button {
   padding: 2px 3px;
 }
 tr.collapse-row > div.ui-resizable-handle {
-  display: none;
+  display: none !important;
 }
 div.journal.has-notes h4.note-header div.header-text span.note-id {
   font-size: smaller;
@@ -979,4 +998,23 @@ table.issues.list div.journal > .wiki > p {
 
 #content.simple-editor .jstTabs.tabs {
   display: none;
+}
+
+/*
+Temporary solution to the issue of broken design of the code block in the issue
+list block column.
+Reference: https://www.redmine.org/issues/40303
+TODO: Font-weight is incorrect
+*/
+table.issues td.block_column code {
+  white-space: break-spaces;
+  span {
+    font-weight: revert;
+    display: revert;
+    margin-bottom: revert;
+  }
+}
+
+table.issues tr:not(.variable-height) td.block_column > div.wiki {
+  max-height: 150px;
 }
