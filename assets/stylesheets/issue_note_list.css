@@ -691,6 +691,9 @@ tr.collapse-row form {
 tr.collapse-row td.issue-status div.column-items {
   display: none !important;
 }
+tr.collapse-row > td.block_column {
+  display: none;
+}
 tr.collapse-row div.journal.has-notes > div.note-info,
 tr.collapse-row div.journal.has-notes > div.wiki {
   display: none;

@@ -192,10 +192,13 @@ IssueNoteList.fn = {
   },
 
   collapseNoteRow(e, state = false) {
-    const $target =
-      e === "all" || e.ctrlKey || e.metaKey
-        ? $("table.list.issues").find("tr.issue")
-        : $(e.target).closest("tr.issue");
+    let $target;
+    if (e === "all" || e.ctrlKey || e.metaKey) {
+      $target = $("table.list.issues > tbody > tr");
+    } else {
+      const issueId = $(e.target).closest("tr.issue").attr("id");
+      $target = $(`#${issueId}, table.list.issues > tbody > tr.${issueId}`);
+    }
     $target.toggleClass("collapse-row", state);
   },
 
