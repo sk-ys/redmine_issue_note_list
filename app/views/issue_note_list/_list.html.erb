@@ -169,6 +169,17 @@
                 <span><%= column.caption %></span>
               <% end %>
               <%= text %>
+              <div class="action_buttons">
+                <%= button_tag(
+                      "",
+                      class: "pop-out mui-icon mui-icon-open_in_new",
+                      type: "button",
+                      onclick: "IssueNoteList.fn.toggleNotesPopOutState(" +
+                        "$(this).closest('td').children('div.wiki'), " +
+                        "'##{issue.id}: #{issue.subject} - #{column.caption}');",
+                      title: l(:label_pop_out, scope: :issue_note_list)
+                    ) %>
+              </div>
             </td>
           </tr>
         <% end -%>
