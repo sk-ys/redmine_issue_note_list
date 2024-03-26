@@ -1,0 +1,29 @@
+<!-- This program is based on redmine/app/views/issues/_list.html.erb -->
+
+<% query.block_columns.each do |column| -%>
+  <% if (text = column_content(column, issue)) && text.present? -%>
+  <% if !in_row -%>
+    <tr class="issue-<%= issue.id %> <%= current_cycle %><%= " collapse-row" if @enable_compact_mode %><%= " variable-height" if @enable_variable_height %>">
+  <% end -%>
+    <td colspan="<%= in_row ? 1 : (@allowed_to_add_note ? 3 : 2) %>" class="<%= column.css_classes %> block_column">
+      <% if !in_row && query.block_columns.count > 1 %>
+        <span><%= column.caption %></span>
+      <% end %>
+      <%= text %>
+      <div class="action_buttons">
+        <%= button_tag(
+              "",
+              class: "pop-out mui-icon mui-icon-open_in_new",
+              type: "button",
+              onclick: "IssueNoteList.fn.toggleNotesPopOutState(" +
+                "$(this).closest('td').children('div.wiki'), " +
+                "'##{issue.id}: #{issue.subject} - #{column.caption}');",
+              title: l(:label_pop_out, scope: :issue_note_list)
+            ) %>
+      </div>
+    </td>
+    <% if !in_row -%></tr><% end -%>
+  <% elsif in_row %>
+    <td class="<%= column.css_classes %> block_column empty"></td>
+  <% end -%>
+<% end -%>
