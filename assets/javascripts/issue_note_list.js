@@ -316,6 +316,16 @@ IssueNoteList.fn = {
         $(e.target).css("width", width);
       },
     });
+    $("td.block_column").resizable({
+      handles: "e",
+      start: function (e) {
+        // Set width only for active element
+        const width = $(e.target).width();
+        const firstClass = $(e.target).attr("class").split(" ")[0];
+        $(`td.block_column.${firstClass}`).css("width", "");
+        $(e.target).css("width", width);
+      },
+    });
 
     // Set notes field height
     function generateNotesFieldHeightStyle(height) {
