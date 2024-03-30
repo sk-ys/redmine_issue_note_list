@@ -21,8 +21,10 @@
           <% end %>
           </div>
         </th>
-        <% query.block_columns.each do |column| %>
-          <th><%= column.caption %></th>
+        <% if @inline_block_elements %>
+          <% query.block_columns.each do |column| %>
+            <th><%= column.caption %></th>
+          <% end %>
         <% end %>
         <th class="recent_notes">
           <%= l(:label_recent_notes, scope: :issue_note_list) %>
@@ -118,7 +120,7 @@
               <% end %>
             </div>
           </td>
-          <%= render partial: "issue_note_list/block_columns", locals: {issue: issue, query: @query, in_row: true} %>
+          <%= render partial: "issue_note_list/block_columns", locals: {issue: issue, query: @query, in_row: true} if @inline_block_elements %>
           <td class="recent_notes">
             <%= render_issue_notes(issue, @number_of_notes, @private_notes_filter) %>
           </td>
@@ -165,7 +167,7 @@
           </td>
           <% end %>
         </tr>
-        <%#= render partial: "issue_note_list/block_columns", locals: {issue: issue, query: @query, in_row: false} %>
+        <%= render partial: "issue_note_list/block_columns", locals: {issue: issue, query: @query, in_row: false} unless @inline_block_elements %>
       <% end -%>
     </tbody>
   </table>

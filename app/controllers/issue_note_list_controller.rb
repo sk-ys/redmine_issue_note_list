@@ -189,5 +189,6 @@ class IssueNoteListController < ApplicationController
     @notes_field_height = params["notes_field_height"]&.to_i || 200
     @enable_simple_editor = params["enable_simple_editor"] == "1"
     @private_notes_filter = @@private_notes_filter_params.include?(params["private_notes_filter"]) ? params["private_notes_filter"] : "contains"
+    @inline_block_elements = params["inline_block_elements"].present? ? params["inline_block_elements"] != "0" : true
   end
 end
