@@ -71,6 +71,11 @@
         [l(:label_not_contains), 'not_contains']],
         selected: @private_notes_filter) %>
     </span>
+    <span>
+      <%= hidden_field_tag :inline_block_elements, 0, id: "hidden_inline_block_elements" %>
+      <%= check_box_tag :inline_block_elements, 1, @inline_block_elements %>
+      <%= label_tag :inline_block_elements, l(:label_inline_block_elements, scope: :issue_note_list) %>
+    </span>
   </p>
   <%= render partial: "queries/query_form" %>
 <% end %>

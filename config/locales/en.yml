@@ -31,3 +31,4 @@ en:
     label_submit_all: Submit all
     text_submit_all_confirmation: This action will submit the contents of all forms. Are you sure you want to proceed?
     label_only: only
+    label_inline_block_elements: Inline block elements

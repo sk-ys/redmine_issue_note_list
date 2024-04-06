@@ -21,6 +21,11 @@
           <% end %>
           </div>
         </th>
+        <% if @inline_block_elements %>
+          <% query.block_columns.each do |column| %>
+            <th><%= column.caption %></th>
+          <% end %>
+        <% end %>
         <th class="recent_notes">
           <%= l(:label_recent_notes, scope: :issue_note_list) %>
           <div class="buttons buttons-right-side">
@@ -115,6 +120,7 @@
               <% end %>
             </div>
           </td>
+          <%= render partial: "issue_note_list/block_columns", locals: {issue: issue, query: @query, in_row: true} if @inline_block_elements %>
           <td class="recent_notes">
             <%= render_issue_notes(issue, @number_of_notes, @private_notes_filter) %>
           </td>
@@ -161,29 +167,7 @@
           </td>
           <% end %>
         </tr>
-        <% query.block_columns.each do |column|
-            if (text = column_content(column, issue)) && text.present? -%>
-          <tr class="issue-<%= issue.id %> <%= current_cycle %><%= " collapse-row" if @enable_compact_mode %><%= " variable-height" if @enable_variable_height %>">
-            <td colspan="<%= @allowed_to_add_note ? 3 : 2 %>" class="<%= column.css_classes %> block_column">
-              <% if query.block_columns.count > 1 %>
-                <span><%= column.caption %></span>
-              <% end %>
-              <%= text %>
-              <div class="action_buttons">
-                <%= button_tag(
-                      "",
-                      class: "pop-out mui-icon mui-icon-open_in_new",
-                      type: "button",
-                      onclick: "IssueNoteList.fn.toggleNotesPopOutState(" +
-                        "$(this).closest('td').children('div.wiki'), " +
-                        "'##{issue.id}: #{issue.subject} - #{column.caption}');",
-                      title: l(:label_pop_out, scope: :issue_note_list)
-                    ) %>
-              </div>
-            </td>
-          </tr>
-        <% end -%>
-      <% end -%>
+        <%= render partial: "issue_note_list/block_columns", locals: {issue: issue, query: @query, in_row: false} unless @inline_block_elements %>
       <% end -%>
     </tbody>
   </table>

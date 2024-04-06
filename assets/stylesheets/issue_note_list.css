@@ -15,6 +15,14 @@ table.list.issues {
       &.recent_notes {
         box-sizing: content-box;
       }
+
+      &.block_column {
+        padding: 3px;
+
+        & > .wiki {
+          height: 100%;
+        }
+      }
     }
 
     &.variable-height > td {
@@ -26,7 +34,6 @@ table.list.issues {
   :is(th.issue-status, td.issue-status) {
     width: 250px;
     vertical-align: top;
-    border-right: 1px solid #ccc;
     overflow-x: hidden;
     overflow-y: auto;
     padding-right: 5px;
@@ -414,7 +421,8 @@ table.list.issues td.add-notes {
 }
 
 /* Style for all notes field */
-table.list.issues :is(th.add-notes, td.add-notes) {
+table.list.issues > thead > tr > th:not(:first-of-type),
+table.list.issues > tbody > tr > td:not(:first-of-type) {
   border-left: 1px solid #ccc;
   position: relative;
 }
@@ -509,23 +517,29 @@ div.add_notes_form_outer {
 }
 
 /* Style for action buttons */
-:is(div.add_notes_form_outer, td.block_column) .action_buttons {
-  display: flex;
-  justify-content: flex-end;
-  height: 22px;
-  align-items: center;
-  position: absolute;
-  right: 5px;
-  top: 5px;
-
-  & > button.pop-out {
-    margin: 0;
-    cursor: pointer;
+:is(div.add_notes_form_outer, td.block_column) {
+  &:hover .action_buttons > button.pop-out {
     opacity: 0.3;
-    z-index: 1;
+  }
 
-    &:hover {
-      opacity: 1;
+  .action_buttons {
+    display: flex;
+    justify-content: flex-end;
+    height: 22px;
+    align-items: center;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+
+    & > button.pop-out {
+      margin: 0;
+      cursor: pointer;
+      opacity: 0.1;
+      z-index: 1;
+
+      &:hover {
+        opacity: 1;
+      }
     }
   }
 }
@@ -727,7 +741,7 @@ tr.collapse-row {
     display: none !important;
   }
 
-  & > td.block_column {
+  & > td.block_column:not([colspan="1"]) {
     display: none;
   }
 
@@ -1042,6 +1056,9 @@ table.issues td.block_column code {
   }
 }
 
-table.issues tr:not(.variable-height) td.block_column > div.wiki {
+table.issues
+  tr:not(.variable-height)
+  td.block_column:not([colspan="1"])
+  > div.wiki {
   max-height: 150px;
 }
