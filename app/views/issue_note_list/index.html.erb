@@ -16,7 +16,7 @@
     }
   <% end -%>
   <style>
-    table.list.issues > tbody > tr.issue > td { height: <%=@notes_field_height%>px; }
+    table.list.issues > tbody > tr.issue > td { height: <%=@query.notes_field_height%>px; }
   </style>
 <% end %>
 <div class="contextual">
@@ -39,27 +39,28 @@
 <% html_title(@query.new_record? ? l(:redmine_issue_note_list) : @query.name) %>
 <%= form_tag(_project_issue_note_list_index_path(@project), method: :get, id: "query_form") do %>
   <p id="issue_note_list_query">
+    <%= hidden_field_tag 'issue_note_list', '1' %>
     <span>
       <%= label_tag :number_of_notes, l(:label_number_of_notes, scope: :issue_note_list) %>
-      <%= number_field_tag :number_of_notes, @number_of_notes, min: 1, max: 10, autocomplete: false %>
+      <%= number_field_tag :number_of_notes, @query.number_of_notes, min: 1, max: 10, autocomplete: false %>
     </span>
     <span>
-      <%= check_box_tag :enable_compact_mode, 1, @enable_compact_mode,
+      <%= check_box_tag :enable_compact_mode, 1, @query.enable_compact_mode,
         onclick: "IssueNoteList.fn.collapseNoteRow('all', this.checked)" %>
       <%= label_tag :enable_compact_mode, l(:label_enable_compact_mode, scope: :issue_note_list) %>
     </span>
     <span>
-      <%= check_box_tag :enable_variable_height, 1, @enable_variable_height,
+      <%= check_box_tag :enable_variable_height, 1, @query.enable_variable_height,
         onclick: "IssueNoteList.fn.setNoteHeightVariable('all', this.checked)" %>
       <%= label_tag :enable_variable_height, l(:label_variable_height, scope: :issue_note_list) %>
     </span>
     <span id="notes_field_height_outer">
       <%= label_tag :notes_field_height, l(:label_notes_field_height, scope: :issue_note_list) %>
-      <%= number_field_tag :notes_field_height, @notes_field_height, min: 100, max: 1000, step: 10, autocomplete: false %>
+      <%= number_field_tag :notes_field_height, @query.notes_field_height, min: 100, max: 1000, step: 10, autocomplete: false %>
       <span id="adjust_notes_field_height_slider"></span>
     </span>
     <span>
-      <%= check_box_tag :enable_simple_editor, 1, @enable_simple_editor,
+      <%= check_box_tag :enable_simple_editor, 1, @query.enable_simple_editor,
         onclick: "IssueNoteList.fn.enableSimpleEditor(this.checked)" %>
       <%= label_tag :enable_simple_editor, l(:label_simple_editor, scope: :issue_note_list) %>
     </span>
@@ -69,11 +70,11 @@
         [l(:label_contains), 'contains'],
         [l(:label_only, scope: :issue_note_list), 'only'],
         [l(:label_not_contains), 'not_contains']],
-        selected: @private_notes_filter) %>
+        selected: @query.private_notes_filter) %>
     </span>
     <span>
       <%= hidden_field_tag :inline_block_elements, 0, id: "hidden_inline_block_elements" %>
-      <%= check_box_tag :inline_block_elements, 1, @inline_block_elements %>
+      <%= check_box_tag :inline_block_elements, 1, @query.inline_block_elements %>
       <%= label_tag :inline_block_elements, l(:label_inline_block_elements, scope: :issue_note_list) %>
     </span>
   </p>
