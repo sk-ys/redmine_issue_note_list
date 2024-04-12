@@ -23,14 +23,12 @@ class IssueNoteListController < ApplicationController
   before_action :find_optional_project, :only => [:index]
   before_action :find_issue, :only => [:add_note]
   before_action :find_journal, :authorize_edit_journal, :only => [:delete_note]
-  before_action :parse_params, :only => [:index, :add_note, :delete_note]
+  before_action :retrieve_queries_with_session, :only => [:index, :add_note, :delete_note]
 
   helper :issues
   helper :queries
   helper :journals
   include QueriesHelper
-
-  @@private_notes_filter_params = ["contains", "only", "not_contains"]
 
   def index
     @is_global = @project == nil
@@ -38,16 +36,6 @@ class IssueNoteListController < ApplicationController
       @allowed_to_add_note = Setting.plugin_redmine_issue_note_list[:add_note_to_issue_note_list_on_global]
     else
       @allowed_to_add_note = User.current.allowed_to?(:add_note_to_issue_note_list, @project)
-    end
-
-    use_session = true
-    retrieve_default_query(use_session)
-    retrieve_query(IssueQuery, use_session)
-
-    if @query.valid?
-      @issue_count = @query.issue_count
-      @issue_pages = Paginator.new @issue_count, per_page_option, params['page']
-      @issues = @query.issues(:offset => @issue_pages.offset, :limit => @issue_pages.per_page)
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -87,6 +75,18 @@ class IssueNoteListController < ApplicationController
     end
     if default_query = IssueQuery.default(project: @project)
       params[:query_id] = default_query.id
+    end
+  end
+
+  def retrieve_queries_with_session
+    use_session = true
+    retrieve_default_query(use_session)
+    retrieve_query(IssueQuery, use_session)
+
+    if @query.valid?
+      @issue_count = @query.issue_count
+      @issue_pages = Paginator.new @issue_count, per_page_option, params['page']
+      @issues = @query.issues(:offset => @issue_pages.offset, :limit => @issue_pages.per_page)
     end
   end
 
@@ -180,15 +180,5 @@ class IssueNoteListController < ApplicationController
 
   def authorize_edit_journal
     authorize_for :journal, :edit
-  end
-
-  def parse_params
-    @number_of_notes = params["number_of_notes"]&.to_i || 2
-    @enable_compact_mode = params["enable_compact_mode"] == "1"
-    @enable_variable_height = params["enable_variable_height"] == "1"
-    @notes_field_height = params["notes_field_height"]&.to_i || 200
-    @enable_simple_editor = params["enable_simple_editor"] == "1"
-    @private_notes_filter = @@private_notes_filter_params.include?(params["private_notes_filter"]) ? params["private_notes_filter"] : "contains"
-    @inline_block_elements = params["inline_block_elements"].present? ? params["inline_block_elements"] != "0" : true
   end
 end
