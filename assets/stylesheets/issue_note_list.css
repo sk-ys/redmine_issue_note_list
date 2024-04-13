@@ -50,12 +50,49 @@ table.list.issues {
     td.issue-status {
       & > :is(div.header, div.columns) {
         width: 250px;
+        min-width: 250px;
       }
       & > div.columns {
         overflow: overlay;
         height: calc(100% - 18px) !important;
         box-sizing: border-box;
       }
+    }
+    &.idnt-1 td.issue-status :is(.header, .columns) {
+      width: calc(250px - 24px + 5px);
+      min-width: calc(250px - 24px + 5px);
+    }
+    &.idnt-2 td.issue-status :is(.header, .columns) {
+      width: calc(250px - 40px + 5px);
+      min-width: calc(250px - 40px + 5px);
+    }
+    &.idnt-3 td.issue-status :is(.header, .columns) {
+      width: calc(250px - 56px + 5px);
+      min-width: calc(250px - 56px + 5px);
+    }
+    &.idnt-4 td.issue-status :is(.header, .columns) {
+      width: calc(250px - 72px + 5px);
+      min-width: calc(250px - 72px + 5px);
+    }
+    &.idnt-5 td.issue-status :is(.header, .columns) {
+      width: calc(250px - 88px + 5px);
+      min-width: calc(250px - 88px + 5px);
+    }
+    &.idnt-6 td.issue-status :is(.header, .columns) {
+      width: calc(250px - 104px + 5px);
+      min-width: calc(250px - 104px + 5px);
+    }
+    &.idnt-7 td.issue-status :is(.header, .columns) {
+      width: calc(250px - 120px + 5px);
+      min-width: calc(250px - 120px + 5px);
+    }
+    &.idnt-8 td.issue-status :is(.header, .columns) {
+      width: calc(250px - 136px + 5px);
+      min-width: calc(250px - 136px + 5px);
+    }
+    &.idnt-9 td.issue-status :is(.header, .columns) {
+      width: calc(250px - 152px + 5px);
+      min-width: calc(250px - 152px + 5px);
     }
   }
 
