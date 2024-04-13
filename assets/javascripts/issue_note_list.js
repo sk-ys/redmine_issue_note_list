@@ -305,7 +305,6 @@ IssueNoteList.fn = {
         $("td.issue-status").css("width", "");
         $(e.target).css("width", width);
       },
-      minWidth: $("td.issue-status").width(),
     });
     $("td.add-notes").resizable({
       handles: "w",
