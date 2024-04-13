@@ -408,6 +408,18 @@ IssueNoteList.fn = {
         autoHide: true,
       });
     });
+
+    // Enable double-click editing
+    $("td.recent_notes .journal.has-notes .wiki").on("dblclick", (e) => {
+      const $journal = $(e.target).closest("div.journal.has-notes");
+      const editButton = $journal.find(
+        ".note-header .header-buttons a[href$=edit]"
+      )[0];
+      if (editButton) {
+        editButton.click();
+        window.getSelection().empty();
+      }
+    });
   },
 };
 
