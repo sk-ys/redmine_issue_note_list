@@ -420,6 +420,34 @@ IssueNoteList.fn = {
         window.getSelection().empty();
       }
     });
+
+    // Focus on the textarea after clicking the Edit Journal button
+    // Observe .wiki attribute updating
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (
+          mutation.type === "attributes" &&
+          mutation.attributeName === "style"
+        ) {
+          const $textarea = $(mutation.target)
+            .closest(".journal.has-notes")
+            .find("textarea.wiki-edit");
+          if ($textarea.length > 0) {
+            $textarea.focus();
+            const textareaLength = $textarea.val().length;
+            $textarea.get(0).setSelectionRange(textareaLength, textareaLength);
+          }
+        }
+      });
+    });
+
+    $("td.recent_notes .journal.has-notes .wiki").each(function () {
+      observer.observe(this, {
+        attributes: true,
+        childList: false,
+        subtree: false,
+      });
+    });
   },
 };
 
