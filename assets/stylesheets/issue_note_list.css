@@ -1014,7 +1014,7 @@ button.mui-icon-right_panel_open {
   height: 100%;
 }
 @media screen and (min-width: 900px) and (min-height: 800px) {
-  body.theme-Bleuclair #content > #sidebar-switch-panel {
+  body[class*="leuclair"] #content > #sidebar-switch-panel {
     position: absolute;
     top: 16px;
     left: auto;
