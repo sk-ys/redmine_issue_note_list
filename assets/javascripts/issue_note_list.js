@@ -404,7 +404,8 @@ IssueNoteList.fn = {
             .find("> td.recent_notes" + ", > td.block_column > div.wiki")
             .css("width", "");
         },
-        minHeight: 100,
+        minHeight:
+          $(this).has("td.block_column:not(.in_row)").length === 0 ? 100 : 30,
         autoHide: true,
       });
     });
