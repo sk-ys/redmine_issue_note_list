@@ -761,6 +761,14 @@ td.block_column {
     top: 0;
     left: 0;
   }
+
+  /* Alternative way to setting min-height to td */
+  &:not(.in_row)::before {
+    content: "";
+    display: block;
+    float: left;
+    min-height: 22px;
+  }
 }
 
 /* Style for compact mode */
