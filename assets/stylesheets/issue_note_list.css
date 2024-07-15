@@ -778,7 +778,7 @@ tr.collapse-row {
     display: none !important;
   }
 
-  & > td.block_column:not([colspan="1"]) {
+  + tr > td.block_column:not(.in_row) {
     display: none;
   }
 
@@ -1093,9 +1093,6 @@ table.issues td.block_column code {
   }
 }
 
-table.issues
-  tr:not(.variable-height)
-  td.block_column:not([colspan="1"])
-  > div.wiki {
+table.issues tr:not(.variable-height) td.block_column:not(.in_row) > div.wiki {
   max-height: 150px;
 }
