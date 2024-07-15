@@ -10,7 +10,7 @@
 table.list.issues {
   & > tbody > tr.issue {
     & > td {
-      box-sizing: border-box;
+      box-sizing: content-box;
 
       &.recent_notes {
         box-sizing: content-box;
@@ -761,6 +761,14 @@ td.block_column {
     top: 0;
     left: 0;
   }
+
+  /* Alternative way to setting min-height to td */
+  &:not(.in_row)::before {
+    content: "";
+    display: block;
+    float: left;
+    min-height: 22px;
+  }
 }
 
 /* Style for compact mode */
@@ -778,7 +786,7 @@ tr.collapse-row {
     display: none !important;
   }
 
-  & > td.block_column:not([colspan="1"]) {
+  + tr > td.block_column:not(.in_row) {
     display: none;
   }
 
@@ -1093,9 +1101,6 @@ table.issues td.block_column code {
   }
 }
 
-table.issues
-  tr:not(.variable-height)
-  td.block_column:not([colspan="1"])
-  > div.wiki {
+table.issues tr:not(.variable-height) td.block_column:not(.in_row) > div.wiki {
   max-height: 150px;
 }

@@ -2,10 +2,10 @@
 
 <% query.block_columns.each do |column| -%>
   <% if (text = column_content(column, issue)) && text.present? -%>
-  <% if !in_row -%>
-    <tr class="issue-<%= issue.id %> <%= current_cycle %><%= " collapse-row" if @enable_compact_mode %><%= " variable-height" if @enable_variable_height %>">
-  <% end -%>
-    <td colspan="<%= in_row ? 1 : (@allowed_to_add_note ? 3 : 2) %>" class="<%= column.css_classes %> block_column">
+    <% if !in_row -%>
+      <tr class="issue-<%= issue.id %> <%= current_cycle %><%= " collapse-row" if @enable_compact_mode %><%= " variable-height" if @enable_variable_height %>">
+    <% end -%>
+    <td colspan="<%= in_row ? 1 : (@allowed_to_add_note ? 3 : 2) %>" class="<%= column.css_classes %> block_column<%= " in_row" if in_row %>">
       <% if !in_row && query.block_columns.count > 1 %>
         <span><%= column.caption %></span>
       <% end %>
@@ -24,6 +24,6 @@
     </td>
     <% if !in_row -%></tr><% end -%>
   <% elsif in_row %>
-    <td class="<%= column.css_classes %> block_column empty"></td>
+    <td class="<%= column.css_classes %> block_column in_row empty"></td>
   <% end -%>
 <% end -%>
