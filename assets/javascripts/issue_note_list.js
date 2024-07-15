@@ -163,7 +163,9 @@ IssueNoteList.fn = {
       close: () => {
         $noteParent.find("div.close-pop-out-button-outer").remove();
         $note.appendTo($noteParent).dialog("destroy");
-        $noteParent.css("height", "");
+        if (!$noteParent.parent().hasClass("variable-height")) {
+          $noteParent.css("height", "");
+        }
       },
       resizeStop: () => {
         const $dialog = $note.dialog("widget");
@@ -181,7 +183,17 @@ IssueNoteList.fn = {
       $target = $(`#${issueId}, table.list.issues > tbody > tr.${issueId}`);
     }
     $target.toggleClass("variable-height", state);
-    if (!state) {
+    if (state) {
+      $target.filter(":not(.collapse-row)").each((_, tr) => {
+        const maxTdHeight = Math.max(
+          ...$(tr)
+            .children("td")
+            .map((_, e) => parseInt($(e).css("height")))
+            .toArray()
+        );
+        $(tr).children("td").css("height", maxTdHeight);
+      });
+    } else {
       $target.children("td").css("height", "");
       $target.find("> td > div.wiki").css("height", "");
     }
@@ -200,6 +212,13 @@ IssueNoteList.fn = {
       $target = $(`#${issueId}, table.list.issues > tbody > tr.${issueId}`);
     }
     $target.toggleClass("collapse-row", state);
+    if (!state) {
+      setTimeout(() => {
+        $target.filter(".variable-height").each((_, tr) => {
+          IssueNoteList.fn.setNoteHeightVariable({ target: tr }, true);
+        });
+      });
+    }
   },
 
   _scrollToNextNote(event, prev = true) {
@@ -366,11 +385,7 @@ IssueNoteList.fn = {
     $("table.list.issues > tbody > tr").each(function () {
       $(this).resizable({
         handles: "s",
-        alsoResize: $(this).find(
-          "> td.issue-status" +
-            ", > td.recent_notes" +
-            ", > td.block_column > div.wiki"
-        ),
+        alsoResize: $(this).children("td"),
         create: function () {
           const $tr = $(this);
           $tr.children(".ui-resizable-handle").on("dblclick", () => {

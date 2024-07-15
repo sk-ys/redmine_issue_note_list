@@ -10,7 +10,7 @@
 table.list.issues {
   & > tbody > tr.issue {
     & > td {
-      box-sizing: border-box;
+      box-sizing: content-box;
 
       &.recent_notes {
         box-sizing: content-box;
