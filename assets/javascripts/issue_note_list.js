@@ -353,7 +353,7 @@ IssueNoteList.fn = {
       .text(generateNotesFieldHeightStyle($("#notes_field_height").val()))
       .appendTo("head");
 
-    // Setup adjust notes field height slider
+    // Set up the slider to adjust the height of the notes field
     $("#adjust_notes_field_height_slider").slider({
       min: 100,
       max: 1000,
