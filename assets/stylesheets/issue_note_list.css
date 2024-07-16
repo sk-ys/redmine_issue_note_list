@@ -779,7 +779,7 @@ tr.collapse-row {
   }
 
   form {
-    display: none;
+    display: none !important;
   }
 
   td.issue-status div.column-items {
