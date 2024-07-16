@@ -17,9 +17,6 @@ IssueNoteList.fn = {
       height: 300,
     };
 
-    // Keep current height
-    $noteParent.css("height", $noteParent.height());
-
     function addButtonsToDialogTitlebar($dialog) {
       const $titleBar = $dialog.find(".ui-dialog-titlebar");
 
