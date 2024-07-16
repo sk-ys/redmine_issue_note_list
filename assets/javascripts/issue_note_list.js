@@ -17,9 +17,6 @@ IssueNoteList.fn = {
       height: 300,
     };
 
-    // Keep current height
-    $noteParent.css("height", $noteParent.height());
-
     function addButtonsToDialogTitlebar($dialog) {
       const $titleBar = $dialog.find(".ui-dialog-titlebar");
 
@@ -388,25 +385,14 @@ IssueNoteList.fn = {
         alsoResize: $(this).children("td"),
         create: function () {
           const $tr = $(this);
-          $tr.children(".ui-resizable-handle").on("dblclick", () => {
+          $tr.children(".ui-resizable-handle").on("dblclick", (e) => {
             // Reset height
-            const $targets = $tr.find(
-              "> td.issue-status" +
-                ", > td.recent_notes" +
-                ", > td.block_column > div.wiki"
-            );
-
-            if (
-              $targets
-                .map((_, e) => /(^|\w)height:/.test($(e).attr("style")))
-                .toArray()
-                .includes(true)
-            ) {
-              $targets.each((_, e) => $(e).css("height", ""));
-            } else if (!$tr.hasClass("variable-height")) {
+            if (!$tr.hasClass("variable-height")) {
               $tr.addClass("variable-height");
+              IssueNoteList.fn.setNoteHeightVariable(e, true);
             } else {
               $tr.removeClass("variable-height");
+              IssueNoteList.fn.setNoteHeightVariable(e, false);
             }
           });
         },
