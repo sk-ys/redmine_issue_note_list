@@ -188,6 +188,7 @@ table.list.issues {
 
   & > tbody > tr.issue {
     & > td.issue-status {
+      box-sizing: border-box;
       & > div.columns > div.column-items {
         display: flex;
         text-overflow: ellipsis;
