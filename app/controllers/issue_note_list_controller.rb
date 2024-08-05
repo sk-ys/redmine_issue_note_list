@@ -29,6 +29,7 @@ class IssueNoteListController < ApplicationController
   helper :queries
   helper :journals
   include QueriesHelper
+  helper :issues_tags if defined?(:issues_tags) # Support for RedmineUP Tags plugin >= 2.0.14
 
   def index
     @is_global = @project == nil
