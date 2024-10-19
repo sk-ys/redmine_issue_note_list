@@ -455,13 +455,4 @@ IssueNoteList.fn = {
 
 window.addEventListener("DOMContentLoaded", () => {
   IssueNoteList.fn.initialize();
-
-  (function replaceRedmineUPTagsPluginLinks() {
-    $(".tag-label-color a, .tag-label a").each((_, e) => {
-      $(e).attr(
-        "href",
-        $(e).attr("href").replace("/issues?", "/issue_note_list?")
-      );
-    });
-  })();
 });
