@@ -223,7 +223,7 @@ IssueNoteList.fn = {
     const containerScrollTop = scrollContainer.scrollTop();
     const containerHeight = scrollContainer.height();
     const cellTops = scrollContainer
-      .find("table.list.issues>tbody>tr.issue")
+      .find("table.list.issues>tbody>tr")
       .map((_, e) => $(e).position().top)
       .toArray();
     const scrollSpeed = 200;
