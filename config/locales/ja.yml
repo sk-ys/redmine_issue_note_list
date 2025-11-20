@@ -25,6 +25,7 @@ ja:
     label_expand_row: 行を拡張
     label_enable_compact_mode: コンパクトモード
     label_notes_field_height: コメント欄高さ
+    label_issue_status_field_width: チケットステータス欄の幅
     label_add_note_to_issue_note_list_on_global: グローバルなコメント一覧へのコメントの追加
     label_hide_the_new_note_input_fields: コメント追加欄を隠す
     label_show_the_new_note_input_fields: コメント追加欄を表示する

@@ -834,15 +834,15 @@ div.journal.has-notes h4.note-header div.header-text span.note-id {
 #issue_note_list_query > span {
   margin-right: 10px;
 }
-#notes_field_height_outer {
+#notes_field_height_outer, #issue_status_field_width_outer {
   display: inline-flex;
   flex-direction: row;
   align-items: center;
 }
-#notes_field_height {
+#notes_field_height, #issue_status_field_width {
   margin-left: 5px;
 }
-#adjust_notes_field_height_slider {
+#adjust_notes_field_height_slider, #adjust_issue_status_field_width_slider {
   display: inline-block;
   width: 100px;
   margin-left: 10px;
