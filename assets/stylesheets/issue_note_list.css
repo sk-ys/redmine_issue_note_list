@@ -133,7 +133,7 @@ table.list.issues {
 
   /* Style for issue-status header and columns */
   td.issue-status {
-    background-position-y: 8px;
+    background-position-y: 10px;
     & > :is(.header, .columns) {
       width: var(--issue-status-width);
       min-width: var(--issue-status-min-width);
