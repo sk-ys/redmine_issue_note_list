@@ -293,35 +293,25 @@ IssueNoteList.fn = {
   },
 
   setIssueStatusWidth(width) {
-    // Get current width to calculate the difference
-    const $firstTd = $("td.issue-status").first();
-    if ($firstTd.length === 0) return;
-
-    const currentWidth = $firstTd.outerWidth();
-    const widthDiff = width - currentWidth;
-
-    // Set width for all td.issue-status elements
-    $("td.issue-status").css("width", width + "px");
-
-    // Update each alsoResize element by adding the width difference
-    $("td.issue-status > div.header, td.issue-status > div.columns").each(
-      function () {
-        const $elem = $(this);
-        $elem.css("width", $elem.outerWidth() + widthDiff + "px");
-      }
+    document.documentElement.style.setProperty(
+      "--issue-status-width",
+      width + (Number.isFinite(width * 1) ? "px" : "")
     );
+  },
 
-    // Update the input field and slider if they exist
-    const $widthInput = $("#issue_status_field_width");
-    const $slider = $("#adjust_issue_status_field_width_slider");
+  clearIssueStatusInlineWidths() {
+    $(
+      "td.issue-status, " +
+        "th.issue-status, " +
+        "td.issue-status > div.header, " +
+        "td.issue-status > div.columns"
+    ).css("width", "");
+  },
 
-    if ($widthInput.length > 0) {
-      $widthInput.val(width);
-    }
-
-    if ($slider.length > 0) {
-      $slider.slider("value", width);
-    }
+  updateIssueStatusFieldWidthField(width, withChange = true) {
+    const $issueStatusFieldWidth = $("#issue_status_field_width");
+    $issueStatusFieldWidth.val(width);
+    if (withChange) $issueStatusFieldWidth.change();
   },
 
   initialize() {
@@ -346,12 +336,22 @@ IssueNoteList.fn = {
     // Set resizable
     $("td.issue-status").resizable({
       handles: "e",
-      alsoResize: "td.issue-status > div.header, td.issue-status > div.columns",
+      alsoResize:
+        "th.issue-status, " +
+        "td.issue-status > div.header, " +
+        "td.issue-status > div.columns",
       start: function (e) {
-        // Set width only for active element
-        const width = $(e.target).width();
-        $("td.issue-status").css("width", "");
-        $(e.target).css("width", width);
+        self.clearIssueStatusInlineWidths();
+        self.setIssueStatusWidth("auto");
+      },
+      resize: function (e) {
+        const width = $("th.issue-status").width();
+        self.updateIssueStatusFieldWidthField(width, false);
+      },
+      stop: function () {
+        const width = $("th.issue-status").width();
+        self.updateIssueStatusFieldWidthField(width);
+        self.clearIssueStatusInlineWidths();
       },
     });
     $("td.add-notes").resizable({
@@ -413,44 +413,22 @@ IssueNoteList.fn = {
       max: 1000,
       step: 50,
       value: $("#issue_status_field_width").val(),
-      slide: () => {
+      slide: (e) => {
         setTimeout(() => {
-          $("#issue_status_field_width")
-            .val($("#adjust_issue_status_field_width_slider").slider("value"))
-            .change();
+          self.updateIssueStatusFieldWidthField($(e.target).slider("value"));
         });
       },
     });
     $("#issue_status_field_width").on("change.issueNoteList", function () {
-      const issue_status_field_width = parseInt($(this).val());
+      const issueStatusFieldWidth = parseInt($(this).val());
       $("#adjust_issue_status_field_width_slider").slider(
         "value",
-        issue_status_field_width
+        issueStatusFieldWidth
       );
-
-      // Get current width to calculate the difference
-      const $firstTd = $("td.issue-status").first();
-      if ($firstTd.length > 0) {
-        const currentWidth = $firstTd.outerWidth();
-        const widthDiff = issue_status_field_width - currentWidth;
-
-        // Apply width to issue-status field
-        $("td.issue-status").css("width", issue_status_field_width + "px");
-
-        // Update each alsoResize element by adding the width difference
-        $("td.issue-status > div.header, td.issue-status > div.columns").each(
-          function () {
-            const $element = $(this);
-            const currentElementWidth = $element.outerWidth();
-            const newElementWidth = currentElementWidth + widthDiff;
-            $element.css("width", newElementWidth + "px");
-          }
-        );
-      }
+      self.setIssueStatusWidth(issueStatusFieldWidth);
     });
 
-    // TODO: Flicker issue when changing width
-    // Set issue status field width style
+    // Set issue status field initial width
     this.setIssueStatusWidth($("#issue_status_field_width").val());
 
     // Enable simple editor
