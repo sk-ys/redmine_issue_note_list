@@ -389,6 +389,7 @@ div.journal.has-notes {
     flex-direction: row;
     justify-content: space-between;
     flex: 0 0 auto;
+    margin: 0;
 
     & > .header-text {
       overflow: hidden;
