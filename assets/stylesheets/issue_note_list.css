@@ -390,6 +390,7 @@ div.journal.has-notes {
     justify-content: space-between;
     flex: 0 0 auto;
     margin: 0;
+    margin-bottom: 3px;
 
     & > .header-text {
       overflow: hidden;
