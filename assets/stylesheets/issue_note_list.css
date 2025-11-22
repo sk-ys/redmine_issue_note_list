@@ -2,7 +2,7 @@
 :root {
   --inl-issue-status-width: 300px;
   --inl-issue-status-min-width: 250px;
-  --inl-issue-status-padding: 5px;
+  --inl-issue-status-padding: 3px;
   --inl-issue-status-indent-base: 8px;
   --inl-issue-status-indent-unit: 16px;
   --inl-issue-status-header-height: 18px;
@@ -221,8 +221,8 @@ table.list.issues {
     /* Single rule for all indent levels */
     &[class*="idnt-"] td.issue-status {
       padding-left: calc(
-        var(--inl-issue-status-indent-base) + var(--inl-issue-status-indent-unit) *
-          var(--idnt-multiplier, 0)
+        var(--inl-issue-status-indent-base) +
+          var(--inl-issue-status-indent-unit) * var(--idnt-multiplier, 0)
       );
       :is(.header, .columns) {
         width: calc(
@@ -231,8 +231,9 @@ table.list.issues {
             var(--inl-issue-status-padding)
         );
         min-width: calc(
-          var(--inl-issue-status-min-width) - var(--inl-issue-status-indent-unit) *
-            var(--idnt-multiplier, 0) - var(--inl-issue-status-indent-base) +
+          var(--inl-issue-status-min-width) -
+            var(--inl-issue-status-indent-unit) * var(--idnt-multiplier, 0) -
+            var(--inl-issue-status-indent-base) +
             var(--inl-issue-status-padding)
         );
       }
@@ -282,6 +283,10 @@ table.list.issues td.recent_notes {
   justify-content: center;
   grid-auto-columns: 1fr;
   padding: 3px;
+
+  div.journal_outer {
+    position: relative;
+  }
 }
 
 /* ========================================
@@ -384,6 +389,8 @@ div.journal.has-notes {
     flex-direction: row;
     justify-content: space-between;
     flex: 0 0 auto;
+    margin: 0;
+    margin-bottom: 3px;
 
     & > .header-text {
       overflow: hidden;
@@ -394,12 +401,27 @@ div.journal.has-notes {
   & > div.note-info {
     overflow: hidden;
     text-overflow: ellipsis;
-    margin-top: -10px;
-    margin-bottom: 5px;
     text-align: right;
-    padding-right: 3px;
     font-size: smaller;
-    flex: 0 0 12px;
+    padding: 1px 5px;
+    flex: 0 0 1rem;
+    position: absolute;
+    top: 32px;
+    right: 10px;
+    opacity: 0.25;
+    background-color: #fff;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+    border-radius: 0.5rem;
+    user-select: none;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  &:has(form) div.note-info {
+    display: none;
   }
 
   & > form {
