@@ -2,7 +2,7 @@
 :root {
   --inl-issue-status-width: 300px;
   --inl-issue-status-min-width: 250px;
-  --inl-issue-status-padding: 5px;
+  --inl-issue-status-padding: 3px;
   --inl-issue-status-indent-base: 8px;
   --inl-issue-status-indent-unit: 16px;
   --inl-issue-status-header-height: 18px;
