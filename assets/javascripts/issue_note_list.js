@@ -346,11 +346,11 @@ IssueNoteList.fn = {
       },
       resize: function (e) {
         const width = $("th.issue-status").width();
-        self.updateIssueStatusFieldWidthField(width, false);
+        self.updateIssueStatusFieldWidthField(parseInt(width), false);
       },
       stop: function () {
         const width = $("th.issue-status").width();
-        self.updateIssueStatusFieldWidthField(width);
+        self.updateIssueStatusFieldWidthField(parseInt(width));
         self.clearIssueStatusInlineWidths();
       },
     });
