@@ -29,6 +29,10 @@ module AddFieldsToQueryForm
           <%= number_field_tag "query[notes_field_height]", @query.notes_field_height, min: 100, max: 1000, step: 10, autocomplete: false %>
         </label>
         <label class="inline" style="white-space: nowrap">
+          <%= l(:label_issue_status_field_width, scope: :issue_note_list) %>:&thinsp;
+          <%= number_field_tag "query[issue_status_field_width]", @query.issue_status_field_width, min: 250, max: 1000, step: 10, autocomplete: false %>
+        </label>
+        <label class="inline" style="white-space: nowrap">
           <%= check_box_tag "query[enable_simple_editor]", "1", @query.enable_simple_editor %>&thinsp;
           <%= l(:label_simple_editor, scope: :issue_note_list) %>
         </label>

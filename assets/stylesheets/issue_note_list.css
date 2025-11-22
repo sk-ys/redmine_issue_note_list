@@ -1,20 +1,47 @@
-/* Adjust the position of query params */
+/* CSS Variables for issue-status styling */
+:root {
+  --inl-issue-status-width: 300px;
+  --inl-issue-status-min-width: 250px;
+  --inl-issue-status-padding: 5px;
+  --inl-issue-status-indent-base: 8px;
+  --inl-issue-status-indent-unit: 16px;
+  --inl-issue-status-header-height: 18px;
+}
+
+/* ========================================
+   ISSUE NOTE LIST QUERY
+   ======================================== */
 #issue_note_list_query > span {
   float: left;
+  margin-right: 10px;
 }
 #query_form_with_buttons {
   clear: left;
 }
+#notes_field_height_outer,
+#issue_status_field_width_outer {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+}
+#notes_field_height,
+#issue_status_field_width {
+  margin-left: 5px;
+}
+#adjust_notes_field_height_slider,
+#adjust_issue_status_field_width_slider {
+  display: inline-block;
+  width: 100px;
+  margin-left: 10px;
+}
 
-/* Style for each table cell */
+/* ========================================
+   ISSUE TABLE BASE
+   ======================================== */
 table.list.issues {
   & > tbody > tr.issue {
     & > td {
       box-sizing: content-box;
-
-      &.recent_notes {
-        box-sizing: content-box;
-      }
 
       &.block_column {
         padding: 3px;
@@ -30,166 +57,110 @@ table.list.issues {
     }
   }
 
-  /* Style for issue-status */
+  & > thead > tr > th {
+    position: relative;
+  }
+}
+
+/* ========================================
+   ISSUE STATUS
+   ======================================== */
+table.list.issues {
+  /* Common styles for th and td */
   :is(th.issue-status, td.issue-status) {
-    width: 250px;
     vertical-align: top;
     overflow-x: hidden;
     overflow-y: auto;
-    padding-right: 5px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-  }
-  tr {
-    &:not(.idnt) td.issue-status {
-      padding: 5px;
-    }
-    &.idnt td.issue-status {
-      background-position-y: 10px;
-    }
-    td.issue-status {
-      & > :is(div.header, div.columns) {
-        width: 250px;
-        min-width: 250px;
-      }
-      & > div.columns {
-        overflow: overlay;
-        height: calc(100% - 18px) !important;
-        box-sizing: border-box;
-      }
-    }
-    &.idnt-1 td.issue-status :is(.header, .columns) {
-      width: calc(250px - 24px + 5px);
-      min-width: calc(250px - 24px + 5px);
-    }
-    &.idnt-2 td.issue-status :is(.header, .columns) {
-      width: calc(250px - 40px + 5px);
-      min-width: calc(250px - 40px + 5px);
-    }
-    &.idnt-3 td.issue-status :is(.header, .columns) {
-      width: calc(250px - 56px + 5px);
-      min-width: calc(250px - 56px + 5px);
-    }
-    &.idnt-4 td.issue-status :is(.header, .columns) {
-      width: calc(250px - 72px + 5px);
-      min-width: calc(250px - 72px + 5px);
-    }
-    &.idnt-5 td.issue-status :is(.header, .columns) {
-      width: calc(250px - 88px + 5px);
-      min-width: calc(250px - 88px + 5px);
-    }
-    &.idnt-6 td.issue-status :is(.header, .columns) {
-      width: calc(250px - 104px + 5px);
-      min-width: calc(250px - 104px + 5px);
-    }
-    &.idnt-7 td.issue-status :is(.header, .columns) {
-      width: calc(250px - 120px + 5px);
-      min-width: calc(250px - 120px + 5px);
-    }
-    &.idnt-8 td.issue-status :is(.header, .columns) {
-      width: calc(250px - 136px + 5px);
-      min-width: calc(250px - 136px + 5px);
-    }
-    &.idnt-9 td.issue-status :is(.header, .columns) {
-      width: calc(250px - 152px + 5px);
-      min-width: calc(250px - 152px + 5px);
-    }
+    padding: var(--inl-issue-status-padding);
   }
 
-  th {
-    position: relative;
-
+  th.issue-status {
     /* Style for issue-status column filter */
-    &.issue-status {
-      overflow: unset;
+    overflow: unset;
+    width: var(--inl-issue-status-width);
 
-      & > div.column-filter {
-        vertical-align: top;
-        padding: 2px 10px;
-        overflow: hidden;
-        position: absolute;
-        background-color: inherit;
-        box-sizing: border-box;
-        right: 0;
-        top: 0;
-        z-index: 1;
-        height: 100%;
-        align-items: center;
-        border: 1px solid transparent;
-        border-radius: 5px;
-
-        &:hover {
-          overflow: unset;
-          height: auto;
-          border: 1px solid #ccc;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          padding-bottom: 10px;
-        }
-      }
-    }
-
-    /* Style for buttons in table header */
-    .buttons {
+    & > div.column-filter {
+      vertical-align: top;
+      padding: 2px 10px;
+      overflow: hidden;
       position: absolute;
+      background-color: inherit;
       box-sizing: border-box;
+      right: 0;
       top: 0;
-      margin: 0;
+      z-index: 1;
       height: 100%;
-      display: flex;
       align-items: center;
-      padding: 0 2px;
+      border: 1px solid transparent;
+      border-radius: 5px;
 
-      &.buttons-right-side {
-        right: 0;
+      &:hover {
+        overflow: unset;
+        height: auto;
+        border: 1px solid #ccc;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-bottom: 10px;
       }
+    }
 
-      &.buttons-left-side {
-        left: 0;
-      }
+    & > div.column-filter {
+      & > span {
+        display: none;
+        margin-top: 0.3em;
 
-      & > button {
-        cursor: pointer;
-        margin: auto 1px;
-        opacity: 0.3;
+        &:first-of-type {
+          display: flex;
+          user-select: none;
+          -webkit-user-select: none;
+          margin-top: 0;
+          margin-left: auto;
+          margin-right: -4px;
+          cursor: pointer;
+        }
 
-        &:hover {
-          opacity: 1;
+        & > a.icon.sort {
+          padding-left: 0;
         }
       }
-    }
-  }
 
-  & > thead > tr > th.issue-status > div.column-filter {
-    & > span {
-      display: none;
-      margin-top: 0.3em;
-
-      &:first-of-type {
+      &:hover > span {
         display: flex;
-        user-select: none;
-        -webkit-user-select: none;
-        margin-top: 0;
-        margin-left: auto;
-        margin-right: -4px;
-        cursor: pointer;
       }
-
-      & > a.icon.sort {
-        padding-left: 0;
-      }
-    }
-
-    &:hover > span {
-      display: flex;
     }
   }
 
-  & > tbody > tr.issue {
-    & > td.issue-status {
+  /* Style for issue-status header and columns */
+  td.issue-status {
+    background-position-y: 10px;
+    & > :is(.header, .columns) {
+      width: var(--inl-issue-status-width);
+      min-width: var(--inl-issue-status-min-width);
+    }
+    & > .header {
+      display: flex;
+      justify-content: space-between;
+      white-space: nowrap;
+      height: var(--inl-issue-status-header-height);
+      font-weight: bold;
+
+      .header-text {
+        flex: 0 1 auto;
+        text-align: left;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+
+      .header-buttons {
+        padding: 0;
+      }
+    }
+    & > .columns {
+      overflow: overlay;
+      height: calc(100% - 18px) !important;
       box-sizing: border-box;
-      & > div.columns > div.column-items {
+      & > div.column-items {
         display: flex;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -212,18 +183,111 @@ table.list.issues {
         }
       }
     }
-
-    & > td.recent_notes {
-      display: grid;
-      grid-auto-flow: column;
-      align-items: stretch;
-      justify-content: center;
-      grid-auto-columns: 1fr;
-      padding: 3px;
-    }
   }
 
-  /* Style for scrollbar in wiki field */
+  /* Style for issue-status cell width */
+  /* Note: When using `width: 100%`, `text-overflow: ellipsis` does not work 
+     properly */
+  & > tbody > tr.issue {
+    /* Indent level custom properties */
+    &.idnt-1 {
+      --idnt-multiplier: 1;
+    }
+    &.idnt-2 {
+      --idnt-multiplier: 2;
+    }
+    &.idnt-3 {
+      --idnt-multiplier: 3;
+    }
+    &.idnt-4 {
+      --idnt-multiplier: 4;
+    }
+    &.idnt-5 {
+      --idnt-multiplier: 5;
+    }
+    &.idnt-6 {
+      --idnt-multiplier: 6;
+    }
+    &.idnt-7 {
+      --idnt-multiplier: 7;
+    }
+    &.idnt-8 {
+      --idnt-multiplier: 8;
+    }
+    &.idnt-9 {
+      --idnt-multiplier: 9;
+    }
+
+    /* Single rule for all indent levels */
+    &[class*="idnt-"] td.issue-status {
+      padding-left: calc(
+        var(--inl-issue-status-indent-base) + var(--inl-issue-status-indent-unit) *
+          var(--idnt-multiplier, 0)
+      );
+      :is(.header, .columns) {
+        width: calc(
+          var(--inl-issue-status-width) - var(--inl-issue-status-indent-unit) *
+            var(--idnt-multiplier, 0) - var(--inl-issue-status-indent-base) +
+            var(--inl-issue-status-padding)
+        );
+        min-width: calc(
+          var(--inl-issue-status-min-width) - var(--inl-issue-status-indent-unit) *
+            var(--idnt-multiplier, 0) - var(--inl-issue-status-indent-base) +
+            var(--inl-issue-status-padding)
+        );
+      }
+    }
+  }
+}
+
+/* ========================================
+   BUTTONS IN TABLE HEADER
+   ======================================== */
+table.list.issues > thead > tr > th .buttons {
+  position: absolute;
+  box-sizing: border-box;
+  top: 0;
+  margin: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 2px;
+
+  &.buttons-right-side {
+    right: 0;
+  }
+
+  &.buttons-left-side {
+    left: 0;
+  }
+
+  & > button {
+    cursor: pointer;
+    margin: auto 1px;
+    opacity: 0.3;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+/* ========================================
+   RECENT NOTES
+   ======================================== */
+table.list.issues td.recent_notes {
+  display: grid;
+  grid-auto-flow: column;
+  align-items: stretch;
+  justify-content: center;
+  grid-auto-columns: 1fr;
+  padding: 3px;
+}
+
+/* ========================================
+   SCROLLBAR STYLING FOR WIKI FIELDS
+   ======================================== */
+table.list.issues {
   div.wiki {
     overflow: overlay;
   }
@@ -253,57 +317,9 @@ table.list.issues {
   }
 }
 
-/* The width of child issue elements is affected by application.css */
-tr.idnt-1 td.issue-status > :is(div.header, div.columns) {
-  width: calc(250px + 5px - 24px);
-}
-tr.idnt-2 td.issue-status > :is(div.header, div.columns) {
-  width: calc(250px + 5px - 40px);
-}
-tr.idnt-3 td.issue-status > :is(div.header, div.columns) {
-  width: calc(250px + 5px - 56px);
-}
-tr.idnt-4 td.issue-status > :is(div.header, div.columns) {
-  width: calc(250px + 5px - 72px);
-}
-tr.idnt-5 td.issue-status > :is(div.header, div.columns) {
-  width: calc(250px + 5px - 88px);
-}
-tr.idnt-6 td.issue-status > :is(div.header, div.columns) {
-  width: calc(250px + 5px - 104px);
-}
-tr.idnt-7 td.issue-status > :is(div.header, div.columns) {
-  width: calc(250px + 5px - 120px);
-}
-tr.idnt-8 td.issue-status > :is(div.header, div.columns) {
-  width: calc(250px + 5px - 136px);
-}
-tr.idnt-9 td.issue-status > :is(div.header, div.columns) {
-  width: calc(250px + 5px - 152px);
-}
-
-/* Style for header of issue-status field */
-td.issue-status div.header {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  white-space: nowrap;
-  height: 18px;
-  font-weight: bold;
-
-  div.header-text {
-    flex: 0 1 auto;
-    text-align: left;
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
-
-  div.header-buttons {
-    padding: 0;
-  }
-}
-
-/* Style for fixed-height button and variable-height button */
+/* ========================================
+   HEIGHT TOGGLE BUTTONS
+   ======================================== */
 tr.issue:not(.variable-height)
   > td.issue-status
   div.header-buttons
@@ -326,7 +342,16 @@ div.journal_outer {
   }
 }
 
-/* Style for notes */
+/* ========================================
+  NOTES
+  ======================================== */
+table.list.issues {
+  & > thead > tr > th:not(:first-of-type),
+  & > tbody > tr > td:not(:first-of-type) {
+    border-left: 1px solid #ccc;
+    position: relative;
+  }
+}
 :is(div.journal_outer, div.add_notes_form_outer) > div.journal.has-notes {
   padding-left: 0;
   display: flex;
@@ -406,7 +431,9 @@ div.journal.has-notes {
   }
 }
 
-/* Style for header-buttons */
+/* ========================================
+  NOTES HEADER BUTTONS
+  ======================================== */
 :is(div.journal.has-notes, td.issue-status) div.header-buttons {
   display: flex;
   flex-direction: row;
@@ -426,7 +453,9 @@ div.journal.has-notes {
   }
 }
 
-/* Style for notes form */
+/* ========================================
+  NOTES FORM STYLING
+  ======================================== */
 td.add-notes form label[for$="private_notes"],
 td.recent_notes div.journal.has-notes > form label[for$="private_notes"] {
   font-size: smaller;
@@ -445,27 +474,24 @@ td.recent_notes div.journal.has-notes > form label[for$="private_notes"] {
   }
 }
 
-/* Style for add-notes field */
+/* ========================================
+   ADD NOTES FIELD
+   ======================================== */
 table.list.issues td.add-notes {
   vertical-align: top;
   padding: 3px;
   width: 300px;
   min-width: 200px;
-  left: 0 !important; /* Support resizable */
+  left: 0 !important; /* Support for resizable functionality */
 
   div.add_notes_form_outer > form > div.jstBlock div.jstTabs {
     width: calc(100% - 30px);
   }
 }
 
-/* Style for all notes field */
-table.list.issues > thead > tr > th:not(:first-of-type),
-table.list.issues > tbody > tr > td:not(:first-of-type) {
-  border-left: 1px solid #ccc;
-  position: relative;
-}
-
-/* Style for notes form */
+/* ========================================
+  NOTES FORM
+  ======================================== */
 :is(div.journal.has-notes, div.add_notes_form_outer) {
   & > form {
     vertical-align: top;
@@ -517,7 +543,9 @@ table.list.issues > tbody > tr > td:not(:first-of-type) {
   }
 }
 
-/* Style for add-notes cell */
+/* ========================================
+   Add-NOTES CELL
+   ======================================== */
 td.add-notes {
   div.private_notes label {
     font-size: smaller;
@@ -535,7 +563,9 @@ td.add-notes {
   }
 }
 
-/* Style for add-notes form */
+/* ========================================
+   ADD NOTES FORM
+   ======================================== */
 div.add_notes_form_outer {
   position: absolute;
   display: flex;
@@ -554,7 +584,9 @@ div.add_notes_form_outer {
   }
 }
 
-/* Style for action buttons */
+/* ========================================
+   ACTION BUTTONS
+   ======================================== */
 :is(div.add_notes_form_outer, td.block_column) {
   &:hover .action_buttons > button.pop-out {
     opacity: 0.3;
@@ -582,7 +614,9 @@ div.add_notes_form_outer {
   }
 }
 
-/* Style for pop-out-dialog */
+/* ========================================
+   POP-OUT DIALOG
+   ======================================== */
 div.ui-dialog.note-pop-out-dialog {
   display: flex;
   flex-direction: column;
@@ -590,7 +624,7 @@ div.ui-dialog.note-pop-out-dialog {
 
   div.journal.has-notes {
     padding: 5px;
-    /* ??? */
+    /* Remove auto width constraint */
     width: unset !important;
 
     & > form > input[name="journal[private_notes]"] {
@@ -735,7 +769,9 @@ div.ui-dialog.note-pop-out-dialog {
   }
 }
 
-/* Style for close-pop-out-button */
+/* ========================================
+   CLOSE POP-OUT BUTTON
+   ======================================== */
 table.issues div.close-pop-out-button-outer {
   height: 100%;
   display: flex;
@@ -763,7 +799,7 @@ td.block_column {
     left: 0;
   }
 
-  /* Alternative way to setting min-height to td */
+  /* Alternative method for setting min-height on td */
   &:not(.in_row)::before {
     content: "";
     display: block;
@@ -772,7 +808,9 @@ td.block_column {
   }
 }
 
-/* Style for compact mode */
+/* ========================================
+   COMPACT MODE
+   ======================================== */
 tr.collapse-row {
   & > td {
     height: 30px !important;
@@ -821,7 +859,7 @@ tr:not(.collapse-row) div.header-buttons > button.expand-row {
   display: none;
 }
 
-/* Enclose the note-ID with a square frame */
+/* Enclose the note ID with a square frame */
 div.journal.has-notes h4.note-header div.header-text span.note-id {
   font-size: smaller;
   border: 1px solid #aaa;
@@ -830,25 +868,9 @@ div.journal.has-notes h4.note-header div.header-text span.note-id {
   color: #aaa;
 }
 
-/* Style for issue-note-list query. */
-#issue_note_list_query > span {
-  margin-right: 10px;
-}
-#notes_field_height_outer {
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
-}
-#notes_field_height {
-  margin-left: 5px;
-}
-#adjust_notes_field_height_slider {
-  display: inline-block;
-  width: 100px;
-  margin-left: 10px;
-}
-
-/* Button and icon styles */
+/* ========================================
+   BUTTON AND ICON STYLES
+   ======================================== */
 button.mui-icon {
   width: 16px;
   height: 16px;
@@ -992,7 +1014,9 @@ button.mui-icon-right_panel_open {
   background-color: transparent;
 }
 
-/* Fixed table header */
+/* ========================================
+   FIXED TABLE HEADER
+   ======================================== */
 @media screen and (min-width: 900px) and (min-height: 800px) {
   #content {
     & > div.contextual {
@@ -1055,7 +1079,9 @@ button.mui-icon-right_panel_open {
   }
 }
 
-/* Support theme "farend bleuclair" */
+/* ========================================
+  Support theme "farend bleuclair"
+   ======================================== */
 :is(#wrapper, .modal) textarea.wiki-edit {
   height: 100%;
 }
@@ -1078,7 +1104,7 @@ div.autoscroll-outer:not(.hide-add-note-fields) button.show-add-note-fields {
   display: none;
 }
 
-/* Fix formatting of P elements in table cells */
+/* Fix formatting of paragraph elements in table cells */
 table.issues.list div.journal > .wiki > p {
   margin: revert;
 }
@@ -1088,10 +1114,9 @@ table.issues.list div.journal > .wiki > p {
 }
 
 /*
-Temporary solution to the issue of broken design of the code block in the issue
-list block column.
+Temporary solution for the broken code block styling in issue list block columns.
 Reference: https://www.redmine.org/issues/40303
-TODO: Font-weight is incorrect
+TODO: Font weight styling is incorrect
 */
 table.issues td.block_column code {
   white-space: break-spaces;

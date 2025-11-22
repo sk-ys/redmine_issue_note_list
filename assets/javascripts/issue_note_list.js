@@ -292,6 +292,28 @@ IssueNoteList.fn = {
     });
   },
 
+  setIssueStatusWidth(width) {
+    document.documentElement.style.setProperty(
+      "--inl-issue-status-width",
+      width + (Number.isFinite(width * 1) ? "px" : "")
+    );
+  },
+
+  clearIssueStatusInlineWidths() {
+    $(
+      "td.issue-status, " +
+        "th.issue-status, " +
+        "td.issue-status > div.header, " +
+        "td.issue-status > div.columns"
+    ).css("width", "");
+  },
+
+  updateIssueStatusFieldWidthField(width, withChange = true) {
+    const $issueStatusFieldWidth = $("#issue_status_field_width");
+    $issueStatusFieldWidth.val(width);
+    if (withChange) $issueStatusFieldWidth.change();
+  },
+
   initialize() {
     const self = this;
 
@@ -314,12 +336,22 @@ IssueNoteList.fn = {
     // Set resizable
     $("td.issue-status").resizable({
       handles: "e",
-      alsoResize: "td.issue-status > div.header, td.issue-status > div.columns",
+      alsoResize:
+        "th.issue-status, " +
+        "td.issue-status > div.header, " +
+        "td.issue-status > div.columns",
       start: function (e) {
-        // Set width only for active element
-        const width = $(e.target).width();
-        $("td.issue-status").css("width", "");
-        $(e.target).css("width", width);
+        self.clearIssueStatusInlineWidths();
+        self.setIssueStatusWidth("auto");
+      },
+      resize: function (e) {
+        const width = $("th.issue-status").width();
+        self.updateIssueStatusFieldWidthField(parseInt(width), false);
+      },
+      stop: function () {
+        const width = $("th.issue-status").width();
+        self.updateIssueStatusFieldWidthField(parseInt(width));
+        self.clearIssueStatusInlineWidths();
       },
     });
     $("td.add-notes").resizable({
@@ -374,6 +406,30 @@ IssueNoteList.fn = {
         generateNotesFieldHeightStyle(notes_field_height)
       );
     });
+
+    // Set up the slider to adjust the width of the issue status field
+    $("#adjust_issue_status_field_width_slider").slider({
+      min: 250, // Note: Also set in CSS min-width for div.header or div.columns
+      max: 1000,
+      step: 50,
+      value: $("#issue_status_field_width").val(),
+      slide: (e) => {
+        setTimeout(() => {
+          self.updateIssueStatusFieldWidthField($(e.target).slider("value"));
+        });
+      },
+    });
+    $("#issue_status_field_width").on("change.issueNoteList", function () {
+      const issueStatusFieldWidth = parseInt($(this).val());
+      $("#adjust_issue_status_field_width_slider").slider(
+        "value",
+        issueStatusFieldWidth
+      );
+      self.setIssueStatusWidth(issueStatusFieldWidth);
+    });
+
+    // Set issue status field initial width
+    this.setIssueStatusWidth($("#issue_status_field_width").val());
 
     // Enable simple editor
     this.enableSimpleEditor($("#enable_simple_editor:checked").length === 1);

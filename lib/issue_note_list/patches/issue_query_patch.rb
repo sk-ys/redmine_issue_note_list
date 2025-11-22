@@ -44,6 +44,14 @@ module IssueNoteList
         def notes_field_height=(arg)
           options[:notes_field_height] = (arg.to_i > 0 ? arg.to_i : nil)
         end
+        
+        def issue_status_field_width
+          (options[:issue_status_field_width].to_i if (options[:issue_status_field_width].to_i > 0)) || 300
+        end
+
+        def issue_status_field_width=(arg)
+          options[:issue_status_field_width] = (arg.to_i > 0 ? arg.to_i : nil)
+        end
 
         def enable_simple_editor
           r = options[:enable_simple_editor]
@@ -91,6 +99,10 @@ module IssueNoteList
           self.notes_field_height =
             params[:notes_field_height] ||
               (params[:query] && params[:query][:notes_field_height]) || options[:notes_field_height]
+
+          self.issue_status_field_width =
+            params[:issue_status_field_width] ||
+              (params[:query] && params[:query][:issue_status_field_width]) || options[:issue_status_field_width]
 
           self.enable_simple_editor =
             params[:enable_simple_editor] ||
