@@ -46,7 +46,7 @@ module IssueNoteList
         end
         
         def issue_status_field_width
-          (options[:issue_status_field_width].to_i if (options[:issue_status_field_width].to_i > 0)) || 500
+          (options[:issue_status_field_width].to_i if (options[:issue_status_field_width].to_i > 0)) || 300
         end
 
         def issue_status_field_width=(arg)

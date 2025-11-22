@@ -1,6 +1,6 @@
 /* CSS Variables for issue-status styling */
 :root {
-  --issue-status-width: 250px;
+  --issue-status-width: 300px;
   --issue-status-min-width: 250px;
   --issue-status-padding: 5px;
   --issue-status-indent-base: 8px;
