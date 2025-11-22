@@ -62,6 +62,15 @@ module IssueNoteList
           options[:enable_simple_editor] = (arg == '1' ? '1' : nil)
         end
 
+        def hide_notes_header
+          r = options[:hide_notes_header]
+          r == '1'
+        end
+
+        def hide_notes_header=(arg)
+          options[:hide_notes_header] = (arg == '1' ? '1' : nil)
+        end
+
         def private_notes_filter
           return 'contains' unless ['contains', 'not_contains', 'only'].include?(options[:private_notes_filter])
           options[:private_notes_filter]
@@ -107,6 +116,10 @@ module IssueNoteList
           self.enable_simple_editor =
             params[:enable_simple_editor] ||
               (params[:query] && params[:query][:enable_simple_editor]) || options[:enable_simple_editor]
+
+          self.hide_notes_header =
+            params[:hide_notes_header] ||
+              (params[:query] && params[:query][:hide_notes_header]) || options[:hide_notes_header]
 
           self.private_notes_filter =
             params[:private_notes_filter] ||

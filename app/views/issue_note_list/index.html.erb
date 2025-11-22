@@ -74,6 +74,11 @@
         <%= label_tag :enable_simple_editor, l(:label_simple_editor, scope: :issue_note_list) %>
       </span>
       <span>
+        <%= hidden_field_tag :hide_notes_header, 0, id: "hidden_hide_notes_header" %>
+        <%= check_box_tag :hide_notes_header, 1, @query.hide_notes_header %>
+        <%= label_tag :hide_notes_header, l(:label_hide_notes_header, scope: :issue_note_list) %>
+      </span>
+      <span>
         <%= label_tag :private_notes_filter, l(:field_private_notes) %>
         <%= select_tag :private_notes_filter, options_for_select([
           [l(:label_contains), 'contains'],
