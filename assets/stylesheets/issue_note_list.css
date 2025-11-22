@@ -1,11 +1,11 @@
 /* CSS Variables for issue-status styling */
 :root {
-  --issue-status-width: 300px;
-  --issue-status-min-width: 250px;
-  --issue-status-padding: 5px;
-  --issue-status-indent-base: 8px;
-  --issue-status-indent-unit: 16px;
-  --issue-status-header-height: 18px;
+  --inl-issue-status-width: 300px;
+  --inl-issue-status-min-width: 250px;
+  --inl-issue-status-padding: 5px;
+  --inl-issue-status-indent-base: 8px;
+  --inl-issue-status-indent-unit: 16px;
+  --inl-issue-status-header-height: 18px;
 }
 
 /* ========================================
@@ -71,13 +71,13 @@ table.list.issues {
     vertical-align: top;
     overflow-x: hidden;
     overflow-y: auto;
-    padding: var(--issue-status-padding);
+    padding: var(--inl-issue-status-padding);
   }
 
   th.issue-status {
     /* Style for issue-status column filter */
     overflow: unset;
-    width: var(--issue-status-width);
+    width: var(--inl-issue-status-width);
 
     & > div.column-filter {
       vertical-align: top;
@@ -135,14 +135,14 @@ table.list.issues {
   td.issue-status {
     background-position-y: 10px;
     & > :is(.header, .columns) {
-      width: var(--issue-status-width);
-      min-width: var(--issue-status-min-width);
+      width: var(--inl-issue-status-width);
+      min-width: var(--inl-issue-status-min-width);
     }
     & > .header {
       display: flex;
       justify-content: space-between;
       white-space: nowrap;
-      height: var(--issue-status-header-height);
+      height: var(--inl-issue-status-header-height);
       font-weight: bold;
 
       .header-text {
@@ -221,19 +221,19 @@ table.list.issues {
     /* Single rule for all indent levels */
     &[class*="idnt-"] td.issue-status {
       padding-left: calc(
-        var(--issue-status-indent-base) + var(--issue-status-indent-unit) *
+        var(--inl-issue-status-indent-base) + var(--inl-issue-status-indent-unit) *
           var(--idnt-multiplier, 0)
       );
       :is(.header, .columns) {
         width: calc(
-          var(--issue-status-width) - var(--issue-status-indent-unit) *
-            var(--idnt-multiplier, 0) - var(--issue-status-indent-base) +
-            var(--issue-status-padding)
+          var(--inl-issue-status-width) - var(--inl-issue-status-indent-unit) *
+            var(--idnt-multiplier, 0) - var(--inl-issue-status-indent-base) +
+            var(--inl-issue-status-padding)
         );
         min-width: calc(
-          var(--issue-status-min-width) - var(--issue-status-indent-unit) *
-            var(--idnt-multiplier, 0) - var(--issue-status-indent-base) +
-            var(--issue-status-padding)
+          var(--inl-issue-status-min-width) - var(--inl-issue-status-indent-unit) *
+            var(--idnt-multiplier, 0) - var(--inl-issue-status-indent-base) +
+            var(--inl-issue-status-padding)
         );
       }
     }

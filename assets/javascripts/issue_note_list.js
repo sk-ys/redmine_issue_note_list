@@ -294,7 +294,7 @@ IssueNoteList.fn = {
 
   setIssueStatusWidth(width) {
     document.documentElement.style.setProperty(
-      "--issue-status-width",
+      "--inl-issue-status-width",
       width + (Number.isFinite(width * 1) ? "px" : "")
     );
   },
