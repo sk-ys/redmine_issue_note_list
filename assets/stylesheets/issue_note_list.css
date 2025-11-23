@@ -701,6 +701,11 @@ div.ui-dialog.note-pop-out-dialog {
     & > * {
       flex: 0 0 auto;
     }
+    
+    & > .note-info {
+      top: 30px;
+      right: 5px;
+    }
 
     & > form {
       flex: 1 1 auto;
