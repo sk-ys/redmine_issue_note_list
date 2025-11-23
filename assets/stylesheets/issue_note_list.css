@@ -11,9 +11,14 @@
 /* ========================================
    ISSUE NOTE LIST QUERY
    ======================================== */
-#issue_note_list_query > span {
-  float: left;
-  margin-right: 10px;
+#issue_note_list_query {
+  span.parameter {
+    float: left;
+    margin-right: 20px;
+  }
+  input[type="number"] {
+    width: 4em;
+  }
 }
 #query_form_with_buttons {
   clear: left;
@@ -701,7 +706,7 @@ div.ui-dialog.note-pop-out-dialog {
     & > * {
       flex: 0 0 auto;
     }
-    
+
     & > .note-info {
       top: 30px;
       right: 5px;

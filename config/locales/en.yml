@@ -34,3 +34,5 @@ en:
     label_only: only
     label_inline_block_elements: Inline block elements
     label_hide_notes_header: Hide notes header
+    label_deferred_parameters: Deferred parameters
+    label_immediate_parameters: Immediate parameters
