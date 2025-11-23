@@ -1,0 +1,69 @@
+<tr>
+  <td>
+    <%= label_tag :issue_note_list_options, l(:label_redmine_issue_note_list) %>
+  </td>
+  <td>
+    <div id="issue_note_list_query">
+      <%= hidden_field_tag 'issue_note_list', '1' %>
+      
+      <fieldset>
+        <legend>
+          <%= l(:label_deferred_parameters, scope: :issue_note_list) %>
+        </legend>
+        <span class="parameter">
+          <%= label_tag :number_of_notes, l(:label_number_of_notes, scope: :issue_note_list) %>
+          <%= number_field_tag :number_of_notes, @query.number_of_notes, min: 1, max: 10, autocomplete: false, size: 3 %>
+        </span>
+        <span class="parameter">
+          <%= hidden_field_tag :inline_block_elements, 0, id: "hidden_inline_block_elements" %>
+          <%= check_box_tag :inline_block_elements, 1, @query.inline_block_elements %>
+          <%= label_tag :inline_block_elements, l(:label_inline_block_elements, scope: :issue_note_list), class: "inline" %>
+        </span>
+        <span class="parameter">
+          <%= label_tag :private_notes_filter, l(:field_private_notes) %>
+          <%= select_tag :private_notes_filter, options_for_select([
+            [l(:label_contains), 'contains'],
+            [l(:label_only, scope: :issue_note_list), 'only'],
+            [l(:label_not_contains), 'not_contains']],
+            selected: @query.private_notes_filter) %>
+        </span>
+      </fieldset>
+      <fieldset>
+        <legend>
+          <%= l(:label_immediate_parameters, scope: :issue_note_list) %>
+        </legend>
+        <span id="issue_status_field_width_outer" class="parameter">
+          <%= label_tag :issue_status_field_width, l(:label_issue_status_field_width, scope: :issue_note_list) %>
+          <%= number_field_tag :issue_status_field_width, @query.issue_status_field_width, min: 250, max: 1000, step: 10, autocomplete: false, size: 5 %>
+          <span id="adjust_issue_status_field_width_slider" style="display:inline-block; vertical-align:middle; width:100px; margin-left:5px;"></span>
+        </span>
+        <span id="notes_field_height_outer" class="parameter">
+          <%= label_tag :notes_field_height, l(:label_notes_field_height, scope: :issue_note_list) %>
+          <%= number_field_tag :notes_field_height, @query.notes_field_height, min: 100, max: 1000, step: 10, autocomplete: false, size: 5 %>
+          <span id="adjust_notes_field_height_slider" style="display:inline-block; vertical-align:middle; width:100px; margin-left:5px;"></span>
+        </span>
+        <span class="parameter">
+          <%= check_box_tag :enable_compact_mode, 1, @query.enable_compact_mode,
+            onclick: "IssueNoteList.fn.collapseNoteRow('all', this.checked)" %>
+          <%= label_tag :enable_compact_mode, l(:label_enable_compact_mode, scope: :issue_note_list), class: "inline" %>
+        </span>
+        <span class="parameter">
+          <%= check_box_tag :enable_variable_height, 1, @query.enable_variable_height,
+            onclick: "IssueNoteList.fn.setNoteHeightVariable('all', this.checked)" %>
+          <%= label_tag :enable_variable_height, l(:label_variable_height, scope: :issue_note_list), class: "inline" %>
+        </span>
+        <span class="parameter">
+          <%= check_box_tag :enable_simple_editor, 1, @query.enable_simple_editor,
+            onclick: "IssueNoteList.fn.enableSimpleEditor(this.checked)" %>
+          <%= label_tag :enable_simple_editor, l(:label_simple_editor, scope: :issue_note_list), class: "inline" %>
+        </span>
+        <span class="parameter">
+          <%= hidden_field_tag :hide_notes_header, 0, id: "hidden_hide_notes_header" %>
+          <%= check_box_tag :hide_notes_header, 1, @query.hide_notes_header,
+            onclick: "IssueNoteList.fn.enableHideNotesHeader(this.checked)" %>
+          <%= label_tag :hide_notes_header, l(:label_hide_notes_header, scope: :issue_note_list), class: "inline" %>
+        </span>
+      </fieldset>
+    </div>
+  </td>
+</tr>

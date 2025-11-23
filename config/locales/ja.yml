@@ -34,3 +34,5 @@ ja:
     label_only: のみ
     label_inline_block_elements: ブロック要素を行内に表示
     label_hide_notes_header: コメント欄のヘッダーを隠す
+    label_deferred_parameters: 遅延適用パラメータ
+    label_immediate_parameters: 即時適用パラメータ
