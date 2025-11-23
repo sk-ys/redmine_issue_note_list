@@ -5,7 +5,7 @@
 
 <div class="autoscroll-outer">
 <div class="autoscroll">
-  <table class="list issues odd-even <%= query.css_classes %>">
+  <table class="list issues odd-even <%= query.css_classes %><%= @query.hide_notes_header ? ' hide-notes-header' : '' %>">
     <thead>
       <tr>
         <th class="issue-status">

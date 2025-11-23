@@ -37,6 +37,10 @@ module AddFieldsToQueryForm
           <%= l(:label_simple_editor, scope: :issue_note_list) %>
         </label>
         <label class="inline" style="white-space: nowrap">
+          <%= check_box_tag "query[hide_notes_header]", "1", @query.hide_notes_header %>
+          <%= l(:label_hide_notes_header, scope: :issue_note_list) %>
+        </label>
+        <label class="inline" style="white-space: nowrap">
           <%= l(:field_private_notes) %>:&thinsp;
           <%= select_tag "query[private_notes_filter]", options_for_select([
             [l(:label_contains), 'contains'],

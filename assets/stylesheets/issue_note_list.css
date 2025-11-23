@@ -276,16 +276,41 @@ table.list.issues > thead > tr > th .buttons {
 /* ========================================
    RECENT NOTES
    ======================================== */
-table.list.issues td.recent_notes {
-  display: grid;
-  grid-auto-flow: column;
-  align-items: stretch;
-  justify-content: center;
-  grid-auto-columns: 1fr;
-  padding: 3px;
+table.list.issues {
+  td.recent_notes {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: stretch;
+    justify-content: center;
+    grid-auto-columns: 1fr;
+    padding: 3px;
 
-  div.journal_outer {
-    position: relative;
+    div.journal_outer {
+      position: relative;
+    }
+  }
+  &.hide-notes-header td.recent_notes .journal {
+    & > h4.note-header {
+      position: absolute;
+      border: none;
+      right: 10px;
+
+      .header-text,
+      .header-buttons > *:not(button.pop-out) {
+        display: none;
+      }
+
+      button.pop-out {
+        opacity: 0.1;
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+    & > .note-info {
+      top: 5px;
+      right: 30px;
+    }
   }
 }
 
@@ -406,7 +431,7 @@ div.journal.has-notes {
     padding: 1px 5px;
     flex: 0 0 1rem;
     position: absolute;
-    top: 32px;
+    top: 1.5rem;
     right: 10px;
     opacity: 0.25;
     background-color: #fff;
@@ -675,6 +700,11 @@ div.ui-dialog.note-pop-out-dialog {
 
     & > * {
       flex: 0 0 auto;
+    }
+    
+    & > .note-info {
+      top: 30px;
+      right: 5px;
     }
 
     & > form {

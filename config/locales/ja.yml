@@ -33,3 +33,4 @@ ja:
     text_submit_all_confirmation: この操作により、すべてのフォームの内容が送信されます。続行しますか？
     label_only: のみ
     label_inline_block_elements: ブロック要素を行内に表示
+    label_hide_notes_header: コメント欄のヘッダーを隠す

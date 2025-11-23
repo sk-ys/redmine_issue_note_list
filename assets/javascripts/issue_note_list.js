@@ -200,6 +200,10 @@ IssueNoteList.fn = {
     $("#content").toggleClass("simple-editor", enable);
   },
 
+  enableHideNotesHeader(enable = true) {
+    $("table.list.issues").toggleClass("hide-notes-header", enable);
+  },
+
   collapseNoteRow(e, state = false) {
     let $target;
     if (e === "all" || e.ctrlKey || e.metaKey) {
