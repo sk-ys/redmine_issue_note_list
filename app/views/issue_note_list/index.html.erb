@@ -75,7 +75,8 @@
       </span>
       <span>
         <%= hidden_field_tag :hide_notes_header, 0, id: "hidden_hide_notes_header" %>
-        <%= check_box_tag :hide_notes_header, 1, @query.hide_notes_header %>
+        <%= check_box_tag :hide_notes_header, 1, @query.hide_notes_header,
+          onclick: "IssueNoteList.fn.enableHideNotesHeader(this.checked)" %>
         <%= label_tag :hide_notes_header, l(:label_hide_notes_header, scope: :issue_note_list) %>
       </span>
       <span>

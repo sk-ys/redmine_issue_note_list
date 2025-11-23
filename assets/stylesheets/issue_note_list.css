@@ -276,16 +276,21 @@ table.list.issues > thead > tr > th .buttons {
 /* ========================================
    RECENT NOTES
    ======================================== */
-table.list.issues td.recent_notes {
-  display: grid;
-  grid-auto-flow: column;
-  align-items: stretch;
-  justify-content: center;
-  grid-auto-columns: 1fr;
-  padding: 3px;
+table.list.issues {
+  td.recent_notes {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: stretch;
+    justify-content: center;
+    grid-auto-columns: 1fr;
+    padding: 3px;
 
-  div.journal_outer {
-    position: relative;
+    div.journal_outer {
+      position: relative;
+    }
+  }
+  &.hide-notes-header td.recent_notes .journal > h4.note-header {
+    display: none;
   }
 }
 
