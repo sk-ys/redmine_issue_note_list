@@ -290,11 +290,26 @@ table.list.issues {
     }
   }
   &.hide-notes-header td.recent_notes .journal {
-    &> h4.note-header {
-      display: none;
+    & > h4.note-header {
+      position: absolute;
+      border: none;
+      right: 10px;
+
+      .header-text,
+      .header-buttons > *:not(button.pop-out) {
+        display: none;
+      }
+
+      button.pop-out {
+        opacity: 0.1;
+        &:hover {
+          opacity: 1;
+        }
+      }
     }
-    &> .note-info {
-      top: 0.5rem;
+    & > .note-info {
+      top: 5px;
+      right: 30px;
     }
   }
 }
