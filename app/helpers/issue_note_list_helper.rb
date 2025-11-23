@@ -114,7 +114,7 @@ module IssueNoteListHelper
     )
     content << "</div>"
     content << "</h4>"
-    content << "<div class=\"note-info\">"
+    content << "<div class=\"note-info\" title=\"#{format_time(journal.created_on)}\">"
     content << l(:field_updated_by).html_safe + ": " + link_to_user(journal.user)
     content << "</div>"
     content << render_notes(issue, journal)
