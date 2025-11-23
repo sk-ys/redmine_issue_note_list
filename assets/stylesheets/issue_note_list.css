@@ -289,8 +289,13 @@ table.list.issues {
       position: relative;
     }
   }
-  &.hide-notes-header td.recent_notes .journal > h4.note-header {
-    display: none;
+  &.hide-notes-header td.recent_notes .journal {
+    &> h4.note-header {
+      display: none;
+    }
+    &> .note-info {
+      top: 0.5rem;
+    }
   }
 }
 
@@ -411,7 +416,7 @@ div.journal.has-notes {
     padding: 1px 5px;
     flex: 0 0 1rem;
     position: absolute;
-    top: 32px;
+    top: 1.5rem;
     right: 10px;
     opacity: 0.25;
     background-color: #fff;
