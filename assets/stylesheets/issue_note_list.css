@@ -482,6 +482,14 @@ div.journal.has-notes {
     }
   }
 }
+@media screen and (min-width: 900px) {
+  .pagination {
+    margin-bottom: -1.5rem;
+    ul.pages li {
+      margin-bottom: 0;
+    }
+  }
+}
 
 /* ========================================
   NOTES HEADER BUTTONS
