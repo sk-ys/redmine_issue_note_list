@@ -36,3 +36,4 @@ en:
     label_hide_notes_header: Hide notes header
     label_deferred_parameters: Deferred parameters
     label_immediate_parameters: Immediate parameters
+    label_silent_mode: Silent mode

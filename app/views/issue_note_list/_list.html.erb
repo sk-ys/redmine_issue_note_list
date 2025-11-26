@@ -150,15 +150,24 @@
                   <%= wikitoolbar_for "add_issue_notes-#{issue.id.to_s}",
                     preview_issue_path(project_id: issue.project_id, issue_id: issue) %>
                   <div class="commands">
-                    <% if issue.safe_attribute? "private_notes" %>
-                      <div class="private_notes">
-                        <%= check_box_tag "issue[private_notes]", true, false,
-                              id: "add_issue_private_notes-#{issue.id.to_s}" %>
-                        <label for="<%= "add_issue_private_notes-#{issue.id.to_s}" %>">
-                          <%= l(:field_private_notes) %>
+                    <div class="options">
+                      <% if issue.safe_attribute? "private_notes" %>
+                        <div class="private_notes">
+                          <%= check_box_tag "issue[private_notes]", true, false,
+                                id: "add_issue_private_notes-#{issue.id.to_s}" %>
+                          <label for="<%= "add_issue_private_notes-#{issue.id.to_s}" %>">
+                            <%= l(:field_private_notes) %>
+                          </label>
+                        </div>
+                      <% end %>
+                      <div class="silent_mode">
+                        <%= check_box_tag "issue[silent_mode]", true, false,
+                              id: "add_issue_silent_mode-#{issue.id.to_s}" %>
+                        <label for="<%= "add_issue_silent_mode-#{issue.id.to_s}" %>">
+                          <%= l(:label_silent_mode, scope: :issue_note_list) %>
                         </label>
                       </div>
-                    <% end %>
+                    </div>
                     <%= submit_tag l(:button_submit) %>
                   </div>
                 <% end %>

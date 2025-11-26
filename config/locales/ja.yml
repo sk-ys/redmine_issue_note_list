@@ -36,3 +36,4 @@ ja:
     label_hide_notes_header: コメント欄のヘッダーを隠す
     label_deferred_parameters: 遅延適用パラメータ
     label_immediate_parameters: 即時適用パラメータ
+    label_silent_mode: サイレントモード
