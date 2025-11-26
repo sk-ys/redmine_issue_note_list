@@ -37,3 +37,5 @@ ja:
     label_deferred_parameters: 遅延適用パラメータ
     label_immediate_parameters: 即時適用パラメータ
     label_silent_mode: サイレントモード
+    label_enable_silent_mode: サイレントモードを有効にする
+    description_enable_silent_mode: コメント追加時にメール通知を送信しないようにします。

@@ -160,13 +160,15 @@
                           </label>
                         </div>
                       <% end %>
-                      <div class="silent_mode">
-                        <%= check_box_tag "issue[silent_mode]", true, false,
-                              id: "add_issue_silent_mode-#{issue.id.to_s}" %>
-                        <label for="<%= "add_issue_silent_mode-#{issue.id.to_s}" %>">
-                          <%= l(:label_silent_mode, scope: :issue_note_list) %>
-                        </label>
-                      </div>
+                      <% if Setting.plugin_redmine_issue_note_list['enable_silent_mode'] %>
+                        <div class="silent_mode">
+                          <%= check_box_tag "issue[silent_mode]", true, false,
+                                id: "add_issue_silent_mode-#{issue.id.to_s}" %>
+                          <label for="<%= "add_issue_silent_mode-#{issue.id.to_s}" %>">
+                            <%= l(:label_silent_mode, scope: :issue_note_list) %>
+                          </label>
+                        </div>
+                      <% end %>
                     </div>
                     <%= submit_tag l(:button_submit) %>
                   </div>

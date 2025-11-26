@@ -37,3 +37,5 @@ en:
     label_deferred_parameters: Deferred parameters
     label_immediate_parameters: Immediate parameters
     label_silent_mode: Silent mode
+    label_enable_silent_mode: Enable silent mode
+    description_enable_silent_mode: Disables email notifications when adding notes.

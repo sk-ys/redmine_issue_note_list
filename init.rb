@@ -23,6 +23,7 @@ Redmine::Plugin.register :redmine_issue_note_list do
                                                     param: :project_id
 
   settings default: {
-    add_note_to_issue_note_list_on_global: false},
+    add_note_to_issue_note_list_on_global: false, 
+    enable_silent_mode: false },
     partial: 'settings/issue_note_list'
 end
