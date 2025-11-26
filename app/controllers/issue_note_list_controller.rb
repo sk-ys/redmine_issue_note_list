@@ -46,6 +46,10 @@ class IssueNoteListController < ApplicationController
   def add_note
     @saved = false
     if update_issue_from_params
+      if params[:issue][:silent_mode].present? && @issue.current_journal
+        # Disable notifications for this journal entry
+        @issue.current_journal.notify = false
+      end
       begin
         @saved = save_issue_with_child_records == true
       rescue ActiveRecord::StaleObjectError

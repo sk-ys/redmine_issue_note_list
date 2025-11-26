@@ -607,8 +607,13 @@ table.list.issues td.add-notes {
    Add-NOTES CELL
    ======================================== */
 td.add-notes {
-  div.private_notes label {
-    font-size: smaller;
+  .commands .options {
+    display: inline-flex;
+    flex-direction: row;
+    gap: 0 5px;
+    label {
+      font-size: smaller;
+    }
   }
 
   &.submitted {

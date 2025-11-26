@@ -1,4 +1,10 @@
 <p>
   <%= label_tag 'settings[add_note_to_issue_note_list_on_global]', l(:label_add_note_to_issue_note_list_on_global, scope: :issue_note_list) %>
   <%= check_box_tag 'settings[add_note_to_issue_note_list_on_global]', 1, @settings[:add_note_to_issue_note_list_on_global] %>
+</p>
+<p>
+  <%= label_tag 'settings[enable_silent_mode]',
+    l(:label_enable_silent_mode, scope: :issue_note_list),
+    title: l(:description_silent_mode, scope: :issue_note_list) %>
+  <%= check_box_tag 'settings[enable_silent_mode]', 1, @settings[:enable_silent_mode] %>
 </p> 
