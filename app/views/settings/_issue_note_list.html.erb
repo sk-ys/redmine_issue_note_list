@@ -5,6 +5,6 @@
 <p>
   <%= label_tag 'settings[enable_silent_mode]',
     l(:label_enable_silent_mode, scope: :issue_note_list),
-    title: l(:description_enable_silent_mode, scope: :issue_note_list) %>
+    title: l(:description_silent_mode, scope: :issue_note_list) %>
   <%= check_box_tag 'settings[enable_silent_mode]', 1, @settings[:enable_silent_mode] %>
 </p> 

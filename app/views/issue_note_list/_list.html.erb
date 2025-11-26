@@ -164,7 +164,8 @@
                         <div class="silent_mode">
                           <%= check_box_tag "issue[silent_mode]", true, false,
                                 id: "add_issue_silent_mode-#{issue.id.to_s}" %>
-                          <label for="<%= "add_issue_silent_mode-#{issue.id.to_s}" %>">
+                          <label for="<%= "add_issue_silent_mode-#{issue.id.to_s}" %>"
+                            title="<%= l(:description_silent_mode, scope: :issue_note_list) %>">
                             <%= l(:label_silent_mode, scope: :issue_note_list) %>
                           </label>
                         </div>
