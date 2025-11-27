@@ -143,6 +143,7 @@
                   id: "add_notes_form-#{issue.id.to_s}", multipart: true,
                   remote: true do %>
                   <%= hidden_field_tag 'number_of_notes', @query.number_of_notes, id: "number_of_notes-#{issue.id}" %>
+                  <%= hidden_field_tag 'private_notes_filter', @query.private_notes_filter, id: "private_notes_filter-#{issue.id}" %>
                   <%= text_area_tag "issue[notes]", nil, cols: 60, rows: 10, class: "wiki-edit",
                         data: { auto_complete: true },
                         id: "add_issue_notes-#{issue.id.to_s}",

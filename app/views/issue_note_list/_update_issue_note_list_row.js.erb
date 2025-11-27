@@ -10,5 +10,8 @@
   
   // Update rows
   const $notes = $("#issue-<%= @issue.id %>").children(".recent_notes");
-  $notes.empty().append($('<%= escape_javascript(render_issue_notes(@issue, @query.number_of_notes, @query.private_notes_filter)) %>'));
+  $notes.empty().append($(
+    '<%= escape_javascript(render_issue_notes(
+        @issue, params[:number_of_notes].to_i, params[:private_notes_filter])) %>'
+  ));
 })();
