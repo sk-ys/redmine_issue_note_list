@@ -42,7 +42,7 @@ This is a Redmine plugin that lists issue notes (history) and allows you to add 
 
 ## License
 
-GNU General Public License version 2 (GPLv2)
+GNU General Public License version 3 (GPLv3)
 
 ## Using Libraries
 
