@@ -401,6 +401,14 @@ div.journal.has-notes {
     box-sizing: border-box;
     flex: 1 1 auto;
     scrollbar-width: 0.5em;
+
+    /* Fix formatting of paragraph elements in table cells */
+    & > p {
+      margin: revert;
+    }
+    & > *:first-of-type {
+      margin-top: 0;
+    }
   }
 
   &.private-notes > div.wiki {
@@ -425,6 +433,8 @@ div.journal.has-notes {
     & > .header-text {
       overflow: hidden;
       text-overflow: ellipsis;
+      display: flex;
+      align-items: center;
     }
   }
 
@@ -931,10 +941,10 @@ tr:not(.collapse-row) div.header-buttons > button.expand-row {
 
 /* Enclose the note ID with a square frame */
 div.journal.has-notes h4.note-header div.header-text span.note-id {
-  font-size: smaller;
+  font-size: 10px;
   border: 1px solid #aaa;
-  margin: 0 3px;
-  padding: 1px 2px;
+  margin: 1px 5px 1px 3px;
+  padding: 0 2px;
   color: #aaa;
 }
 
@@ -1172,11 +1182,6 @@ div.autoscroll-outer.hide-add-note-fields
   :is(.add-notes, button.hide-add-note-fields),
 div.autoscroll-outer:not(.hide-add-note-fields) button.show-add-note-fields {
   display: none;
-}
-
-/* Fix formatting of paragraph elements in table cells */
-table.issues.list div.journal > .wiki > p {
-  margin: revert;
 }
 
 #content.simple-editor .jstTabs.tabs {
