@@ -19,6 +19,7 @@ This is a Redmine plugin that lists issue notes (history) and allows you to add 
 ## Requirements
 
 * Redmine
+  * Note: This plugin has been tested and confirmed to work with Redmine 5 - 6.1.
 * [Redmine base deface plugin](https://github.com/jbbarth/redmine_base_deface)
 
 ## Installation
