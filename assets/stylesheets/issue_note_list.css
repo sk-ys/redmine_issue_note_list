@@ -407,7 +407,7 @@ div.journal.has-notes {
       margin: revert;
     }
     & > *:first-of-type {
-      margin-top: 0;
+      margin-top: 0.5rem;
     }
   }
 
