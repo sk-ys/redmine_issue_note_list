@@ -317,6 +317,9 @@ table.list.issues {
       right: 30px;
     }
   }
+  :is(tr:first-of-type, tr.group + tr.issue) td.recent_notes {
+    border-top: none;
+  }
 }
 
 /* ========================================
