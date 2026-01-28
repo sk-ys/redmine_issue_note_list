@@ -213,6 +213,13 @@ IssueNoteList.fn = {
       $target = $(`#${issueId}, table.list.issues > tbody > tr.${issueId}`);
     }
     $target.toggleClass("collapse-row", state);
+    $target.each((_, tr) => {
+      const issueId = $(tr).attr("id")?.replace("issue-", "");
+      if (state && issueId) {
+        IssueNoteList.fn.addShrinkedNoteToNoteHeader(issueId);
+      }
+    });
+
     if (!state) {
       setTimeout(() => {
         $target.filter(".variable-height").each((_, tr) => {
@@ -220,6 +227,27 @@ IssueNoteList.fn = {
         });
       });
     }
+  },
+
+  addShrinkedNoteToNoteHeader(issueId) {
+    const $notes = $(`#issue-${issueId} .recent_notes .journal.has-notes`);
+    $notes.each((_, note) => {
+      const $note = $(note);
+      const timestamp = $note
+        .find(".note-header .header-text a[href*='/activity?from=']")
+        .text();
+      if ($note.find(".shrinked-note-header").data("timestamp") !== timestamp) {
+        $note.find(".shrinked-note-header").remove();
+      }
+      if ($note.find(".shrinked-note-header").length === 0) {
+        const $noteContent = $note.find(".wiki.journal-note");
+        const $shrinkedNoteHeader = $("<div/>")
+          .addClass("shrinked-note-header")
+          .data("timestamp", timestamp)
+          .append($noteContent.children().clone())
+          .insertAfter($note.find(".note-id"));
+      }
+    });
   },
 
   _scrollToNextNote(event, prev = true) {

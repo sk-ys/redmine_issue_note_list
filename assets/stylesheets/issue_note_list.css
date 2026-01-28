@@ -6,6 +6,7 @@
   --inl-issue-status-indent-base: 8px;
   --inl-issue-status-indent-unit: 16px;
   --inl-issue-status-header-height: 18px;
+  --inl-issue-status-collapsed-header-height: 24px;
 }
 
 /* ========================================
@@ -138,7 +139,7 @@ table.list.issues {
 
   /* Style for issue-status header and columns */
   td.issue-status {
-    background-position-y: 10px;
+    background-position-y: 5px;
     & > :is(.header, .columns) {
       width: var(--inl-issue-status-width);
       min-width: var(--inl-issue-status-min-width);
@@ -432,6 +433,7 @@ div.journal.has-notes {
     flex: 0 0 auto;
     margin: 0;
     margin-bottom: 3px;
+    height: var(--inl-issue-status-header-height);
 
     & > .header-text {
       overflow: hidden;
@@ -894,9 +896,12 @@ td.block_column {
 /* ========================================
    COMPACT MODE
    ======================================== */
+.shrinked-note-header {
+  display: none;
+}
 tr.collapse-row {
   & > td {
-    height: 30px !important;
+    height: var(--inl-issue-status-collapsed-header-height) !important;
     overflow: hidden;
   }
 
@@ -936,6 +941,47 @@ tr.collapse-row {
 
   & > div.ui-resizable-handle {
     display: none !important;
+  }
+
+  h4.note-header {
+    border: none;
+  }
+
+  /* Hide timestamp */
+  h4.note-header a[href*="/activity?from="] {
+    display: none;
+  }
+
+  /* Show shrinked note header */
+  div.journal.has-notes .shrinked-note-header {
+    display: block;
+    line-height: var(--inl-issue-status-header-height);
+    height: var(--inl-issue-status-header-height);
+    overflow: hidden;
+    display: flex;
+    margin-left: 3px;
+    color: #aaa;
+
+    * {
+      margin: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-right: 0;
+      box-sizing: border-box;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      color: #aaa !important;
+      font-size: 0.95em;
+    }
+
+    &::before {
+      content: "📝 ";
+      margin-right: 4px;
+    }
+    &::after {
+      content: "...";
+      margin-left: 4px;
+    }
   }
 }
 tr:not(.collapse-row) div.header-buttons > button.expand-row {
