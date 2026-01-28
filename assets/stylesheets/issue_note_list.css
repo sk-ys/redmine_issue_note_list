@@ -951,8 +951,8 @@ tr.collapse-row {
     border: none;
   }
 
-  /* Hide timestamp */
-  h4.note-header a[href*="/activity?from="] {
+  /* Hide items without note ID or shrinked note header */
+  h4.note-header .header-text > *:not(.note-id, .shrinked-note-header) {
     display: none;
   }
 

@@ -466,8 +466,8 @@ IssueNoteList.fn = {
     // Enable simple editor
     this.enableSimpleEditor($("#enable_simple_editor:checked").length === 1);
 
-    // Apply Resizable to cell height
     $("table.list.issues > tbody > tr").each(function () {
+      // Apply Resizable to cell height
       $(this).resizable({
         handles: "s",
         alsoResize: $(this).children("td"),
@@ -497,6 +497,12 @@ IssueNoteList.fn = {
           $(this).has("td.block_column:not(.in_row)").length === 0 ? 100 : 30,
         autoHide: true,
       });
+
+      // Add shrinked note header when collapsing note rows
+      const issueId = $(this).attr("id")?.replace("issue-", "");
+      if (issueId) {
+        IssueNoteList.fn.addShrinkedNoteToNoteHeader(issueId);
+      }
     });
 
     // Enable double-click editing
