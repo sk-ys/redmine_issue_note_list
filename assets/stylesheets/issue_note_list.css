@@ -6,7 +6,7 @@
   --inl-issue-status-indent-base: 8px;
   --inl-issue-status-indent-unit: 16px;
   --inl-issue-status-header-height: 18px;
-  --inl-issue-status-collapsed-header-height: 24px;
+  --inl-issue-status-collapsed-header-height: 20px;
 }
 
 /* ========================================
@@ -139,7 +139,7 @@ table.list.issues {
 
   /* Style for issue-status header and columns */
   td.issue-status {
-    background-position-y: 5px;
+    background-position-y: 3px;
     & > :is(.header, .columns) {
       width: var(--inl-issue-status-width);
       min-width: var(--inl-issue-status-min-width);
@@ -149,6 +149,7 @@ table.list.issues {
       justify-content: space-between;
       white-space: nowrap;
       height: var(--inl-issue-status-header-height);
+      height: var(--inl-issue-status-header-height);
       font-weight: bold;
 
       .header-text {
@@ -156,6 +157,7 @@ table.list.issues {
         text-align: left;
         text-overflow: ellipsis;
         overflow: hidden;
+        line-height: var(--inl-issue-status-header-height);
       }
 
       .header-buttons {
@@ -425,6 +427,7 @@ div.journal.has-notes {
     overflow: hidden;
     padding-left: 0;
     padding-right: 0;
+    padding-top: 0;
     text-overflow: ellipsis;
     position: relative;
     display: flex;
@@ -434,6 +437,7 @@ div.journal.has-notes {
     margin: 0;
     margin-bottom: 3px;
     height: var(--inl-issue-status-header-height);
+    line-height: var(--inl-issue-status-header-height);
 
     & > .header-text {
       overflow: hidden;
@@ -909,7 +913,7 @@ tr.collapse-row {
     display: none !important;
   }
 
-  td.issue-status div.column-items {
+  td.issue-status div.columns {
     display: none !important;
   }
 
@@ -995,6 +999,7 @@ div.journal.has-notes h4.note-header div.header-text span.note-id {
   margin: 1px 5px 1px 3px;
   padding: 0 2px;
   color: #aaa;
+  line-height: 1.4;
 }
 
 /* ========================================
