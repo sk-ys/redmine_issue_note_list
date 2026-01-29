@@ -900,11 +900,42 @@ td.block_column {
 }
 
 /* ========================================
+   SHRUNK NOTE HEADER
+   ======================================== */
+.shrunk-note-header {
+  display: none;
+  line-height: var(--inl-issue-status-header-height);
+  height: var(--inl-issue-status-header-height);
+  overflow: hidden;
+  margin-left: 3px;
+  color: #aaa;
+  pointer-events: none;
+
+  * {
+    margin: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 0;
+    box-sizing: border-box;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #aaa !important;
+    font-size: 0.95em;
+  }
+
+  &::before {
+    content: "📝 ";
+    margin-right: 4px;
+  }
+  &::after {
+    content: "...";
+    margin-left: 4px;
+  }
+}
+
+/* ========================================
    COMPACT MODE
    ======================================== */
-.shrinked-note-header {
-  display: none;
-}
 tr.collapse-row {
   & > td {
     height: var(--inl-issue-status-collapsed-header-height) !important;
@@ -953,41 +984,14 @@ tr.collapse-row {
     border: none;
   }
 
-  /* Hide items without note ID or shrinked note header */
-  h4.note-header .header-text > *:not(.note-id, .shrinked-note-header) {
+  /* Hide items without note ID or shrunk note header */
+  h4.note-header .header-text > *:not(.note-id, .shrunk-note-header) {
     display: none;
   }
 
-  /* Show shrinked note header */
-  div.journal.has-notes .shrinked-note-header {
-    display: block;
-    line-height: var(--inl-issue-status-header-height);
-    height: var(--inl-issue-status-header-height);
-    overflow: hidden;
+  /* Show shrunk note header */
+  div.journal.has-notes .shrunk-note-header {
     display: flex;
-    margin-left: 3px;
-    color: #aaa;
-
-    * {
-      margin: 0;
-      padding-top: 0;
-      padding-bottom: 0;
-      padding-right: 0;
-      box-sizing: border-box;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      color: #aaa !important;
-      font-size: 0.95em;
-    }
-
-    &::before {
-      content: "📝 ";
-      margin-right: 4px;
-    }
-    &::after {
-      content: "...";
-      margin-left: 4px;
-    }
   }
 }
 tr:not(.collapse-row) div.header-buttons > button.expand-row {

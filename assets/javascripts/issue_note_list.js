@@ -216,7 +216,7 @@ IssueNoteList.fn = {
     $target.each((_, tr) => {
       const issueId = $(tr).attr("id")?.replace("issue-", "");
       if (state && issueId) {
-        IssueNoteList.fn.addShrinkedNoteToNoteHeader(issueId);
+        IssueNoteList.fn.addShrunkNoteToNoteHeader(issueId);
       }
     });
 
@@ -229,20 +229,20 @@ IssueNoteList.fn = {
     }
   },
 
-  addShrinkedNoteToNoteHeader(issueId) {
+  addShrunkNoteToNoteHeader(issueId) {
     const $notes = $(`#issue-${issueId} .recent_notes .journal.has-notes`);
     $notes.each((_, note) => {
       const $note = $(note);
       const timestamp = $note
         .find(".note-header .header-text a[href*='/activity?from=']")
         .text();
-      if ($note.find(".shrinked-note-header").data("timestamp") !== timestamp) {
-        $note.find(".shrinked-note-header").remove();
+      if ($note.find(".shrunk-note-header").data("timestamp") !== timestamp) {
+        $note.find(".shrunk-note-header").remove();
       }
-      if ($note.find(".shrinked-note-header").length === 0) {
+      if ($note.find(".shrunk-note-header").length === 0) {
         const $noteContent = $note.find(".wiki.journal-note");
-        const $shrinkedNoteHeader = $("<div/>")
-          .addClass("shrinked-note-header")
+        const $shrunkNoteHeader = $("<div/>")
+          .addClass("shrunk-note-header")
           .data("timestamp", timestamp)
           .append($noteContent.children().clone())
           .insertAfter($note.find(".note-id"));
@@ -498,10 +498,10 @@ IssueNoteList.fn = {
         autoHide: true,
       });
 
-      // Add shrinked note header when collapsing note rows
+      // Add shrunk note header when collapsing note rows
       const issueId = $(this).attr("id")?.replace("issue-", "");
       if (issueId) {
-        IssueNoteList.fn.addShrinkedNoteToNoteHeader(issueId);
+        IssueNoteList.fn.addShrunkNoteToNoteHeader(issueId);
       }
     });
 
