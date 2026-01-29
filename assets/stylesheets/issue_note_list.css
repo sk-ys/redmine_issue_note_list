@@ -297,7 +297,7 @@ table.list.issues {
       position: relative;
     }
   }
-  &.hide-notes-header td.recent_notes .journal {
+  &.hide-notes-header tr:not(.collapse-row) td.recent_notes .journal {
     & > h4.note-header {
       position: absolute;
       border: none;
@@ -320,7 +320,9 @@ table.list.issues {
       right: 30px;
     }
   }
-  :is(tr:first-of-type, tr.group + tr.issue) td.recent_notes {
+  tr:not(.collapse-row)
+    :is(&:first-of-type, &.group + &.issue)
+    td.recent_notes {
     border-top: none;
   }
 }
