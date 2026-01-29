@@ -919,12 +919,12 @@ td.block_column {
     box-sizing: border-box;
     white-space: nowrap;
     text-overflow: ellipsis;
-    color: #aaa !important;
+    color: #666 !important;
     font-size: 0.95em;
   }
 
   &::before {
-    content: "📝 ";
+    content: ">";
     margin-right: 4px;
   }
   &::after {
