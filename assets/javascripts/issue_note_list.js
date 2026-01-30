@@ -245,7 +245,10 @@ IssueNoteList.fn = {
           .addClass("shrunk-note-header")
           .data("timestamp", timestamp)
           .append($noteContent.children().clone())
-          .insertAfter($note.find(".note-id"));
+          .insertAfter($note.find(".note-id"))
+          .on("click", (e) => {
+            $note.closest("tr.issue").find(".expand-row").click();
+          });
       }
     });
   },
