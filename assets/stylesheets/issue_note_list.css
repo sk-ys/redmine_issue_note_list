@@ -6,6 +6,7 @@
   --inl-issue-status-indent-base: 8px;
   --inl-issue-status-indent-unit: 16px;
   --inl-issue-status-header-height: 18px;
+  --inl-issue-status-collapsed-header-height: 20px;
 }
 
 /* ========================================
@@ -138,7 +139,7 @@ table.list.issues {
 
   /* Style for issue-status header and columns */
   td.issue-status {
-    background-position-y: 10px;
+    background-position-y: 3px;
     & > :is(.header, .columns) {
       width: var(--inl-issue-status-width);
       min-width: var(--inl-issue-status-min-width);
@@ -148,6 +149,7 @@ table.list.issues {
       justify-content: space-between;
       white-space: nowrap;
       height: var(--inl-issue-status-header-height);
+      height: var(--inl-issue-status-header-height);
       font-weight: bold;
 
       .header-text {
@@ -155,6 +157,7 @@ table.list.issues {
         text-align: left;
         text-overflow: ellipsis;
         overflow: hidden;
+        line-height: var(--inl-issue-status-header-height);
       }
 
       .header-buttons {
@@ -294,7 +297,7 @@ table.list.issues {
       position: relative;
     }
   }
-  &.hide-notes-header td.recent_notes .journal {
+  &.hide-notes-header tr:not(.collapse-row) td.recent_notes .journal {
     & > h4.note-header {
       position: absolute;
       border: none;
@@ -317,7 +320,9 @@ table.list.issues {
       right: 30px;
     }
   }
-  :is(tr:first-of-type, tr.group + tr.issue) td.recent_notes {
+  tr:not(.collapse-row)
+    :is(&:first-of-type, &.group + &.issue)
+    td.recent_notes {
     border-top: none;
   }
 }
@@ -424,6 +429,7 @@ div.journal.has-notes {
     overflow: hidden;
     padding-left: 0;
     padding-right: 0;
+    padding-top: 0;
     text-overflow: ellipsis;
     position: relative;
     display: flex;
@@ -432,6 +438,8 @@ div.journal.has-notes {
     flex: 0 0 auto;
     margin: 0;
     margin-bottom: 3px;
+    height: var(--inl-issue-status-header-height);
+    line-height: var(--inl-issue-status-header-height);
 
     & > .header-text {
       overflow: hidden;
@@ -892,11 +900,46 @@ td.block_column {
 }
 
 /* ========================================
+   SHRUNK NOTE HEADER
+   ======================================== */
+.shrunk-note-header {
+  display: none;
+  line-height: var(--inl-issue-status-header-height);
+  height: var(--inl-issue-status-header-height);
+  overflow: hidden;
+  margin-left: 3px;
+  color: #aaa;
+  cursor: pointer;
+
+  * {
+    margin: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 0;
+    box-sizing: border-box;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #666 !important;
+    font-size: 0.95em;
+    pointer-events: none;
+  }
+
+  &::before {
+    content: ">";
+    margin-right: 4px;
+  }
+  &::after {
+    content: "...";
+    margin-left: 4px;
+  }
+}
+
+/* ========================================
    COMPACT MODE
    ======================================== */
 tr.collapse-row {
   & > td {
-    height: 30px !important;
+    height: var(--inl-issue-status-collapsed-header-height) !important;
     overflow: hidden;
   }
 
@@ -904,7 +947,7 @@ tr.collapse-row {
     display: none !important;
   }
 
-  td.issue-status div.column-items {
+  td.issue-status div.columns {
     display: none !important;
   }
 
@@ -937,6 +980,20 @@ tr.collapse-row {
   & > div.ui-resizable-handle {
     display: none !important;
   }
+
+  h4.note-header {
+    border: none;
+  }
+
+  /* Hide items without note ID or shrunk note header */
+  h4.note-header .header-text > *:not(.note-id, .shrunk-note-header) {
+    display: none;
+  }
+
+  /* Show shrunk note header */
+  div.journal.has-notes .shrunk-note-header {
+    display: flex;
+  }
 }
 tr:not(.collapse-row) div.header-buttons > button.expand-row {
   display: none;
@@ -949,6 +1006,7 @@ div.journal.has-notes h4.note-header div.header-text span.note-id {
   margin: 1px 5px 1px 3px;
   padding: 0 2px;
   color: #aaa;
+  line-height: 1.4;
 }
 
 /* ========================================

@@ -41,7 +41,7 @@ IssueNoteList.fn = {
           .attr("title", label)
           .on("click", (e) => {
             const $dialog = $(e.target).closest(
-              ".ui-dialog.note-pop-out-dialog"
+              ".ui-dialog.note-pop-out-dialog",
             );
             if (hasAllClassNames(className, $dialog.attr("class").split(" "))) {
               // restore
@@ -66,7 +66,7 @@ IssueNoteList.fn = {
 
       const $fixToLeftButton = generateResizeWindowButton(
         "fixed fix-to-left mui-icon mui-icon-dock_to_left",
-        IssueNoteList.resources.labelFixToLeft
+        IssueNoteList.resources.labelFixToLeft,
       );
 
       const $fixToRightButton = generateResizeWindowButton(
@@ -74,12 +74,12 @@ IssueNoteList.fn = {
         IssueNoteList.resources.labelFixToRight,
         ($dialog) => {
           $dialog.css("left", $(window).width() - $dialog.outerWidth());
-        }
+        },
       );
 
       const $fixToTopButton = generateResizeWindowButton(
         "fixed fix-to-top mui-icon mui-icon-dock_to_top",
-        IssueNoteList.resources.labelFixToTop
+        IssueNoteList.resources.labelFixToTop,
       );
 
       const $fixToBottomButton = generateResizeWindowButton(
@@ -87,12 +87,12 @@ IssueNoteList.fn = {
         IssueNoteList.resources.labelFixToBottom,
         ($dialog) => {
           $dialog.css("top", $(window).height() - $dialog.outerHeight());
-        }
+        },
       );
 
       const $maximizeButton = generateResizeWindowButton(
         "maximized mui-icon",
-        IssueNoteList.resources.labelMaximize
+        IssueNoteList.resources.labelMaximize,
       );
 
       $("<div/>")
@@ -118,8 +118,8 @@ IssueNoteList.fn = {
             })
             .on("click", () => {
               $note.dialog("close");
-            })
-        )
+            }),
+        ),
     );
 
     $note.dialog({
@@ -186,7 +186,7 @@ IssueNoteList.fn = {
           ...$(tr)
             .children("td")
             .map((_, e) => parseInt($(e).css("height")))
-            .toArray()
+            .toArray(),
         );
         $(tr).children("td").css("height", maxTdHeight);
       });
@@ -213,6 +213,13 @@ IssueNoteList.fn = {
       $target = $(`#${issueId}, table.list.issues > tbody > tr.${issueId}`);
     }
     $target.toggleClass("collapse-row", state);
+    $target.each((_, tr) => {
+      const issueId = $(tr).attr("id")?.replace("issue-", "");
+      if (state && issueId) {
+        IssueNoteList.fn.addShrunkNoteToNoteHeader(issueId);
+      }
+    });
+
     if (!state) {
       setTimeout(() => {
         $target.filter(".variable-height").each((_, tr) => {
@@ -220,6 +227,30 @@ IssueNoteList.fn = {
         });
       });
     }
+  },
+
+  addShrunkNoteToNoteHeader(issueId) {
+    const $notes = $(`#issue-${issueId} .recent_notes .journal.has-notes`);
+    $notes.each((_, note) => {
+      const $note = $(note);
+      const timestamp = $note
+        .find(".note-header .header-text a[href*='/activity?from=']")
+        .text();
+      if ($note.find(".shrunk-note-header").data("timestamp") !== timestamp) {
+        $note.find(".shrunk-note-header").remove();
+      }
+      if ($note.find(".shrunk-note-header").length === 0) {
+        const $noteContent = $note.find(".wiki.journal-note");
+        const $shrunkNoteHeader = $("<div/>")
+          .addClass("shrunk-note-header")
+          .data("timestamp", timestamp)
+          .append($noteContent.children().clone())
+          .insertAfter($note.find(".note-id"))
+          .on("click", (e) => {
+            $note.closest("tr.issue").find(".expand-row").click();
+          });
+      }
+    });
   },
 
   _scrollToNextNote(event, prev = true) {
@@ -249,7 +280,7 @@ IssueNoteList.fn = {
               cellTops[0] -
               (scrollOnePage ? containerHeight : margin),
           (arr) => arr.slice(-1)[0] - cellTops[0],
-          0
+          0,
         )
       : getNewScrollTop(
           (i) =>
@@ -258,7 +289,7 @@ IssueNoteList.fn = {
               cellTops[0] +
               (scrollOnePage ? containerHeight : margin),
           (arr) => arr[0] - cellTops[0],
-          cellTops.slice(-1)[0]
+          cellTops.slice(-1)[0],
         );
 
     scrollContainer.animate({ scrollTop: scrollTop }, scrollSpeed);
@@ -280,7 +311,7 @@ IssueNoteList.fn = {
     container.toggleClass(className);
     localStorage.setItem(
       "issue-note-list_hide-add-note-fields",
-      container.hasClass(className)
+      container.hasClass(className),
     );
   },
 
@@ -299,7 +330,7 @@ IssueNoteList.fn = {
   setIssueStatusWidth(width) {
     document.documentElement.style.setProperty(
       "--inl-issue-status-width",
-      width + (Number.isFinite(width * 1) ? "px" : "")
+      width + (Number.isFinite(width * 1) ? "px" : ""),
     );
   },
 
@@ -308,7 +339,7 @@ IssueNoteList.fn = {
       "td.issue-status, " +
         "th.issue-status, " +
         "td.issue-status > div.header, " +
-        "td.issue-status > div.columns"
+        "td.issue-status > div.columns",
     ).css("width", "");
   },
 
@@ -404,10 +435,10 @@ IssueNoteList.fn = {
       const notes_field_height = parseInt($(this).val());
       $("#adjust_notes_field_height_slider").slider(
         "value",
-        notes_field_height
+        notes_field_height,
       );
       $notes_field_height_style.text(
-        generateNotesFieldHeightStyle(notes_field_height)
+        generateNotesFieldHeightStyle(notes_field_height),
       );
     });
 
@@ -427,7 +458,7 @@ IssueNoteList.fn = {
       const issueStatusFieldWidth = parseInt($(this).val());
       $("#adjust_issue_status_field_width_slider").slider(
         "value",
-        issueStatusFieldWidth
+        issueStatusFieldWidth,
       );
       self.setIssueStatusWidth(issueStatusFieldWidth);
     });
@@ -438,8 +469,8 @@ IssueNoteList.fn = {
     // Enable simple editor
     this.enableSimpleEditor($("#enable_simple_editor:checked").length === 1);
 
-    // Apply Resizable to cell height
     $("table.list.issues > tbody > tr").each(function () {
+      // Apply Resizable to cell height
       $(this).resizable({
         handles: "s",
         alsoResize: $(this).children("td"),
@@ -469,13 +500,19 @@ IssueNoteList.fn = {
           $(this).has("td.block_column:not(.in_row)").length === 0 ? 100 : 30,
         autoHide: true,
       });
+
+      // Add shrunk note header when collapsing note rows
+      const issueId = $(this).attr("id")?.replace("issue-", "");
+      if (issueId) {
+        IssueNoteList.fn.addShrunkNoteToNoteHeader(issueId);
+      }
     });
 
     // Enable double-click editing
     $("td.recent_notes .journal.has-notes .wiki").on("dblclick", (e) => {
       const $journal = $(e.target).closest("div.journal.has-notes");
       const editButton = $journal.find(
-        ".note-header .header-buttons a[href$=edit]"
+        ".note-header .header-buttons a[href$=edit]",
       )[0];
       if (editButton) {
         editButton.click();
@@ -520,7 +557,7 @@ window.addEventListener("DOMContentLoaded", () => {
     $(".tag-label-color a, .tag-label a").each((_, e) => {
       $(e).attr(
         "href",
-        $(e).attr("href").replace("/issues?", "/issue_note_list?")
+        $(e).attr("href").replace("/issues?", "/issue_note_list?"),
       );
     });
   })();
