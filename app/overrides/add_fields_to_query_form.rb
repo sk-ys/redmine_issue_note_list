@@ -11,7 +11,8 @@ module AddFieldsToQueryForm
         <%= hidden_field_tag 'query[enable_compact_mode]', '0' %>
         <%= hidden_field_tag 'query[enable_variable_height]', '0' %>
         <%= hidden_field_tag 'query[enable_simple_editor]', '0' %>
-        <%= hidden_field_tag 'query[inline_block_elements]', '1' %>
+        <%= hidden_field_tag 'query[hide_notes_header]', '0' %>
+        <%= hidden_field_tag 'query[inline_block_elements]', '0' %>
         <label class="inline" style="white-space: nowrap">
           <%= l(:label_number_of_notes, scope: :issue_note_list) %>:&thinsp;
           <%= number_field_tag "query[number_of_notes]", @query.number_of_notes, min: 1, max: 10, autocomplete: false %>
