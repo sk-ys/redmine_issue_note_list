@@ -12,6 +12,10 @@
   const $notes = $("#issue-<%= @issue.id %>").children(".recent_notes");
   $notes.empty().append($(
     '<%= escape_javascript(render_issue_notes(
-        @issue, params[:number_of_notes].to_i, params[:private_notes_filter])) %>'
+        @issue,
+        params[:number_of_notes].to_i,
+        params[:private_notes_filter],
+        @query.note_type_op,
+        @query.note_type_v)) %>'
   ));
 })();

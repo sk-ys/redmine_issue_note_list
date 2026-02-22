@@ -123,10 +123,11 @@ module IssueNoteListHelper
     content.html_safe
   end
 
-  def render_issue_notes(issue, number_of_notes, private_notes_filter)
+  def render_issue_notes(issue, number_of_notes, private_notes_filter, note_type_op = '*', note_type_v = [])
     journals = issue.visible_journals_with_index
       .select{|journal| journal.notes.present?}
       .select{|journal| filter_private_notes(journal, private_notes_filter)}
+      .select{|journal| filter_note_type(journal, note_type_op, note_type_v)}
       .reverse
       .take(number_of_notes)
 
@@ -165,6 +166,26 @@ module IssueNoteListHelper
     else
       # default
       return true
+    end
+  end
+
+  def filter_note_type(journal, note_type_op, note_type_v)
+    return true unless defined?(ExtraNotesHelper)
+    return true if note_type_op == '*'
+
+    values = Array(note_type_v).map(&:to_s)
+    note_type = ''  # Default note type (Normal)
+    if journal.respond_to?(:extra_attribute) && journal.extra_attribute
+      note_type = journal.extra_attribute.note_type if journal.extra_attribute.respond_to?(:note_type)
+    end
+
+    case note_type_op
+    when '='
+      values.include?(note_type)
+    when '!'
+      !values.include?(note_type)
+    else
+      true
     end
   end
 end
