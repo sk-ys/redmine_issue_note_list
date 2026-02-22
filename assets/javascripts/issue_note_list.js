@@ -547,6 +547,43 @@ IssueNoteList.fn = {
         subtree: false,
       });
     });
+
+    // Reorganize any existing forms
+    $('td.recent_notes form[id^="journal-"]').each(function () {
+      self.reorganizeJournalFormElements($(this));
+    });
+  },
+
+  // Reorganize form elements for better layout
+  reorganizeJournalFormElements($form) {
+    if (
+      $form.hasClass("reorganized") ||
+      $form.find(".form-footer").length > 0
+    ) {
+      return;
+    }
+
+    // Create form footer container
+    const $formFooter = $("<div>").addClass("form-footer");
+    const $optionsDiv = $("<div>").addClass("form-options");
+    const $actionsDiv = $("<div>").addClass("form-actions");
+
+    // Move all elements after textarea to options div
+    const $jstBlock = $form.find("div.jstBlock");
+    if ($jstBlock.length > 0) {
+      $jstBlock.nextAll().appendTo($optionsDiv);
+    } else {
+      $form.find("textarea.wiki-edit").nextAll().appendTo($optionsDiv);
+    }
+
+    // Move submit button and its siblings to actions div
+    $optionsDiv
+      .find("input[type='submit'], input[type='submit'] ~ *")
+      .appendTo($actionsDiv);
+
+    $form
+      .append($formFooter.append($optionsDiv).append($actionsDiv))
+      .addClass("reorganized");
   },
 };
 

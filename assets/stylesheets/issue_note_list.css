@@ -537,8 +537,50 @@ div.journal.has-notes {
 /* ========================================
   NOTES FORM STYLING
   ======================================== */
-td.add-notes form label[for$="private_notes"],
-td.recent_notes div.journal.has-notes > form label[for$="private_notes"] {
+/* Journal edit form footer layout */
+div.journal.has-notes > form.reorganized {
+  & > .form-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5em;
+    width: 100%;
+    padding: 0 5px;
+    box-sizing: border-box;
+  }
+
+  & > .form-footer .form-options {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    flex-wrap: wrap;
+
+    & > input[type="checkbox"] {
+      margin: 0;
+    }
+
+    & > label {
+      margin: 0;
+      white-space: nowrap;
+    }
+
+    & > span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5em;
+      white-space: nowrap;
+    }
+  }
+
+  & > .form-footer .form-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    white-space: nowrap;
+  }
+}
+
+td.add-notes form label[for$="private_notes"] {
   font-size: smaller;
   position: absolute;
   left: 24px;
@@ -769,25 +811,6 @@ div.ui-dialog.note-pop-out-dialog {
         resize: none;
         min-height: auto !important;
         width: 100%;
-      }
-    }
-  }
-
-  form[id^="journal-"][id$="-form"] {
-    & > div.jstBlock {
-      margin-bottom: 40px;
-    }
-    & > input[name="journal[private_notes]"] {
-      position: absolute;
-      bottom: 10px;
-      left: 5px;
-      height: 15px;
-
-      & + label {
-        position: absolute;
-        bottom: 15px;
-        left: 30px;
-        line-height: 15px;
       }
     }
   }
