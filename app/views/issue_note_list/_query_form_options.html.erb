@@ -44,7 +44,7 @@
             <% is_multiple = @query.note_type_v.count > 1 %>
             <span>
               <%= select_tag 'note_type_v[]',options_for_select(
-                [[l(:default_priority_normal), '']] + note_type_options, selected: @query.note_type_v),
+                [[l(:label_normal, scope: :extra_notes), '']] + note_type_options, selected: @query.note_type_v),
                 multiple: is_multiple, class: "values", id: "values_note_type",
                 disabled: @query.note_type_op == '*' %>
               <span class="toggle-multiselect icon-only <%= is_multiple ? 'icon-toggle-minus' : 'icon-toggle-plus' %>">
