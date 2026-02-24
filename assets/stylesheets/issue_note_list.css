@@ -628,6 +628,7 @@ table.list.issues td.add-notes {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
+      gap: 1em;
 
       &:not(:has(.private_notes)) {
         justify-content: end;
@@ -674,6 +675,8 @@ td.add-notes {
     display: inline-flex;
     flex-direction: row;
     gap: 0 5px;
+    overflow-x: auto;
+    scrollbar-width: thin;
     label {
       font-size: smaller;
     }

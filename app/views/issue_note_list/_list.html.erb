@@ -167,6 +167,9 @@
                           </label>
                         </div>
                       <% end %>
+                      <% if defined?(ExtraNotesHelper) && User.current.allowed_to?(:add_extra_notes, issue.project) %>
+                        <%= render partial: 'extra_notes/extra_notes_selector', locals: {journal: nil} %>
+                      <% end %>
                       <% if Setting.plugin_redmine_issue_note_list['enable_silent_mode'] %>
                         <div class="silent_mode">
                           <%= check_box_tag "issue[silent_mode]", true, false,
