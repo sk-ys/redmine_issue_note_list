@@ -62,6 +62,12 @@ module IssueNoteListHelper
   def render_journal_update_info_empty()
     content_tag("span", "", class: "update-info empty")
   end
+  
+  def render_note_type_marker(journal)
+    if defined?(ExtraNotesHelper)
+      render partial: 'extra_notes/extra_notes_marker', locals: {journal: journal}
+    end
+  end
 
   def render_issue_note(issue, journal)
     project = issue.project
@@ -81,7 +87,9 @@ module IssueNoteListHelper
     content << render_private_notes_indicator(journal)
     content << (respond_to?(:render_journal_update_info) ? (render_journal_update_info(journal) || render_journal_update_info_empty()) : "")
     content << "</div>"
-    content << "<div class=\"header-buttons\">"
+    content << "<div class=\"contextual\">"
+    content << render_note_type_marker(journal)
+    content << "<span class=\"header-buttons\">"
     if journal.editable_by?(User.current)
       content << link_to(l(:button_edit),
                          edit_journal_path(journal),
@@ -112,6 +120,7 @@ module IssueNoteListHelper
                    "'##{issue.id}: #{issue.subject} - #{l(:field_notes)}-#{indice}');",
           title: l(:label_pop_out, scope: :issue_note_list),
     )
+    content << "</span>"
     content << "</div>"
     content << "</h4>"
     content << "<div class=\"note-info\" title=\"#{format_time(journal.created_on)}\">"
