@@ -66,9 +66,9 @@ module IssueNoteListHelper
   def render_note_type_marker(journal)
     if defined?(ExtraNotesHelper)
       if Redmine::Plugin.find(:redmine_extra_notes).version < Gem::Version.new('0.4.0')
-        render partial: 'extra_notes/extra_notes_marker', locals: {journal: journal}
+        render partial: 'extra_notes/extra_notes_marker', locals: {journal: journal}, formats: [:html]
       else
-        render partial: 'extra_notes/extra_notes_label', locals: {journal: journal}
+        render partial: 'extra_notes/extra_notes_label', locals: {journal: journal}, formats: [:html]
       end
     end
   end
@@ -208,3 +208,6 @@ module IssueNoteListHelper
     end
   end
 end
+
+# Add IssueNoteListHelper methods to JournalsHelper
+JournalsHelper.send(:include, IssueNoteListHelper)
