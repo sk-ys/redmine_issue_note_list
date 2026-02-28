@@ -66,26 +66,26 @@ module IssueNoteListHelper
   def render_note_type_marker(journal)
     if defined?(ExtraNotesHelper)
       if Redmine::Plugin.find(:redmine_extra_notes).version < Gem::Version.new('0.4.0')
-        render partial: 'extra_notes/extra_notes_marker', locals: {journal: journal}
+        render partial: 'extra_notes/extra_notes_marker', locals: {journal: journal}, formats: [:html]
       else
-        render partial: 'extra_notes/extra_notes_label', locals: {journal: journal}
+        render partial: 'extra_notes/extra_notes_label', locals: {journal: journal}, formats: [:html]
       end
     end
   end
 
-  def render_issue_note(issue, journal)
+  def render_note_header(journal)
+    issue = journal.issue
     project = issue.project
     indice = journal.indice || journal.issue.visible_journals_with_index.find { |j| j.id == journal.id }.indice
 
-    content = +""
-    content << "<div class=\"#{journal.css_classes} issue-#{issue.id}\" id=\"change-#{journal.id}\">"
+    content = ""
     content << "<h4 class=\"note-header\">"
     content << "<div class=\"header-text\">"
     content << "<span class=\"note-id\">#{l(:field_notes)}-#{indice}</span>"
     content << link_to(
       format_time(journal.created_on),
-      @project.present? ?
-        project_activity_path(@project, from: User.current.time_to_date(journal.created_on)) :
+      project.present? ?
+        project_activity_path(project, from: User.current.time_to_date(journal.created_on)) :
         activity_path(from: User.current.time_to_date(journal.created_on))
     )
     content << render_private_notes_indicator(journal)
@@ -130,7 +130,13 @@ module IssueNoteListHelper
     content << "<div class=\"note-info\" title=\"#{format_time(journal.created_on)}\">"
     content << l(:field_updated_by).html_safe + ": " + link_to_user(journal.user)
     content << "</div>"
-    content << render_notes(issue, journal)
+  end
+
+  def render_issue_note(journal)
+    content = ""
+    content << "<div class=\"#{journal.css_classes} issue-#{journal.issue.id}\" id=\"change-#{journal.id}\">"
+    content << render_note_header(journal)
+    content << render_notes(journal.issue, journal)  # JournalsHelper
     content << "</div>"
 
     content.html_safe
@@ -150,7 +156,7 @@ module IssueNoteListHelper
       if journals.count <= num
         content << '<div class="journal empty"></div>'
       else
-        content << render_issue_note(issue, journals[num])
+        content << render_issue_note(journals[num])
       end
       content << '</div>'
     end
@@ -202,3 +208,6 @@ module IssueNoteListHelper
     end
   end
 end
+
+# Add IssueNoteListHelper methods to JournalsHelper
+JournalsHelper.send(:include, IssueNoteListHelper)
