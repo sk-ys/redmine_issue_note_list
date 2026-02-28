@@ -365,11 +365,11 @@ table.list.issues {
    ======================================== */
 tr.issue:not(.variable-height)
   > td.issue-status
-  div.header-buttons
+  .header-buttons
   > button.fixed-height,
 tr.issue.variable-height
   > td.issue-status
-  div.header-buttons
+  .header-buttons
   > button.variable-height {
   display: none;
 }
@@ -447,6 +447,30 @@ div.journal.has-notes {
       display: flex;
       align-items: center;
     }
+
+    .contextual {
+      float: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+
+      .extra-notes-label {
+        font-size: 0.8em;
+        color: #000;
+        padding: 0 4px;
+        border-radius: 3px;
+        line-height: 1.4;
+        background-color: #dcedc8;
+        opacity: 0.5;
+        user-select: none;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
   }
 
   & > div.note-info {
@@ -515,7 +539,7 @@ div.journal.has-notes {
 /* ========================================
   NOTES HEADER BUTTONS
   ======================================== */
-:is(div.journal.has-notes, td.issue-status) div.header-buttons {
+:is(div.journal.has-notes, td.issue-status) .header-buttons {
   display: flex;
   flex-direction: row;
 
@@ -537,8 +561,50 @@ div.journal.has-notes {
 /* ========================================
   NOTES FORM STYLING
   ======================================== */
-td.add-notes form label[for$="private_notes"],
-td.recent_notes div.journal.has-notes > form label[for$="private_notes"] {
+/* Journal edit form footer layout */
+div.journal.has-notes > form.reorganized {
+  & > .form-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5em;
+    width: 100%;
+    padding: 0 5px;
+    box-sizing: border-box;
+  }
+
+  & > .form-footer .form-options {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    flex-wrap: wrap;
+
+    & > input[type="checkbox"] {
+      margin: 0;
+    }
+
+    & > label {
+      margin: 0;
+      white-space: nowrap;
+    }
+
+    & > span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5em;
+      white-space: nowrap;
+    }
+  }
+
+  & > .form-footer .form-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    white-space: nowrap;
+  }
+}
+
+td.add-notes form label[for$="private_notes"] {
   font-size: smaller;
   position: absolute;
   left: 24px;
@@ -586,6 +652,7 @@ table.list.issues td.add-notes {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
+      gap: 1em;
 
       &:not(:has(.private_notes)) {
         justify-content: end;
@@ -632,6 +699,8 @@ td.add-notes {
     display: inline-flex;
     flex-direction: row;
     gap: 0 5px;
+    overflow-x: auto;
+    scrollbar-width: thin;
     label {
       font-size: smaller;
     }
@@ -717,7 +786,7 @@ div.ui-dialog.note-pop-out-dialog {
       margin-bottom: 6px;
     }
 
-    div.header-buttons :is(button.collapse, button.expand, button.pop-out) {
+    .header-buttons :is(button.collapse, button.expand, button.pop-out) {
       display: none;
     }
     & > div.wiki {
@@ -769,25 +838,6 @@ div.ui-dialog.note-pop-out-dialog {
         resize: none;
         min-height: auto !important;
         width: 100%;
-      }
-    }
-  }
-
-  form[id^="journal-"][id$="-form"] {
-    & > div.jstBlock {
-      margin-bottom: 40px;
-    }
-    & > input[name="journal[private_notes]"] {
-      position: absolute;
-      bottom: 10px;
-      left: 5px;
-      height: 15px;
-
-      & + label {
-        position: absolute;
-        bottom: 15px;
-        left: 30px;
-        line-height: 15px;
       }
     }
   }
@@ -965,7 +1015,7 @@ tr.collapse-row {
     }
   }
 
-  div.header-buttons > *:not(button.pop-out):not(button.expand-row) {
+  .header-buttons > *:not(button.pop-out):not(button.expand-row) {
     display: none;
   }
 
@@ -995,7 +1045,7 @@ tr.collapse-row {
     display: flex;
   }
 }
-tr:not(.collapse-row) div.header-buttons > button.expand-row {
+tr:not(.collapse-row) .header-buttons > button.expand-row {
   display: none;
 }
 

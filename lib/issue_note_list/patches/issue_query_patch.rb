@@ -90,6 +90,22 @@ module IssueNoteList
           options[:inline_block_elements] = (['0', '1'].include?(arg) ? arg : nil)
         end
 
+        def note_type_op
+          options[:note_type_op].presence || '*'
+        end
+
+        def note_type_op=(arg)
+          options[:note_type_op] = ['*', '=', '!'].include?(arg) ? arg : '*'
+        end
+
+        def note_type_v
+          Array(options[:note_type_v].presence)
+        end
+
+        def note_type_v=(arg)
+          options[:note_type_v] = Array(arg.presence)
+        end
+
         def build_from_params_with_issue_note_list(params, defaults={})
           build_from_params_without_issue_note_list(params, defaults)
 
@@ -128,6 +144,14 @@ module IssueNoteList
           self.inline_block_elements =
             params[:inline_block_elements] ||
               (params[:query] && params[:query][:inline_block_elements]) || options[:inline_block_elements]
+
+          self.note_type_op =
+            params[:note_type_op] ||
+              (params[:query] && params[:query][:note_type_op]) || options[:note_type_op]
+
+          self.note_type_v =
+            params[:note_type_v] ||
+              (params[:query] && params[:query][:note_type_v]) || options[:note_type_v]
 
           self
         end
