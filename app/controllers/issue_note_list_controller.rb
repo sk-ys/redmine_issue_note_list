@@ -23,6 +23,11 @@ class IssueNoteListController < ApplicationController
   before_action :find_issue, :only => [:add_note]
   before_action :find_journal, :authorize_edit_journal, :only => [:delete_note]
   before_action :retrieve_queries_with_session, :only => [:index, :add_note, :delete_note]
+  
+  if defined?(ExtraNotes::IssuesControllerPatch)
+    include ExtraNotes::IssuesControllerPatch
+    after_action :save_extra_note, only: [:add_note]
+  end
 
   helper :issues
   helper :queries

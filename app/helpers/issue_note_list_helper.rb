@@ -62,26 +62,38 @@ module IssueNoteListHelper
   def render_journal_update_info_empty()
     content_tag("span", "", class: "update-info empty")
   end
+  
+  def render_note_type_marker(journal)
+    if defined?(ExtraNotesHelper)
+      if Redmine::Plugin.find(:redmine_extra_notes).version < Gem::Version.new('0.4.0')
+        render partial: 'extra_notes/extra_notes_marker', locals: {journal: journal}, formats: [:html]
+      else
+        render partial: 'extra_notes/extra_notes_label', locals: {journal: journal}, formats: [:html]
+      end
+    end
+  end
 
-  def render_issue_note(issue, journal)
+  def render_note_header(journal)
+    issue = journal.issue
     project = issue.project
     indice = journal.indice || journal.issue.visible_journals_with_index.find { |j| j.id == journal.id }.indice
 
-    content = +""
-    content << "<div class=\"#{journal.css_classes} issue-#{issue.id}\" id=\"change-#{journal.id}\">"
+    content = ""
     content << "<h4 class=\"note-header\">"
     content << "<div class=\"header-text\">"
     content << "<span class=\"note-id\">#{l(:field_notes)}-#{indice}</span>"
     content << link_to(
       format_time(journal.created_on),
-      @project.present? ?
-        project_activity_path(@project, from: User.current.time_to_date(journal.created_on)) :
+      project.present? ?
+        project_activity_path(project, from: User.current.time_to_date(journal.created_on)) :
         activity_path(from: User.current.time_to_date(journal.created_on))
     )
     content << render_private_notes_indicator(journal)
     content << (respond_to?(:render_journal_update_info) ? (render_journal_update_info(journal) || render_journal_update_info_empty()) : "")
     content << "</div>"
-    content << "<div class=\"header-buttons\">"
+    content << "<div class=\"contextual\">"
+    content << render_note_type_marker(journal)
+    content << "<span class=\"header-buttons\">"
     if journal.editable_by?(User.current)
       content << link_to(l(:button_edit),
                          edit_journal_path(journal),
@@ -112,21 +124,29 @@ module IssueNoteListHelper
                    "'##{issue.id}: #{issue.subject} - #{l(:field_notes)}-#{indice}');",
           title: l(:label_pop_out, scope: :issue_note_list),
     )
+    content << "</span>"
     content << "</div>"
     content << "</h4>"
     content << "<div class=\"note-info\" title=\"#{format_time(journal.created_on)}\">"
     content << l(:field_updated_by).html_safe + ": " + link_to_user(journal.user)
     content << "</div>"
-    content << render_notes(issue, journal)
+  end
+
+  def render_issue_note(journal)
+    content = ""
+    content << "<div class=\"#{journal.css_classes} issue-#{journal.issue.id}\" id=\"change-#{journal.id}\">"
+    content << render_note_header(journal)
+    content << render_notes(journal.issue, journal)  # JournalsHelper
     content << "</div>"
 
     content.html_safe
   end
 
-  def render_issue_notes(issue, number_of_notes, private_notes_filter)
+  def render_issue_notes(issue, number_of_notes, private_notes_filter, note_type_op = '*', note_type_v = [])
     journals = issue.visible_journals_with_index
       .select{|journal| journal.notes.present?}
       .select{|journal| filter_private_notes(journal, private_notes_filter)}
+      .select{|journal| filter_note_type(journal, note_type_op, note_type_v)}
       .reverse
       .take(number_of_notes)
 
@@ -136,7 +156,7 @@ module IssueNoteListHelper
       if journals.count <= num
         content << '<div class="journal empty"></div>'
       else
-        content << render_issue_note(issue, journals[num])
+        content << render_issue_note(journals[num])
       end
       content << '</div>'
     end
@@ -167,4 +187,27 @@ module IssueNoteListHelper
       return true
     end
   end
+
+  def filter_note_type(journal, note_type_op, note_type_v)
+    return true unless defined?(ExtraNotesHelper)
+    return true if note_type_op == '*'
+
+    values = Array(note_type_v).map(&:to_s)
+    note_type = ''  # Default note type (Normal)
+    if journal.respond_to?(:extra_attribute) && journal.extra_attribute
+      note_type = journal.extra_attribute.note_type if journal.extra_attribute.respond_to?(:note_type)
+    end
+
+    case note_type_op
+    when '='
+      values.include?(note_type)
+    when '!'
+      !values.include?(note_type)
+    else
+      true
+    end
+  end
 end
+
+# Add IssueNoteListHelper methods to JournalsHelper
+JournalsHelper.send(:include, IssueNoteListHelper)

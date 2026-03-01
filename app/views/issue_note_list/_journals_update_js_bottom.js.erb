@@ -1,11 +1,24 @@
-// Update class
 (() => {
-  if (location.pathname.split("/").slice(-1)[0] === "issue_note_list") {
+  const controller = Array(
+    ...document.getElementsByTagName("body")[0].classList,
+  )
+    .filter((e) => e.startsWith("controller-"))[0]
+    ?.replace("controller-", "");
+  if (controller === "issue_note_list") {
     var target = $("#change-<%= @journal.id  %>");
-    target
-      .addClass("issue-<%= @journal.issue.id %>")
-      .addClass(
-        target.parent().hasClass("ui-dialog") ?
-          "ui-dialog-content ui-widget-content" : "");
+    if (target.length > 0) {
+      // Update class
+      target
+        .addClass("issue-<%= @journal.issue.id %>")
+        .addClass(
+          target.parent().hasClass("ui-dialog")
+            ? "ui-dialog-content ui-widget-content"
+            : "",
+        );
+
+      // Update note header
+      const $noteHeader = target.find(".note-header");
+      $noteHeader.replaceWith($(`<%= raw render_note_header(@journal) %>`));
+    }
   }
 })();

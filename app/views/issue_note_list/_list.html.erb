@@ -64,7 +64,7 @@
         <% if group_name %>
           <% reset_cycle %>
           <tr class="group open">
-            <td colspan="<%= @allowed_to_add_note ? 3 : 2 %>">
+            <td colspan="<%= (@allowed_to_add_note ? 3 : 2) + (@query.inline_block_elements ? query.block_columns.size : 0) %>">
               <span class="expander icon icon-expanded" onclick="toggleRowGroup(this);">&nbsp;</span>
               <span class="name"><%= group_name %></span>
               <span class="badge badge-count count"><%= group_count %></span>
@@ -122,7 +122,13 @@
           </td>
           <%= render partial: "issue_note_list/block_columns", locals: {issue: issue, query: @query, in_row: true} if @query.inline_block_elements %>
           <td class="recent_notes">
-            <%= render_issue_notes(issue, @query.number_of_notes.to_i, @query.private_notes_filter) %>
+            <%= render_issue_notes(
+                  issue,
+                  @query.number_of_notes.to_i,
+                  @query.private_notes_filter,
+                  @query.note_type_op,
+                  @query.note_type_v
+                ) %>
           </td>
           <% if @allowed_to_add_note %>
           <td class="add-notes">
@@ -160,6 +166,9 @@
                             <%= l(:field_private_notes) %>
                           </label>
                         </div>
+                      <% end %>
+                      <% if defined?(ExtraNotesHelper) && User.current.allowed_to?(:add_extra_notes, issue.project) %>
+                        <%= render partial: 'extra_notes/extra_notes_selector', locals: {journal: nil} %>
                       <% end %>
                       <% if Setting.plugin_redmine_issue_note_list['enable_silent_mode'] %>
                         <div class="silent_mode">

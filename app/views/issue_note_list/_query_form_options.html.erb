@@ -27,6 +27,40 @@
             [l(:label_not_contains), 'not_contains']],
             selected: @query.private_notes_filter) %>
         </span>
+        <%# Note type provided by Extra Notes plugin %>
+        <% if defined?(ExtraNotesHelper) %>
+          <% all_note_types = ExtraNotesHelper.note_types %>
+          <% note_type_options = all_note_types.each_with_index
+              .select { |t, _| t['enabled'].to_s != '0' }
+              .map { |t, i| [t['tab_label'].presence || "#{l(:label_extra_notes)} ##{i + 1}", t['id']] } %>
+          <span class="parameter">
+            <%= label_tag :note_type_op, l(:label_note_type, scope: :extra_notes) %>
+            <%= select_tag :note_type_op, options_for_select([
+              [l(:label_any), '*'],
+              [l(:label_equals), '='],
+              [l(:label_not_equals), '!']],
+              selected: @query.note_type_op),
+              id: "operators_note_type" %>
+            <% is_multiple = @query.note_type_v.count > 1 %>
+            <span>
+              <%= select_tag 'note_type_v[]',options_for_select(
+                [[l(:label_normal, scope: :extra_notes), '']] + note_type_options, selected: @query.note_type_v),
+                multiple: is_multiple, class: "values", id: "values_note_type",
+                disabled: @query.note_type_op == '*' %>
+              <span class="toggle-multiselect icon-only <%= is_multiple ? 'icon-toggle-minus' : 'icon-toggle-plus' %>">
+                <%= sprite_icon(is_multiple ? 'toggle-minus' : 'toggle-plus') %>
+              </span>
+            </span>
+            <script>
+              $(function() {
+                $('#operators_note_type').change(function() {
+                  var op = $(this).val();
+                  $('#values_note_type').prop('disabled', op === '*');
+                });
+              });
+            </script>
+          </span>
+        <% end %>
       </fieldset>
       <fieldset>
         <legend>
@@ -58,7 +92,6 @@
           <%= label_tag :enable_simple_editor, l(:label_simple_editor, scope: :issue_note_list), class: "inline" %>
         </span>
         <span class="parameter">
-          <%= hidden_field_tag :hide_notes_header, 0, id: "hidden_hide_notes_header" %>
           <%= check_box_tag :hide_notes_header, 1, @query.hide_notes_header,
             onclick: "IssueNoteList.fn.enableHideNotesHeader(this.checked)" %>
           <%= label_tag :hide_notes_header, l(:label_hide_notes_header, scope: :issue_note_list), class: "inline" %>
