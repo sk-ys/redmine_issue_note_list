@@ -15,12 +15,15 @@ This is a Redmine plugin that lists issue notes (history) and allows you to add 
     * Use simple editor
     * Display notes in a popup window
 * **Filtering**: Filter displayed issues using queries, similar to the standard issue list.
+* **Extra Notes Plugin Support**: Integrates with [Redmine Extra Notes Plugin](https://github.com/sk-ys/redmine_extra_notes) to manage and filter notes by category/type.
 
 ## Requirements
 
 * Redmine
   * Note: This plugin has been tested and confirmed to work with Redmine 5 - 6.1.
 * [Redmine base deface plugin](https://github.com/jbbarth/redmine_base_deface)
+* (Optional) [Redmine Extra Notes Plugin](https://github.com/sk-ys/redmine_extra_notes) - For managing and filtering notes by category/type
+* (Optional) [Redmine GLightbox Plugin](https://github.com/sk-ys/redmine_glightbox) - Enables lightbox functionality in the note list view 
 
 ## Installation
 
