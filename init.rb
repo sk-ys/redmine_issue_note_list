@@ -17,10 +17,14 @@ Redmine::Plugin.register :redmine_issue_note_list do
   end
 
   menu :application_menu, :redmine_issue_note_list,
-    { controller: "issue_note_list", action: "index" }, after: :issues
+    { controller: "issue_note_list", action: "index" }, 
+    after: :issues,
+    if: Proc.new { User.current.allowed_to?(:view_issue_note_list, nil, global: true) }
   menu :project_menu, :redmine_issue_note_list,
-    { controller: "issue_note_list", action: "index" }, after: :issues,
-                                                    param: :project_id
+    { controller: "issue_note_list", action: "index" }, 
+    after: :issues,
+    param: :project_id,
+    if: Proc.new { |project| User.current.allowed_to?(:view_issue_note_list, project) }
 
   settings default: {
     add_note_to_issue_note_list_on_global: false, 
