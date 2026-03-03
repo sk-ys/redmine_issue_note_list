@@ -20,9 +20,9 @@
 class IssueNoteListController < ApplicationController
   menu_item :redmine_issue_note_list
   before_action :find_optional_project, :only => [:index]
-  before_action :find_issue, :only => [:add_note]
+  before_action :find_issue, :only => [:add_note, :refresh_notes]
   before_action :find_journal, :authorize_edit_journal, :only => [:delete_note]
-  before_action :retrieve_queries_with_session, :only => [:index, :add_note, :delete_note]
+  before_action :retrieve_queries_with_session, :only => [:index, :add_note, :delete_note, :refresh_notes]
   
   if defined?(ExtraNotes::IssuesControllerPatch)
     include ExtraNotes::IssuesControllerPatch
@@ -65,6 +65,10 @@ class IssueNoteListController < ApplicationController
   def delete_note
     @journal.destroy
     render 'delete_note'
+  end
+
+  def refresh_notes
+    render 'refresh_notes'
   end
 
   private

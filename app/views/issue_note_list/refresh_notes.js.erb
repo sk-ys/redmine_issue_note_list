@@ -1,13 +1,7 @@
 (() => {
-  // Clear textarea
-  $("textarea#add_issue_notes-<%= @issue.id %>").val("").removeData("changed");
-
-  // Select Edit tab
-  $("#add_notes_form-<%= @issue.id %> > .jstBlock > .jstTabs .tab-edit")[0].click();
-
   // Close all pop-out contents
   $(".ui-dialog-content.journal.issue-<%= @issue.id %>").dialog("close");
-  
+
   // Update rows
   const $notes = $("#issue-<%= @issue.id %>").children(".recent_notes");
   $notes.empty().append($(
