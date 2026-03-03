@@ -19,6 +19,11 @@
       // Update note header
       const $noteHeader = target.find(".note-header");
       $noteHeader.replaceWith($(`<%= raw render_note_header(@journal) %>`));
+
+      // Regenerate GLightbox if exists
+      if (window.redmineGLightbox) {
+        window.redmineGLightbox.regenerate();
+      }
     }
   }
 })();
