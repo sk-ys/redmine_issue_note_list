@@ -18,4 +18,9 @@
         @query.note_type_op,
         @query.note_type_v)) %>'
   ));
+
+  // Regenerate GLightbox if exists
+  if (window.redmineGLightbox) {
+    window.redmineGLightbox.regenerate();
+  }
 })();
