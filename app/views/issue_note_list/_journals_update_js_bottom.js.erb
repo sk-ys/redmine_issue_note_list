@@ -5,34 +5,10 @@
     <% filter_opts = request.env['issue_note_list.filter_opts'] || {} %>
     <% if request.env['issue_note_list.journal_filtered_out'] %>
       // Journal no longer matches filter criteria - update entire row
-      <% 
-        number_of_notes = filter_opts[:number_of_notes] || 2
-        private_notes_filter = filter_opts[:private_notes_filter] || 'contains'
-        note_type_op = filter_opts[:note_type_op] || '*'
-        note_type_v = filter_opts[:note_type_v] || []
-      %>
-      // Close pop-out before updating
-      target.dialog( "instance" ) && target.dialog( "close" );
-      
-      target.closest('.journal_outer').fadeOut(300, function() {
-        $(this).remove();
-        
-        // Update entire notes list for this issue
-        const $notes = $("#issue-<%= @journal.issue.id %>").children(".recent_notes");
-        $notes.empty().append($(
-          '<%= escape_javascript(render_issue_notes(
-              @journal.issue,
-              number_of_notes,
-              private_notes_filter,
-              note_type_op,
-              note_type_v)) %>'
-        ));
-        
-        // Regenerate GLightbox if exists
-        if (window.redmineGLightbox) {
-          window.redmineGLightbox.regenerate();
-        }
-      });
+      <%= render 'issue_note_list/update_issue_note_list_row',
+                 mode: 'update',
+                 issue: @journal.issue,
+                 filter_opts: filter_opts %>
     <% else %>
       // Update journal normally
       // Update class

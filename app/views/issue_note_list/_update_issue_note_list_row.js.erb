@@ -1,22 +1,33 @@
+<%
+  mode = local_assigns[:mode] || 'add'
+  issue = local_assigns[:issue] || @issue
+  filter_opts = local_assigns[:filter_opts] || {}
+  number_of_notes = filter_opts[:number_of_notes] || @query&.number_of_notes || 2
+  private_notes_filter = filter_opts[:private_notes_filter] || @query&.private_notes_filter || 'contains'
+  note_type_op = filter_opts[:note_type_op] || @query&.note_type_op || '*'
+  note_type_v = filter_opts[:note_type_v] || @query&.note_type_v || []
+%>
 (() => {
-  // Clear textarea
-  $("textarea#add_issue_notes-<%= @issue.id %>").val("").removeData("changed");
+  <% if mode == 'add' %>
+    // Clear textarea
+    $("textarea#add_issue_notes-<%= issue.id %>").val("").removeData("changed");
 
-  // Select Edit tab
-  $("#add_notes_form-<%= @issue.id %> > .jstBlock > .jstTabs .tab-edit")[0].click();
+    // Select Edit tab
+    $("#add_notes_form-<%= issue.id %> > .jstBlock > .jstTabs .tab-edit")[0]?.click();
+  <% end %>
 
   // Close all pop-out contents
-  $(".ui-dialog-content.journal.issue-<%= @issue.id %>").dialog("close");
+  $(".ui-dialog-content.journal.issue-<%= issue.id %>").dialog("close");
   
   // Update rows
-  const $notes = $("#issue-<%= @issue.id %>").children(".recent_notes");
+  const $notes = $("#issue-<%= issue.id %>").children(".recent_notes");
   $notes.empty().append($(
     '<%= escape_javascript(render_issue_notes(
-        @issue,
-        @query.number_of_notes,
-        @query.private_notes_filter,
-        @query.note_type_op,
-        @query.note_type_v)) %>'
+        issue,
+        number_of_notes,
+        private_notes_filter,
+        note_type_op,
+        note_type_v)) %>'
   ));
 
   // Regenerate GLightbox if exists
