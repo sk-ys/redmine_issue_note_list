@@ -11,6 +11,9 @@
         note_type_op = filter_opts[:note_type_op] || '*'
         note_type_v = filter_opts[:note_type_v] || []
       %>
+      // Close pop-out before updating
+      target.dialog( "instance" ) && target.dialog( "close" );
+      
       target.closest('.journal_outer').fadeOut(300, function() {
         $(this).remove();
         
