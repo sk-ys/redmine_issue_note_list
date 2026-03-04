@@ -1,3 +1,16 @@
+<% if params[:issue_note_list].present? %>
+  <%= hidden_field_tag 'issue_note_list', '1', id: "journal-#{@journal.id}-issue-note-list" %>
+<% end %>
+<% if params[:filter].present? %>
+  <%= hidden_field_tag 'filter[number_of_notes]', params[:filter][:number_of_notes], id: "journal-#{@journal.id}-filter-number-of-notes" if params[:filter][:number_of_notes].present? %>
+  <%= hidden_field_tag 'filter[private_notes_filter]', params[:filter][:private_notes_filter], id: "journal-#{@journal.id}-filter-private-notes" if params[:filter][:private_notes_filter].present? %>
+  <%= hidden_field_tag 'filter[note_type_op]', params[:filter][:note_type_op], id: "journal-#{@journal.id}-filter-note-type-op" if params[:filter][:note_type_op].present? %>
+  <% if params[:filter][:note_type_v].present? %>
+    <% Array(params[:filter][:note_type_v]).each do |val| %>
+      <%= hidden_field_tag 'filter[note_type_v][]', val, id: "journal-#{@journal.id}-filter-note-type-v-#{val}" %>
+    <% end %>
+  <% end %>
+<% end %>
 <script>
   window.IssueNoteList?.fn?.reorganizeJournalFormElements?.($(`#journal-<%= @journal.id %>-form`));
 </script>
