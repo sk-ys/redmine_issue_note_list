@@ -26,7 +26,6 @@ class IssueNoteListController < ApplicationController
   
   if defined?(ExtraNotes::IssuesControllerPatch)
     include ExtraNotes::IssuesControllerPatch
-    after_action :save_extra_note, only: [:add_note]
   end
 
   helper :issues
@@ -59,6 +58,21 @@ class IssueNoteListController < ApplicationController
       rescue ActiveRecord::StaleObjectError
       end
     end
+    
+    # Save extra_note BEFORE rendering to ensure extra_attribute is available during render
+    if @saved && defined?(ExtraNotes::IssuesControllerPatch) && respond_to?(:save_extra_note, true)
+      save_extra_note
+    end
+    
+    # Apply filter params to @query before rendering
+    filter = params[:filter]
+    if filter.present? && @query
+      @query.number_of_notes = filter[:number_of_notes] if filter[:number_of_notes].present?
+      @query.private_notes_filter = filter[:private_notes_filter] if filter[:private_notes_filter].present?
+      @query.note_type_op = filter[:note_type_op] if filter[:note_type_op].present?
+      @query.note_type_v = filter[:note_type_v] if filter[:note_type_v].present?
+    end
+    
     render 'add_note'
   end
 

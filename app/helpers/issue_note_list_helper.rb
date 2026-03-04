@@ -143,7 +143,23 @@ module IssueNoteListHelper
   end
 
   def render_issue_notes(issue, number_of_notes, private_notes_filter, note_type_op = '*', note_type_v = [])
-    journals = issue.visible_journals_with_index
+    all_journals = issue.visible_journals_with_index
+    
+    # Preload extra_attribute if ExtraNotesHelper is defined
+    if defined?(ExtraNotesHelper) && all_journals.any?
+      begin
+        # Rails 7+ style
+        ActiveRecord::Associations::Preloader.new(
+          records: all_journals,
+          associations: :extra_attribute
+        ).call
+      rescue ArgumentError
+        # Rails 6 and earlier style
+        ActiveRecord::Associations::Preloader.new.preload(all_journals, :extra_attribute)
+      end
+    end
+    
+    journals = all_journals
       .select{|journal| journal.notes.present?}
       .select{|journal| filter_private_notes(journal, private_notes_filter)}
       .select{|journal| filter_note_type(journal, note_type_op, note_type_v)}
