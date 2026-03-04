@@ -108,7 +108,13 @@ module IssueNoteListHelper
                         title: l(:button_quote),
                         class: "icon-only mui-icon-chat_paste_go")
       content << link_to(l(:button_delete),
-                        delete_note_issue_note_list_path(journal.id, number_of_notes: @number_of_notes),
+                        delete_note_issue_note_list_path(journal.id, 
+                          filter: {
+                            number_of_notes: @query&.number_of_notes,
+                            private_notes_filter: @query&.private_notes_filter,
+                            note_type_op: @query&.note_type_op,
+                            note_type_v: @query&.note_type_v
+                          }),
                         remote: true,
                         method: 'delete',
                         title: l(:button_delete),
