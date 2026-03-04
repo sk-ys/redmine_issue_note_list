@@ -1,65 +1,55 @@
+<% if params[:issue_note_list].present? %>
 (() => {
-  const controller = Array(
-    ...document.getElementsByTagName("body")[0].classList,
-  )
-    .filter((e) => e.startsWith("controller-"))[0]
-    ?.replace("controller-", "");
-  if (controller === "issue_note_list") {
-    var target = $("#change-<%= @journal.id  %>");
-    
+  const target = $("#change-<%= @journal.id  %>");
+  if (target.length > 0) {
+    <% filter_opts = request.env['issue_note_list.filter_opts'] || {} %>
     <% if request.env['issue_note_list.journal_filtered_out'] %>
       // Journal no longer matches filter criteria - update entire row
       <% 
-        issue = request.env['issue_note_list.issue']
-        filter_opts = request.env['issue_note_list.filter_opts'] || {}
         number_of_notes = filter_opts[:number_of_notes] || 2
         private_notes_filter = filter_opts[:private_notes_filter] || 'contains'
         note_type_op = filter_opts[:note_type_op] || '*'
         note_type_v = filter_opts[:note_type_v] || []
       %>
-      if (target.length > 0) {
-        target.closest('.journal_outer').fadeOut(300, function() {
-          $(this).remove();
-          
-          // Update entire notes list for this issue
-          const $notes = $("#issue-<%= issue.id %>").children(".recent_notes");
-          $notes.empty().append($(
-            '<%= escape_javascript(render_issue_notes(
-                issue,
-                number_of_notes,
-                private_notes_filter,
-                note_type_op,
-                note_type_v)) %>'
-          ));
-          
-          // Regenerate GLightbox if exists
-          if (window.redmineGLightbox) {
-            window.redmineGLightbox.regenerate();
-          }
-        });
-      }
-    <% else %>
-      // Update journal normally
-      <% filter_opts = request.env['issue_note_list.filter_opts'] || {} %>
-      if (target.length > 0) {
-        // Update class
-        target
-          .addClass("issue-<%= @journal.issue.id %>")
-          .addClass(
-            target.parent().hasClass("ui-dialog")
-              ? "ui-dialog-content ui-widget-content"
-              : "",
-          );
-
-        // Update note header
-        const $noteHeader = target.find(".note-header");
-        $noteHeader.replaceWith($(`<%= raw render_note_header(@journal, filter_opts) %>`));
-
+      target.closest('.journal_outer').fadeOut(300, function() {
+        $(this).remove();
+        
+        // Update entire notes list for this issue
+        const $notes = $("#issue-<%= @journal.issue.id %>").children(".recent_notes");
+        $notes.empty().append($(
+          '<%= escape_javascript(render_issue_notes(
+              @journal.issue,
+              number_of_notes,
+              private_notes_filter,
+              note_type_op,
+              note_type_v)) %>'
+        ));
+        
         // Regenerate GLightbox if exists
         if (window.redmineGLightbox) {
           window.redmineGLightbox.regenerate();
         }
+      });
+    <% else %>
+      // Update journal normally
+      // Update class
+      target
+        .addClass("issue-<%= @journal.issue.id %>")
+        .addClass(
+          target.parent().hasClass("ui-dialog")
+            ? "ui-dialog-content ui-widget-content"
+            : "",
+        );
+
+      // Update note header
+      const $noteHeader = target.find(".note-header");
+      $noteHeader.replaceWith($(`<%= raw render_note_header(@journal, filter_opts) %>`));
+
+      // Regenerate GLightbox if exists
+      if (window.redmineGLightbox) {
+        window.redmineGLightbox.regenerate();
       }
     <% end %>
   }
 })();
+<% end %>
