@@ -1,12 +1,16 @@
+<% if params[:issue_note_list].present? %>
 (() => {
-  const controller = Array(
-    ...document.getElementsByTagName("body")[0].classList,
-  )
-    .filter((e) => e.startsWith("controller-"))[0]
-    ?.replace("controller-", "");
-  if (controller === "issue_note_list") {
-    var target = $("#change-<%= @journal.id  %>");
-    if (target.length > 0) {
+  const target = $("#change-<%= @journal.id  %>");
+  if (target.length > 0) {
+    <% filter_opts = request.env['issue_note_list.filter_opts'] || {} %>
+    <% if request.env['issue_note_list.journal_filtered_out'] %>
+      // Journal no longer matches filter criteria - update entire row
+      <%= render 'issue_note_list/update_issue_note_list_row',
+                 mode: 'update',
+                 issue: @journal.issue,
+                 filter_opts: filter_opts %>
+    <% else %>
+      // Update journal normally
       // Update class
       target
         .addClass("issue-<%= @journal.issue.id %>")
@@ -18,12 +22,13 @@
 
       // Update note header
       const $noteHeader = target.find(".note-header");
-      $noteHeader.replaceWith($(`<%= raw render_note_header(@journal) %>`));
+      $noteHeader.replaceWith($(`<%= raw render_note_header(@journal, filter_opts) %>`));
 
       // Regenerate GLightbox if exists
       if (window.redmineGLightbox) {
         window.redmineGLightbox.regenerate();
       }
-    }
+    <% end %>
   }
 })();
+<% end %>

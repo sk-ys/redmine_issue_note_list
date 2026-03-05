@@ -23,15 +23,16 @@ class IssueNoteListController < ApplicationController
   before_action :find_issue, :only => [:add_note]
   before_action :find_journal, :authorize_edit_journal, :only => [:delete_note]
   before_action :retrieve_queries_with_session, :only => [:index, :add_note, :delete_note]
+  before_action :apply_filter_params_to_query, :only => [:add_note, :delete_note]
   
   if defined?(ExtraNotes::IssuesControllerPatch)
     include ExtraNotes::IssuesControllerPatch
-    after_action :save_extra_note, only: [:add_note]
   end
 
   helper :issues
   helper :queries
   helper :journals
+  helper :issue_note_list
   include QueriesHelper
   helper IssuesTagsHelper if defined?(IssuesTagsHelper) # Support for RedmineUP Tags plugin >= 2.0.14
 
@@ -59,6 +60,12 @@ class IssueNoteListController < ApplicationController
       rescue ActiveRecord::StaleObjectError
       end
     end
+    
+    # Save extra_note BEFORE rendering to ensure extra_attribute is available during render
+    if @saved && defined?(ExtraNotes::IssuesControllerPatch) && respond_to?(:save_extra_note, true)
+      save_extra_note
+    end
+    
     render 'add_note'
   end
 
@@ -189,5 +196,15 @@ class IssueNoteListController < ApplicationController
 
   def authorize_edit_journal
     authorize_for :journal, :edit
+  end
+
+  def apply_filter_params_to_query
+    filter = params[:filter]
+    return unless filter.present? && @query
+
+    @query.number_of_notes = filter[:number_of_notes] if filter[:number_of_notes].present?
+    @query.private_notes_filter = filter[:private_notes_filter] if filter[:private_notes_filter].present?
+    @query.note_type_op = filter[:note_type_op] if filter[:note_type_op].present?
+    @query.note_type_v = filter[:note_type_v] if filter.key?(:note_type_v)
   end
 end
