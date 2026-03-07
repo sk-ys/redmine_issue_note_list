@@ -302,10 +302,18 @@ table.list.issues {
       position: absolute;
       border: none;
       right: 10px;
+      overflow: visible;
 
       .header-text,
       .header-buttons > *:not(button.pop-out) {
         display: none;
+      }
+
+      .contextual {
+        flex-direction: column-reverse;
+        justify-content: flex-end;
+        align-items: flex-end;
+        height: min-content;
       }
 
       button.pop-out {
@@ -316,7 +324,7 @@ table.list.issues {
       }
     }
     & > .note-info {
-      top: 5px;
+      top: 0;
       right: 30px;
     }
   }
@@ -470,6 +478,14 @@ div.journal.has-notes {
           opacity: 1;
         }
       }
+    }
+
+    .private {
+      line-height: 1em;
+      bottom: unset;
+    }
+    .update-info {
+      font-size: 0.8em;
     }
   }
 
