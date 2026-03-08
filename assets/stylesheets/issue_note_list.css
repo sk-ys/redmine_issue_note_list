@@ -337,6 +337,12 @@ table.list.issues {
       top: 0;
       right: 30px;
     }
+
+    &:has(form) {
+      & > h4.note-header {
+        display: none;
+      }
+    }
   }
   tr:not(.collapse-row)
     :is(&:first-of-type, &.group + &.issue)
@@ -1063,7 +1069,7 @@ tr.collapse-row {
 
     div.journal.has-notes {
       height: min-content;
-      
+
       & > :is(div.note-info, div.wiki) {
         display: none;
       }
