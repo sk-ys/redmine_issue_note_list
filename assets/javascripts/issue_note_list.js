@@ -521,7 +521,7 @@ IssueNoteList.fn = {
     });
 
     // Enable double-click editing
-    $("td.recent_notes .journal.has-notes .wiki").on("dblclick", (e) => {
+    $("#content").on("dblclick", ".journal.has-notes .wiki", (e) => {
       const $journal = $(e.target).closest("div.journal.has-notes");
       const editButton = $journal.find(
         ".note-header .header-buttons a[href*='/edit'].mui-icon-edit",
