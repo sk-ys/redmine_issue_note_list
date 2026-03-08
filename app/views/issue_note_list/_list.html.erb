@@ -122,13 +122,15 @@
           </td>
           <%= render partial: "issue_note_list/block_columns", locals: {issue: issue, query: @query, in_row: true} if @query.inline_block_elements %>
           <td class="recent_notes">
-            <%= render_issue_notes(
-                  issue,
-                  @query.number_of_notes.to_i,
-                  @query.private_notes_filter,
-                  @query.note_type_op,
-                  @query.note_type_v
-                ) %>
+            <div class="recent_notes_container">
+              <%= render_issue_notes(
+                    issue,
+                    @query.number_of_notes.to_i,
+                    @query.private_notes_filter,
+                    @query.note_type_op,
+                    @query.note_type_v
+                  ) %>
+            </div>
           </td>
           <% if @allowed_to_add_note %>
           <td class="add-notes">

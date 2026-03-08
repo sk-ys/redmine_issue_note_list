@@ -192,7 +192,9 @@ IssueNoteList.fn = {
       });
     } else {
       $target.children("td").css("height", "");
-      $target.find("> td > div.wiki").css("height", "");
+      $target
+        .find("> td > div.wiki, .recent_notes_container")
+        .css("height", "");
     }
   },
 
@@ -411,7 +413,10 @@ IssueNoteList.fn = {
 
     // Set notes field height
     function generateNotesFieldHeightStyle(height) {
-      return `table.list.issues > tbody > tr.issue > td { height: ${height}px; }`;
+      return (
+        "table.list.issues > tbody > tr.issue > td" +
+        `, .recent_notes_container { height: ${height}px; }`
+      );
     }
     const $notes_field_height_style = $("<style />")
       .text(generateNotesFieldHeightStyle($("#notes_field_height").val()))
@@ -473,7 +478,10 @@ IssueNoteList.fn = {
       // Apply Resizable to cell height
       $(this).resizable({
         handles: "s",
-        alsoResize: $(this).children("td"),
+        alsoResize: [
+          $(this).children("td"),
+          $(this).find(".recent_notes_container"),
+        ],
         create: function () {
           const $tr = $(this);
           $tr.children(".ui-resizable-handle").on("dblclick", (e) => {
@@ -490,10 +498,14 @@ IssueNoteList.fn = {
         start: function () {
           $(this).addClass("variable-height");
         },
-        stop: function () {
+        stop: function (e) {
           $(this)
             .css("height", "")
-            .find("> td.recent_notes" + ", > td.block_column > div.wiki")
+            .find(
+              "> td.recent_notes" +
+                ", > td.block_column > div.wiki" +
+                ", .recent_notes_container",
+            )
             .css("width", "");
         },
         minHeight:
