@@ -47,7 +47,7 @@
 table.list.issues {
   & > tbody > tr.issue {
     & > td {
-      box-sizing: content-box;
+      box-sizing: border-box;
 
       &.block_column {
         padding: 3px;
@@ -65,6 +65,10 @@ table.list.issues {
 
   & > thead > tr > th {
     position: relative;
+  }
+
+  .ui-resizable-s {
+    bottom: 0;
   }
 }
 
@@ -286,15 +290,21 @@ table.list.issues > thead > tr > th .buttons {
    ======================================== */
 table.list.issues {
   td.recent_notes {
-    display: grid;
-    grid-auto-flow: column;
-    align-items: stretch;
-    justify-content: center;
-    grid-auto-columns: 1fr;
-    padding: 3px;
+    padding: 0;
 
-    div.journal_outer {
+    .recent_notes_container {
       position: relative;
+      display: grid;
+      grid-auto-flow: column;
+      align-items: stretch;
+      justify-content: center;
+      grid-auto-columns: 1fr;
+      overflow: hidden;
+
+      div.journal_outer {
+        position: relative;
+        margin: 3px;
+      }
     }
   }
   &.hide-notes-header tr:not(.collapse-row) td.recent_notes .journal {
@@ -302,10 +312,18 @@ table.list.issues {
       position: absolute;
       border: none;
       right: 10px;
+      overflow: visible;
 
       .header-text,
       .header-buttons > *:not(button.pop-out) {
         display: none;
+      }
+
+      .contextual {
+        flex-direction: column-reverse;
+        justify-content: flex-end;
+        align-items: flex-end;
+        height: min-content;
       }
 
       button.pop-out {
@@ -316,14 +334,23 @@ table.list.issues {
       }
     }
     & > .note-info {
-      top: 5px;
+      top: 0;
       right: 30px;
+    }
+
+    &:has(form) {
+      & > h4.note-header {
+        display: none;
+      }
     }
   }
   tr:not(.collapse-row)
     :is(&:first-of-type, &.group + &.issue)
     td.recent_notes {
     border-top: none;
+  }
+  .variable-height .recent_notes_container {
+    height: 100%;
   }
 }
 
@@ -470,6 +497,14 @@ div.journal.has-notes {
           opacity: 1;
         }
       }
+    }
+
+    .private {
+      line-height: 1em;
+      bottom: unset;
+    }
+    .update-info {
+      font-size: 0.8em;
     }
   }
 
@@ -990,7 +1025,12 @@ td.block_column {
 tr.collapse-row {
   & > td {
     height: var(--inl-issue-status-collapsed-header-height) !important;
+    box-sizing: content-box !important;
     overflow: hidden;
+
+    .recent_notes_container {
+      height: 100% !important;
+    }
   }
 
   form {
@@ -1003,16 +1043,6 @@ tr.collapse-row {
 
   + tr > td.block_column:not(.in_row) {
     display: none;
-  }
-
-  div.journal.has-notes {
-    & > :is(div.note-info, div.wiki) {
-      display: none;
-    }
-
-    & > div.note-info {
-      display: none;
-    }
   }
 
   .header-buttons > *:not(button.pop-out):not(button.expand-row) {
@@ -1031,18 +1061,40 @@ tr.collapse-row {
     display: none !important;
   }
 
-  h4.note-header {
-    border: none;
-  }
-
-  /* Hide items without note ID or shrunk note header */
-  h4.note-header .header-text > *:not(.note-id, .shrunk-note-header) {
-    display: none;
-  }
-
-  /* Show shrunk note header */
-  div.journal.has-notes .shrunk-note-header {
+  .journal_outer {
+    padding-bottom: 0 !important;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    div.journal.has-notes {
+      height: min-content;
+
+      & > :is(div.note-info, div.wiki) {
+        display: none;
+      }
+
+      & > div.note-info {
+        display: none;
+      }
+
+      & > h4.note-header {
+        border: none;
+        margin: 0;
+        margin-bottom: 0;
+        padding: 0;
+
+        /* Hide items without note ID or shrunk note header */
+        .header-text > *:not(.note-id, .shrunk-note-header) {
+          display: none;
+        }
+      }
+
+      /* Show shrunk note header */
+      .shrunk-note-header {
+        display: flex;
+      }
+    }
   }
 }
 tr:not(.collapse-row) .header-buttons > button.expand-row {

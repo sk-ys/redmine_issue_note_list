@@ -73,10 +73,16 @@ module IssueNoteListHelper
     end
   end
 
-  def render_note_header(journal)
+  def render_note_header(journal, filter_opts = {})
     issue = journal.issue
     project = issue.project
     indice = journal.indice || journal.issue.visible_journals_with_index.find { |j| j.id == journal.id }.indice
+
+    # Use filter options from parameter or fall back to @query
+    number_of_notes = filter_opts[:number_of_notes] || @query&.number_of_notes
+    private_notes_filter = filter_opts[:private_notes_filter] || @query&.private_notes_filter
+    note_type_op = filter_opts[:note_type_op] || @query&.note_type_op
+    note_type_v = filter_opts[:note_type_v] || @query&.note_type_v
 
     content = ""
     content << "<h4 class=\"note-header\">"
@@ -96,7 +102,14 @@ module IssueNoteListHelper
     content << "<span class=\"header-buttons\">"
     if journal.editable_by?(User.current)
       content << link_to(l(:button_edit),
-                         edit_journal_path(journal),
+                         edit_journal_path(journal, 
+                           issue_note_list: 1,
+                           filter: {
+                             number_of_notes: number_of_notes,
+                             private_notes_filter: private_notes_filter,
+                             note_type_op: note_type_op,
+                             note_type_v: note_type_v
+                           }),
                          remote: true,
                          method: "get",
                          title: l(:button_edit),
@@ -108,7 +121,13 @@ module IssueNoteListHelper
                         title: l(:button_quote),
                         class: "icon-only mui-icon-chat_paste_go")
       content << link_to(l(:button_delete),
-                        delete_note_issue_note_list_path(journal.id, number_of_notes: @number_of_notes),
+                        delete_note_issue_note_list_path(journal.id, 
+                          filter: {
+                            number_of_notes: number_of_notes,
+                            private_notes_filter: private_notes_filter,
+                            note_type_op: note_type_op,
+                            note_type_v: note_type_v
+                          }),
                         remote: true,
                         method: 'delete',
                         title: l(:button_delete),
@@ -132,10 +151,10 @@ module IssueNoteListHelper
     content << "</div>"
   end
 
-  def render_issue_note(journal)
+  def render_issue_note(journal, filter_opts = {})
     content = ""
     content << "<div class=\"#{journal.css_classes} issue-#{journal.issue.id}\" id=\"change-#{journal.id}\">"
-    content << render_note_header(journal)
+    content << render_note_header(journal, filter_opts)
     content << render_notes(journal.issue, journal)  # JournalsHelper
     content << "</div>"
 
@@ -143,12 +162,35 @@ module IssueNoteListHelper
   end
 
   def render_issue_notes(issue, number_of_notes, private_notes_filter, note_type_op = '*', note_type_v = [])
-    journals = issue.visible_journals_with_index
+    all_journals = issue.visible_journals_with_index
+    
+    # Preload extra_attribute if ExtraNotesHelper is defined
+    if defined?(ExtraNotesHelper) && all_journals.any?
+      begin
+        # Rails 7+ style
+        ActiveRecord::Associations::Preloader.new(
+          records: all_journals,
+          associations: :extra_attribute
+        ).call
+      rescue ArgumentError
+        # Rails 6 and earlier style
+        ActiveRecord::Associations::Preloader.new.preload(all_journals, :extra_attribute)
+      end
+    end
+    
+    journals = all_journals
       .select{|journal| journal.notes.present?}
       .select{|journal| filter_private_notes(journal, private_notes_filter)}
       .select{|journal| filter_note_type(journal, note_type_op, note_type_v)}
       .reverse
       .take(number_of_notes)
+
+    filter_opts = {
+      number_of_notes: number_of_notes,
+      private_notes_filter: private_notes_filter,
+      note_type_op: note_type_op,
+      note_type_v: note_type_v
+    }
 
     content = +""
     (0..(number_of_notes - 1)).reverse_each do |num|
@@ -156,7 +198,7 @@ module IssueNoteListHelper
       if journals.count <= num
         content << '<div class="journal empty"></div>'
       else
-        content << render_issue_note(journals[num])
+        content << render_issue_note(journals[num], filter_opts)
       end
       content << '</div>'
     end

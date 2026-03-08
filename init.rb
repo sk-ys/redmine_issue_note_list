@@ -1,4 +1,5 @@
 require_dependency File.expand_path('../lib/issue_note_list/hooks.rb', __FILE__)
+require_dependency File.expand_path('../lib/issue_note_list/controller_journals_edit_post_hook.rb', __FILE__)
 Dir[File.join(File.expand_path('../lib/issue_note_list/patches', __FILE__), '*.rb')].each do |patch|
   require_dependency patch
 end

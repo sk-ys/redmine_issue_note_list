@@ -18,7 +18,7 @@
   <% end -%>
   <style>
     :root { --inl-issue-status-width: <%=@query.issue_status_field_width%>px; }
-    table.list.issues > tbody > tr.issue > td { height: <%=@query.notes_field_height%>px; }
+    table.list.issues > tbody > tr.issue > td, .recent_notes_container { height: <%=@query.notes_field_height%>px; }
   </style>
 <% end %>
 <div class="contextual">
