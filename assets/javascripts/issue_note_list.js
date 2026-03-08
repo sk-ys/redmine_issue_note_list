@@ -521,20 +521,16 @@ IssueNoteList.fn = {
     });
 
     // Enable double-click editing
-    $("#content").on(
-      "dblclick",
-      "td.recent_notes .journal.has-notes .wiki",
-      (e) => {
-        const $journal = $(e.target).closest("div.journal.has-notes");
-        const editButton = $journal.find(
-          ".note-header .header-buttons a[href*='/edit'].mui-icon-edit",
-        )[0];
-        if (editButton) {
-          editButton.click();
-          window.getSelection().empty();
-        }
-      },
-    );
+    $("td.recent_notes .journal.has-notes .wiki").on("dblclick", (e) => {
+      const $journal = $(e.target).closest("div.journal.has-notes");
+      const editButton = $journal.find(
+        ".note-header .header-buttons a[href*='/edit'].mui-icon-edit",
+      )[0];
+      if (editButton) {
+        editButton.click();
+        window.getSelection().empty();
+      }
+    });
 
     // Focus on the textarea after clicking the Edit Journal button
     // Observe .wiki attribute updating
