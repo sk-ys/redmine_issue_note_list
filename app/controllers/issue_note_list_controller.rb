@@ -206,5 +206,7 @@ class IssueNoteListController < ApplicationController
     @query.private_notes_filter = filter[:private_notes_filter] if filter[:private_notes_filter].present?
     @query.note_type_op = filter[:note_type_op] if filter[:note_type_op].present?
     @query.note_type_v = filter[:note_type_v] if filter.key?(:note_type_v)
+    @query.journal_created_on_from = filter[:journal_created_on_from] if filter.key?(:journal_created_on_from)
+    @query.journal_created_on_to = filter[:journal_created_on_to] if filter.key?(:journal_created_on_to)
   end
 end

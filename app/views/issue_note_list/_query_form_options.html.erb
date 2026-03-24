@@ -27,6 +27,19 @@
             [l(:label_not_contains), 'not_contains']],
             selected: @query.private_notes_filter) %>
         </span>
+        <span class="parameter">
+          <%= label_tag :journal_created_on_from, l(:label_journal_created_on_filter, scope: :issue_note_list) %>
+          <%= text_field_tag :journal_created_on_from, @query.journal_created_on_from,
+                placeholder: l(:label_date_from, scope: :issue_note_list),
+                size: 10,
+                class: "date",
+                id: "journal_created_on_from" %>
+          <%= text_field_tag :journal_created_on_to, @query.journal_created_on_to,
+                placeholder: l(:label_date_to, scope: :issue_note_list),
+                size: 10,
+                class: "date",
+                id: "journal_created_on_to" %>
+        </span>
         <%# Note type provided by Extra Notes plugin %>
         <% if defined?(ExtraNotesHelper) %>
           <% all_note_types = ExtraNotesHelper.note_types %>

@@ -83,6 +83,8 @@ module IssueNoteListHelper
     private_notes_filter = filter_opts[:private_notes_filter] || @query&.private_notes_filter
     note_type_op = filter_opts[:note_type_op] || @query&.note_type_op
     note_type_v = filter_opts[:note_type_v] || @query&.note_type_v
+    journal_created_on_from = filter_opts[:journal_created_on_from] || @query&.journal_created_on_from
+    journal_created_on_to = filter_opts[:journal_created_on_to] || @query&.journal_created_on_to
 
     content = ""
     content << "<h4 class=\"note-header\">"
@@ -108,7 +110,9 @@ module IssueNoteListHelper
                              number_of_notes: number_of_notes,
                              private_notes_filter: private_notes_filter,
                              note_type_op: note_type_op,
-                             note_type_v: note_type_v
+                             note_type_v: note_type_v,
+                             journal_created_on_from: journal_created_on_from,
+                             journal_created_on_to: journal_created_on_to
                            }),
                          remote: true,
                          method: "get",
@@ -126,7 +130,9 @@ module IssueNoteListHelper
                             number_of_notes: number_of_notes,
                             private_notes_filter: private_notes_filter,
                             note_type_op: note_type_op,
-                            note_type_v: note_type_v
+                            note_type_v: note_type_v,
+                            journal_created_on_from: journal_created_on_from,
+                            journal_created_on_to: journal_created_on_to
                           }),
                         remote: true,
                         method: 'delete',
@@ -161,7 +167,7 @@ module IssueNoteListHelper
     content.html_safe
   end
 
-  def render_issue_notes(issue, number_of_notes, private_notes_filter, note_type_op = '*', note_type_v = [])
+  def render_issue_notes(issue, number_of_notes, private_notes_filter, note_type_op = '*', note_type_v = [], journal_created_on_from = nil, journal_created_on_to = nil)
     all_journals = issue.visible_journals_with_index
     
     # Preload extra_attribute if ExtraNotesHelper is defined
@@ -182,6 +188,7 @@ module IssueNoteListHelper
       .select{|journal| journal.notes.present?}
       .select{|journal| filter_private_notes(journal, private_notes_filter)}
       .select{|journal| filter_note_type(journal, note_type_op, note_type_v)}
+      .select{|journal| filter_journal_created_on(journal, journal_created_on_from, journal_created_on_to)}
       .reverse
       .take(number_of_notes)
 
@@ -189,7 +196,9 @@ module IssueNoteListHelper
       number_of_notes: number_of_notes,
       private_notes_filter: private_notes_filter,
       note_type_op: note_type_op,
-      note_type_v: note_type_v
+      note_type_v: note_type_v,
+      journal_created_on_from: journal_created_on_from,
+      journal_created_on_to: journal_created_on_to
     }
 
     content = +""
@@ -248,6 +257,16 @@ module IssueNoteListHelper
     else
       true
     end
+  end
+
+  def filter_journal_created_on(journal, from, to)
+    return true if from.blank? && to.blank?
+    created_date = journal.created_on.to_date
+    return false if from.present? && created_date < Date.parse(from)
+    return false if to.present? && created_date > Date.parse(to)
+    true
+  rescue ArgumentError
+    true
   end
 end
 

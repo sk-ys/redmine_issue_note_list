@@ -106,6 +106,22 @@ module IssueNoteList
           options[:note_type_v] = Array(arg.presence)
         end
 
+        def journal_created_on_from
+          options[:journal_created_on_from].presence
+        end
+
+        def journal_created_on_from=(arg)
+          options[:journal_created_on_from] = arg.presence
+        end
+
+        def journal_created_on_to
+          options[:journal_created_on_to].presence
+        end
+
+        def journal_created_on_to=(arg)
+          options[:journal_created_on_to] = arg.presence
+        end
+
         def build_from_params_with_issue_note_list(params, defaults={})
           build_from_params_without_issue_note_list(params, defaults)
 
@@ -152,6 +168,14 @@ module IssueNoteList
           self.note_type_v =
             params[:note_type_v] ||
               (params[:query] && params[:query][:note_type_v]) || options[:note_type_v]
+
+          self.journal_created_on_from =
+            params[:journal_created_on_from] ||
+              (params[:query] && params[:query][:journal_created_on_from]) || options[:journal_created_on_from]
+
+          self.journal_created_on_to =
+            params[:journal_created_on_to] ||
+              (params[:query] && params[:query][:journal_created_on_to]) || options[:journal_created_on_to]
 
           self
         end
