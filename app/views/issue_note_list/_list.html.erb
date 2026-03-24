@@ -129,8 +129,8 @@
                     @query.private_notes_filter,
                     @query.note_type_op,
                     @query.note_type_v,
-                    @query.journal_created_on_from,
-                    @query.journal_created_on_to
+                    @query.journal_created_on_op,
+                    @query.journal_created_on_v
                   ) %>
             </div>
           </td>
@@ -158,8 +158,10 @@
                   <% @query.note_type_v.each_with_index do |value, index| %>
                     <%= hidden_field_tag "filter[note_type_v][]", value, id: "note_type_v-#{issue.id}-#{index}" %>
                   <% end %>
-                  <%= hidden_field_tag 'filter[journal_created_on_from]', @query.journal_created_on_from, id: "journal_created_on_from-#{issue.id}" %>
-                  <%= hidden_field_tag 'filter[journal_created_on_to]', @query.journal_created_on_to, id: "journal_created_on_to-#{issue.id}" %>
+                  <%= hidden_field_tag 'filter[journal_created_on_op]', @query.journal_created_on_op, id: "journal_created_on_op-#{issue.id}" %>
+                  <% @query.journal_created_on_v.each_with_index do |value, index| %>
+                    <%= hidden_field_tag 'filter[journal_created_on_v][]', value, id: "journal_created_on_v-#{issue.id}-#{index}" %>
+                  <% end %>
                   <%= text_area_tag "issue[notes]", nil, cols: 60, rows: 10, class: "wiki-edit",
                         data: { auto_complete: true },
                         id: "add_issue_notes-#{issue.id.to_s}",

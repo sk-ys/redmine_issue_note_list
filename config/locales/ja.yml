@@ -40,5 +40,3 @@ ja:
     label_enable_silent_mode: サイレントモードを有効にする
     description_silent_mode: コメント追加時にメール通知を送信しないようにします。
     label_journal_created_on_filter: コメント作成日
-    label_date_from: "開始日"
-    label_date_to: "終了日"

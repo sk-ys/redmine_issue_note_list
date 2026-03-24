@@ -40,5 +40,3 @@ en:
     label_enable_silent_mode: Enable silent mode
     description_silent_mode: Disables email notifications when adding notes.
     label_journal_created_on_filter: Note created
-    label_date_from: "from"
-    label_date_to: "to"

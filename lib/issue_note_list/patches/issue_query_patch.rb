@@ -106,20 +106,27 @@ module IssueNoteList
           options[:note_type_v] = Array(arg.presence)
         end
 
-        def journal_created_on_from
-          options[:journal_created_on_from].presence
+        JOURNAL_CREATED_ON_OPS = [
+          '*', '=', '>=', '<=', '><',
+          '>t-', '<t-', '><t-', 't-',
+          't', 'ld', 'w', 'lw', 'l2w', 'm', 'lm', 'y'
+        ].freeze
+
+        def journal_created_on_op
+          op = options[:journal_created_on_op]
+          JOURNAL_CREATED_ON_OPS.include?(op) ? op : '*'
         end
 
-        def journal_created_on_from=(arg)
-          options[:journal_created_on_from] = arg.presence
+        def journal_created_on_op=(arg)
+          options[:journal_created_on_op] = JOURNAL_CREATED_ON_OPS.include?(arg) ? arg : '*'
         end
 
-        def journal_created_on_to
-          options[:journal_created_on_to].presence
+        def journal_created_on_v
+          Array(options[:journal_created_on_v].presence)
         end
 
-        def journal_created_on_to=(arg)
-          options[:journal_created_on_to] = arg.presence
+        def journal_created_on_v=(arg)
+          options[:journal_created_on_v] = Array(arg.presence)
         end
 
         def build_from_params_with_issue_note_list(params, defaults={})
@@ -169,13 +176,13 @@ module IssueNoteList
             params[:note_type_v] ||
               (params[:query] && params[:query][:note_type_v]) || options[:note_type_v]
 
-          self.journal_created_on_from =
-            params[:journal_created_on_from] ||
-              (params[:query] && params[:query][:journal_created_on_from]) || options[:journal_created_on_from]
+          self.journal_created_on_op =
+            params[:journal_created_on_op] ||
+              (params[:query] && params[:query][:journal_created_on_op]) || options[:journal_created_on_op]
 
-          self.journal_created_on_to =
-            params[:journal_created_on_to] ||
-              (params[:query] && params[:query][:journal_created_on_to]) || options[:journal_created_on_to]
+          self.journal_created_on_v =
+            params[:journal_created_on_v] ||
+              (params[:query] && params[:query][:journal_created_on_v]) || options[:journal_created_on_v]
 
           self
         end

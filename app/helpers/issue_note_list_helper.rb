@@ -83,8 +83,8 @@ module IssueNoteListHelper
     private_notes_filter = filter_opts[:private_notes_filter] || @query&.private_notes_filter
     note_type_op = filter_opts[:note_type_op] || @query&.note_type_op
     note_type_v = filter_opts[:note_type_v] || @query&.note_type_v
-    journal_created_on_from = filter_opts[:journal_created_on_from] || @query&.journal_created_on_from
-    journal_created_on_to = filter_opts[:journal_created_on_to] || @query&.journal_created_on_to
+    journal_created_on_op = filter_opts[:journal_created_on_op] || @query&.journal_created_on_op
+    journal_created_on_v = filter_opts[:journal_created_on_v] || @query&.journal_created_on_v
 
     content = ""
     content << "<h4 class=\"note-header\">"
@@ -111,8 +111,8 @@ module IssueNoteListHelper
                              private_notes_filter: private_notes_filter,
                              note_type_op: note_type_op,
                              note_type_v: note_type_v,
-                             journal_created_on_from: journal_created_on_from,
-                             journal_created_on_to: journal_created_on_to
+                             journal_created_on_op: journal_created_on_op,
+                             journal_created_on_v: journal_created_on_v
                            }),
                          remote: true,
                          method: "get",
@@ -131,8 +131,8 @@ module IssueNoteListHelper
                             private_notes_filter: private_notes_filter,
                             note_type_op: note_type_op,
                             note_type_v: note_type_v,
-                            journal_created_on_from: journal_created_on_from,
-                            journal_created_on_to: journal_created_on_to
+                            journal_created_on_op: journal_created_on_op,
+                            journal_created_on_v: journal_created_on_v
                           }),
                         remote: true,
                         method: 'delete',
@@ -167,7 +167,7 @@ module IssueNoteListHelper
     content.html_safe
   end
 
-  def render_issue_notes(issue, number_of_notes, private_notes_filter, note_type_op = '*', note_type_v = [], journal_created_on_from = nil, journal_created_on_to = nil)
+  def render_issue_notes(issue, number_of_notes, private_notes_filter, note_type_op = '*', note_type_v = [], journal_created_on_op = '*', journal_created_on_v = [])
     all_journals = issue.visible_journals_with_index
     
     # Preload extra_attribute if ExtraNotesHelper is defined
@@ -188,7 +188,7 @@ module IssueNoteListHelper
       .select{|journal| journal.notes.present?}
       .select{|journal| filter_private_notes(journal, private_notes_filter)}
       .select{|journal| filter_note_type(journal, note_type_op, note_type_v)}
-      .select{|journal| filter_journal_created_on(journal, journal_created_on_from, journal_created_on_to)}
+      .select{|journal| filter_journal_created_on(journal, journal_created_on_op, journal_created_on_v)}
       .reverse
       .take(number_of_notes)
 
@@ -197,8 +197,8 @@ module IssueNoteListHelper
       private_notes_filter: private_notes_filter,
       note_type_op: note_type_op,
       note_type_v: note_type_v,
-      journal_created_on_from: journal_created_on_from,
-      journal_created_on_to: journal_created_on_to
+      journal_created_on_op: journal_created_on_op,
+      journal_created_on_v: journal_created_on_v
     }
 
     content = +""
@@ -259,14 +259,78 @@ module IssueNoteListHelper
     end
   end
 
-  def filter_journal_created_on(journal, from, to)
-    return true if from.blank? && to.blank?
+  def filter_journal_created_on(journal, op, values)
+    return true if op.blank? || op == '*'
+
     created_date = journal.created_on.to_date
-    return false if from.present? && created_date < Date.parse(from)
-    return false if to.present? && created_date > Date.parse(to)
+    today = User.current.today
+
+    case op
+    when '='
+      d = parse_journal_date(values[0])
+      return true unless d
+      created_date == d
+    when '>='
+      d = parse_journal_date(values[0])
+      return true unless d
+      created_date >= d
+    when '<='
+      d = parse_journal_date(values[0])
+      return true unless d
+      created_date <= d
+    when '><'
+      d1 = parse_journal_date(values[0])
+      d2 = parse_journal_date(values[1])
+      (d1.nil? || created_date >= d1) && (d2.nil? || created_date <= d2)
+    when '>t-'
+      return true if values[0].blank?
+      created_date >= today - values[0].to_i
+    when '<t-'
+      return true if values[0].blank?
+      created_date <= today - values[0].to_i
+    when '><t-'
+      return true if values[0].blank?
+      created_date >= today - values[0].to_i && created_date <= today
+    when 't-'
+      return true if values[0].blank?
+      created_date == today - values[0].to_i
+    when 't'
+      created_date == today
+    when 'ld'
+      created_date == today - 1
+    when 'w'
+      first_day = l(:general_first_day_of_week).to_i
+      cwday = today.cwday
+      days_ago = cwday >= first_day ? cwday - first_day : cwday + 7 - first_day
+      created_date >= today - days_ago && created_date <= today - days_ago + 6
+    when 'lw'
+      first_day = l(:general_first_day_of_week).to_i
+      cwday = today.cwday
+      days_ago = cwday >= first_day ? cwday - first_day : cwday + 7 - first_day
+      created_date >= today - days_ago - 7 && created_date <= today - days_ago - 1
+    when 'l2w'
+      first_day = l(:general_first_day_of_week).to_i
+      cwday = today.cwday
+      days_ago = cwday >= first_day ? cwday - first_day : cwday + 7 - first_day
+      created_date >= today - days_ago - 14 && created_date <= today - days_ago - 1
+    when 'm'
+      created_date >= today.beginning_of_month && created_date <= today.end_of_month
+    when 'lm'
+      lm = today.prev_month
+      created_date >= lm.beginning_of_month && created_date <= lm.end_of_month
+    when 'y'
+      created_date >= today.beginning_of_year && created_date <= today.end_of_year
+    else
+      true
+    end
+  rescue StandardError
     true
+  end
+
+  def parse_journal_date(value)
+    Date.parse(value.to_s)
   rescue ArgumentError
-    true
+    nil
   end
 end
 

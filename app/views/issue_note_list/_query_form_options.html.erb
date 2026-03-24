@@ -28,17 +28,85 @@
             selected: @query.private_notes_filter) %>
         </span>
         <span class="parameter">
-          <%= label_tag :journal_created_on_from, l(:label_journal_created_on_filter, scope: :issue_note_list) %>
-          <%= text_field_tag :journal_created_on_from, @query.journal_created_on_from,
-                placeholder: l(:label_date_from, scope: :issue_note_list),
-                size: 10,
-                class: "date",
-                id: "journal_created_on_from" %>
-          <%= text_field_tag :journal_created_on_to, @query.journal_created_on_to,
-                placeholder: l(:label_date_to, scope: :issue_note_list),
-                size: 10,
-                class: "date",
-                id: "journal_created_on_to" %>
+          <%= label_tag :journal_created_on_op, l(:label_journal_created_on_filter, scope: :issue_note_list) %>
+          <%
+            jco_op = @query.journal_created_on_op
+            jco_v  = @query.journal_created_on_v
+            jco_single_date_ops = ['=', '>=', '<=']
+            jco_date_range_ops  = ['><']
+            jco_days_ops        = ['>t-', '<t-', '><t-', 't-']
+            jco_show_single = jco_single_date_ops.include?(jco_op)
+            jco_show_range  = jco_date_range_ops.include?(jco_op)
+            jco_show_days   = jco_days_ops.include?(jco_op)
+          %>
+          <%= select_tag :journal_created_on_op,
+                options_for_select([
+                  [l(:label_any), '*'],
+                  [l(:label_equals), '='],
+                  [l(:label_greater_or_equal), '>='],
+                  [l(:label_less_or_equal), '<='],
+                  [l(:label_between), '><'],
+                  [l(:label_less_than_ago), '>t-'],
+                  [l(:label_more_than_ago), '<t-'],
+                  [l(:label_in_the_past_days), '><t-'],
+                  [l(:label_ago), 't-'],
+                  [l(:label_today), 't'],
+                  [l(:label_yesterday), 'ld'],
+                  [l(:label_this_week), 'w'],
+                  [l(:label_last_week), 'lw'],
+                  [l(:label_last_n_weeks, count: 2), 'l2w'],
+                  [l(:label_this_month), 'm'],
+                  [l(:label_last_month), 'lm'],
+                  [l(:label_this_year), 'y']
+                ], selected: jco_op),
+                id: 'journal_created_on_op' %>
+          <span id="jco-single-date"<%= ' style="display:none;"'.html_safe unless jco_show_single %>>
+            <%= text_field_tag 'journal_created_on_v[]', jco_v[0],
+                  size: 10, class: 'date',
+                  id: 'journal_created_on_v_0',
+                  disabled: !jco_show_single %>
+          </span>
+          <span id="jco-date-range"<%= ' style="display:none;"'.html_safe unless jco_show_range %>>
+            <%= text_field_tag 'journal_created_on_v[]', jco_v[0],
+                  size: 10, class: 'date',
+                  id: 'journal_created_on_v_from',
+                  disabled: !jco_show_range %>
+            -
+            <%= text_field_tag 'journal_created_on_v[]', jco_v[1],
+                  size: 10, class: 'date',
+                  id: 'journal_created_on_v_to',
+                  disabled: !jco_show_range %>
+          </span>
+          <span id="jco-days"<%= ' style="display:none;"'.html_safe unless jco_show_days %>>
+            <%= number_field_tag 'journal_created_on_v[]', jco_v[0],
+                  min: 0, size: 4,
+                  id: 'journal_created_on_v_days',
+                  disabled: !jco_show_days %>
+            <%= l(:label_day_plural) %>
+          </span>
+          <script>
+            $(function() {
+              var singleDateOps = ['=', '>=', '<='];
+              var dateRangeOps  = ['><'];
+              var daysOps       = ['>t-', '<t-', '><t-', 't-'];
+
+              function updateJco() {
+                var op = $('#journal_created_on_op').val();
+                var groups = {
+                  '#jco-single-date': singleDateOps,
+                  '#jco-date-range':  dateRangeOps,
+                  '#jco-days':        daysOps
+                };
+                $.each(groups, function(selector, ops) {
+                  var active = ops.indexOf(op) !== -1;
+                  $(selector).toggle(active).find('input').prop('disabled', !active);
+                });
+              }
+
+              $('#journal_created_on_op').on('change', updateJco);
+              updateJco();
+            });
+          </script>
         </span>
         <%# Note type provided by Extra Notes plugin %>
         <% if defined?(ExtraNotesHelper) %>
