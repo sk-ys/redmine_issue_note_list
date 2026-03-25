@@ -61,18 +61,18 @@
                 ], selected: jco_op),
                 id: 'journal_created_on_op' %>
           <span id="jco-single-date"<%= ' style="display:none;"'.html_safe unless jco_show_single %>>
-            <%= text_field_tag 'journal_created_on_v[]', jco_v[0],
+            <%= date_field_tag 'journal_created_on_v[]', jco_v[0],
                   size: 10, class: 'date',
                   id: 'journal_created_on_v_0',
                   disabled: !jco_show_single %>
           </span>
           <span id="jco-date-range"<%= ' style="display:none;"'.html_safe unless jco_show_range %>>
-            <%= text_field_tag 'journal_created_on_v[]', jco_v[0],
+            <%= date_field_tag 'journal_created_on_v[]', jco_v[0],
                   size: 10, class: 'date',
                   id: 'journal_created_on_v_from',
                   disabled: !jco_show_range %>
             -
-            <%= text_field_tag 'journal_created_on_v[]', jco_v[1],
+            <%= date_field_tag 'journal_created_on_v[]', jco_v[1],
                   size: 10, class: 'date',
                   id: 'journal_created_on_v_to',
                   disabled: !jco_show_range %>
