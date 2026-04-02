@@ -106,6 +106,29 @@ module IssueNoteList
           options[:note_type_v] = Array(arg.presence)
         end
 
+        JOURNAL_CREATED_ON_OPS = [
+          '*', '=', '>=', '<=', '><',
+          '>t-', '<t-', '><t-', 't-',
+          't', 'ld', 'w', 'lw', 'l2w', 'm', 'lm', 'y'
+        ].freeze
+
+        def journal_created_on_op
+          op = options[:journal_created_on_op]
+          JOURNAL_CREATED_ON_OPS.include?(op) ? op : '*'
+        end
+
+        def journal_created_on_op=(arg)
+          options[:journal_created_on_op] = JOURNAL_CREATED_ON_OPS.include?(arg) ? arg : '*'
+        end
+
+        def journal_created_on_v
+          Array(options[:journal_created_on_v].presence)
+        end
+
+        def journal_created_on_v=(arg)
+          options[:journal_created_on_v] = Array(arg.presence)
+        end
+
         def build_from_params_with_issue_note_list(params, defaults={})
           build_from_params_without_issue_note_list(params, defaults)
 
@@ -152,6 +175,14 @@ module IssueNoteList
           self.note_type_v =
             params[:note_type_v] ||
               (params[:query] && params[:query][:note_type_v]) || options[:note_type_v]
+
+          self.journal_created_on_op =
+            params[:journal_created_on_op] ||
+              (params[:query] && params[:query][:journal_created_on_op]) || options[:journal_created_on_op]
+
+          self.journal_created_on_v =
+            params[:journal_created_on_v] ||
+              (params[:query] && params[:query][:journal_created_on_v]) || options[:journal_created_on_v]
 
           self
         end
