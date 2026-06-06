@@ -70,6 +70,8 @@ module IssueNoteListHelper
       else
         render partial: 'extra_notes/extra_notes_label', locals: {journal: journal}, formats: [:html]
       end
+    else
+      ""
     end
   end
 
@@ -100,7 +102,7 @@ module IssueNoteListHelper
     content << (respond_to?(:render_journal_update_info) ? (render_journal_update_info(journal) || render_journal_update_info_empty()) : "")
     content << "</div>"
     content << "<div class=\"contextual\">"
-    content << render_note_type_marker(journal)
+    content << render_note_type_marker(journal).to_s
     content << "<span class=\"header-buttons\">"
     if journal.editable_by?(User.current)
       content << link_to(l(:button_edit),
